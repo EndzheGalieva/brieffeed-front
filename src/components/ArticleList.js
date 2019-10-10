@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { SERVER_URL } from '../constants.js';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import AddArticle from './AddArticle.js';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import { green } from '@material-ui/core/colors';
+import AddArticle from './Article/AddArticle.js';
 
 class ArticleList extends Component {
   constructor(props) {
