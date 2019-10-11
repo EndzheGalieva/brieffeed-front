@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import CreateArticleButton from '../Article/CreateArticleButton';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,8 +39,12 @@ function Header() {
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
+          <Button component={Link} to="/article-list" color="inherit">
+            Articles
+          </Button>
+          <Button component={Link} to="/about-us" color="inherit">About Us</Button>
           <CreateArticleButton />
-          <Button color="inherit">Login</Button>
+          <Button component={Link} to="/login" color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>

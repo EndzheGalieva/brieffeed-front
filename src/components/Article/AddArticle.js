@@ -1,83 +1,49 @@
 import React, { Component } from 'react';
-import SkyLight from 'react-skylight';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import { Editor } from '@tinymce/tinymce-react';
+import {
+  FormControl,
+  InputLabel,
+  Input,
+  FormHelperText
+} from '@material-ui/core';
 
 class AddArticle extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { articleName: '', description: '' };
-  }
-
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  handleEditorChange = e => {
+    console.log('Content was updated:', e.target.getContent());
   };
 
   render() {
     return (
       <div>
-        <SkyLight hideOnOverlayClicked ref="addDialog">
-          <h3>New article</h3>
-          <form>
-            <TextField
-              type="text"
-              placeholder="Article Name"
-              name="articleName"
-              onChange={this.handleChange}
-            />
-            <br />
-            <TextField
-              type="text"
-              placeholder="Description"
-              name="description"
-              onChange={this.handleChange}
-            />
-            <br />
-            <br />
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={this.handleSubmit}
-            >
-              Сохранить
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={this.cancelSubmit}
-            >
-              Отмена
-            </Button>
-          </form>
-        </SkyLight>
-        <div>
-          <Button
-            variant="outlined"
-            color="primary"
-            style={{ margin: '10px' }}
-            onClick={() => this.refs.addDialog.show()}
-          >
-            New article
-          </Button>
-        </div>
+        <FormControl>
+          <InputLabel required htmlFor="my-input">
+            Title
+          </InputLabel>
+          <Input id="my-input" aria-describedby="my-helper-text" />
+          <FormHelperText id="my-helper-text">
+            We'll never share your email.
+          </FormHelperText>
+          <Editor
+            apiKey="zgthisp1lypefx3m431mxa9bc5gwjaxv7bhv5bbhu4vi1m25"
+            init={{
+              height: 500,
+              menubar: true,
+              plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+              ],
+              toolbar:
+                'undo redo | formatselect | bold italic backcolor | \
+            alignleft aligncenter alignright alignjustify | \
+            bullist numlist outdent indent | removeformat | help'
+            }}
+            onChange={this.handleEditorChange}
+          />
+        </FormControl>
       </div>
     );
   }
-
-  handleSubmit = event => {
-    event.preventDefault();
-    var newArticle = {
-      articleName: this.state.articleName,
-      description: this.state.description
-    };
-    this.props.addArticle(newArticle);
-    this.refs.addDialog.hide();
-  };
-
-  cancelSubmit = event => {
-    event.preventDefault();
-    this.refs.addDialog.hide();
-  };
 }
 
 export default AddArticle;

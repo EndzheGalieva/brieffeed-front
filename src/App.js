@@ -10,8 +10,8 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <Route path="/articleList" component={ArticleList} />
-        <Route path="/addProject" component={AddArticle} />
+        <Route exact path="/article-list" component={ArticleList} />
+        <Route exact path="/add-article" component={AddArticle} />
       </div>
     </Router>
   );

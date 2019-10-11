@@ -5,12 +5,14 @@
   "dependencies": {
     "@material-ui/core": "^4.5.0",
     "@material-ui/icons": "^4.4.3",
+    "@tinymce/tinymce-react": "^3.3.2",
     "react": "^16.10.1",
     "react-confirm-alert": "^2.4.1",
     "react-dom": "^16.10.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
-    "react-skylight": "^0.5.1"
+    "react-skylight": "^0.5.1",
+    "tinymce": "^5.0.16"
   },
   "scripts": {
     "start": "react-scripts start",
