@@ -19,7 +19,7 @@ const CreateArticleButton = () => {
       <Fab
         component={Link}
         to="/add-article"
-        color="secondary"
+        color="default"
         aria-label="add"
         className={classes.fab}
         size="small"

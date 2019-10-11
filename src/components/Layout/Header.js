@@ -37,7 +37,7 @@ function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            Brieffeed
           </Typography>
           <Button component={Link} to="/article-list" color="inherit">
             Articles
