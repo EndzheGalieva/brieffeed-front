@@ -6,9 +6,9 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import { green } from '@material-ui/core/colors';
-import AddArticle from './Article/AddArticle.js';
+import AddPost from './Post/AddPost.js';
 
-class ArticleList extends Component {
+class Posts extends Component {
   // constructor(props) {
   //   super(props);
   //   this.state = { articles: [], open: false, message: '' };
@@ -36,7 +36,7 @@ class ArticleList extends Component {
     //   ));
 
     return (
-      <h2>Article List</h2>
+      <h2>Posts</h2>
       //     <div className="App">
       //       <Grid container>
       //         <Grid item>
@@ -146,4 +146,4 @@ class ArticleList extends Component {
   }
 }
 
-export default ArticleList;
+export default Posts;

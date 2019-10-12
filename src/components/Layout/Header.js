@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import CreateArticleButton from '../Article/CreateArticleButton';
+import CreatePostButton from '../Post/CreatePostButton';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -39,12 +39,11 @@ function Header() {
           <Typography variant="h6" className={classes.title}>
             Brieffeed
           </Typography>
-          <Button component={Link} to="/article-list" color="inherit">
-            Articles
-          </Button>
-          <Button component={Link} to="/about-us" color="inherit">About Us</Button>
-          <CreateArticleButton />
-          <Button component={Link} to="/login" color="inherit">Login</Button>
+          <Button component={Link} to="/posts" color="inherit">Posts</Button>
+          <Button component={Link} to="/users" color="inherit">Users</Button>
+          <CreatePostButton />          
+          <Button component={Link} to="/log-in" color="inherit">Log in</Button>
+          <Button component={Link} to="/sign-up" color="inherit">Sign up</Button>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,17 +1,21 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import ArticleList from './components/ArticleList';
+import Posts from './components/Posts';
 import Header from './components/Layout/Header';
-import AddArticle from './components/Article/AddArticle';
+import AddPost from './components/Post/AddPost';
+import Users from './components/Users';
+import Login from './components/Login';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Header />
-        <Route exact path="/article-list" component={ArticleList} />
-        <Route exact path="/add-article" component={AddArticle} />
+        <Route exact path="/posts" component={Posts} />
+        <Route exact path="/users" component={Users} />
+        <Route exact path="/add-post" component={AddPost} />
+        <Route exact path="/log-in" component={Login} />
       </div>
     </Router>
   );

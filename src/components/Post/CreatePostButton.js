@@ -12,13 +12,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CreateArticleButton = () => {
+const CreatePostButton = () => {
   const classes = useStyles();
   return (
     <React.Fragment>
       <Fab
         component={Link}
-        to="/add-article"
+        to="/add-post"
         color="default"
         aria-label="add"
         className={classes.fab}
@@ -30,4 +30,4 @@ const CreateArticleButton = () => {
   );
 };
 
-export default CreateArticleButton;
+export default CreatePostButton;

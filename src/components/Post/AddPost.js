@@ -1,6 +1,6 @@
 import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
+import { FormControl, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
@@ -59,13 +59,13 @@ const categories = [
   }
 ];
 
-const options = ['Save in draft', 'Save and publish'];
+const options = ['Save in draft', 'Publish'];
 
 const handleEditorChange = e => {
   console.log('Content was updated:', e.target.getContent());
 };
 
-function AddArticle() {
+function AddPost() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -234,4 +234,4 @@ function AddArticle() {
   );
 }
 
-export default AddArticle;
+export default AddPost;

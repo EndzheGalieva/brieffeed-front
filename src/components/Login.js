@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { SERVER_URL } from '../constants.js';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import ArticleList from './ArticleList';
+import Posts from './Posts';
 import { Snackbar } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 
@@ -19,7 +19,7 @@ class Login extends Component {
 
   render() {
     if (this.state.isAuthenticated === true) {
-      return <ArticleList />;
+      return <Posts />;
     } else {
       return (
         <div>
