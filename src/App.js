@@ -6,18 +6,24 @@ import Header from './components/Layout/Header';
 import AddPost from './components/Post/AddPost';
 import Users from './components/Users';
 import Login from './components/Login';
+import SignUp from './components/SignUp';
+import { Provider } from 'react-redux';
+import store from './store';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <Route exact path="/posts" component={Posts} />
-        <Route exact path="/users" component={Users} />
-        <Route exact path="/add-post" component={AddPost} />
-        <Route exact path="/log-in" component={Login} />
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <Header />
+          <Route exact path="/posts" component={Posts} />
+          <Route exact path="/users" component={Users} />
+          <Route exact path="/add-post" component={AddPost} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

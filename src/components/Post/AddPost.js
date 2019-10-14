@@ -15,6 +15,11 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import TextField from '@material-ui/core/TextField';
+import { SERVER_URL } from '../../constants';
+import { setState } from 'expect/build/jestMatchersObject';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createPost } from '../../actions/postActions';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -61,10 +66,6 @@ const categories = [
 
 const options = ['Save in draft', 'Publish'];
 
-const handleEditorChange = e => {
-  console.log('Content was updated:', e.target.getContent());
-};
-
 function AddPost() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -85,14 +86,19 @@ function AddPost() {
   };
 
   const [values, setValues] = React.useState({
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    category: 0
+    id: 0,
+    postName: '',
+    tag: [],
+    category: 0,
+    postContent: ''
   });
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
+  };
+
+  const handleEditorChange = name => event => {
+    setValues({ ...values, [name]: event.target.getContent() });
   };
 
   const handleClose = event => {
@@ -103,14 +109,49 @@ function AddPost() {
     setOpen(false);
   };
 
+  // const fetchPosts = () => {
+  //   const token = sessionStorage.getItem('jwt');
+  //   fetch(SERVER_URL + 'api/posts', {
+  //     headers: { Authorization: token }
+  //   })
+  //     .then(response => response.json())
+  //     .then(responseData => {
+  //       setState({
+  //         posts: responseData._embedded.posts
+  //       });
+  //     })
+  //     .catch(err => console.error(err));
+  // };
+
+  const onSubmit = () => {
+    const post = {
+      postName: values.postName,
+      postContent: values.postContent
+    };
+    // const token = sessionStorage.getItem('jwt');
+    // fetch(SERVER_URL + 'api/posts', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: token
+    //   },
+    //   body: JSON.stringify(post)
+    // })
+    //   // .then(res => res.fetchPosts())
+    //   .then(response => response.json())
+    //   .catch(err => console.error(err));
+    this.props.createPost(post, this.props.history)
+  };
+
   return (
-    <React.Fragment>
+    <div>
       <CssBaseline />
       <Container maxWidth="lg">
         <FormControl
           className={classes.container}
           noValidate
           autoComplete="off"
+          onSubmit={onSubmit}
         >
           <TextField
             required
@@ -118,6 +159,9 @@ function AddPost() {
             label="Title"
             className={classes.textField}
             margin="normal"
+            value={values.postName}
+            onChange={handleChange('postName')}
+            name="postName"
           />
           <TextField
             id="standard-required"
@@ -161,7 +205,9 @@ function AddPost() {
             alignleft aligncenter alignright alignjustify | 
             bullist numlist outdent indent | removeformat | help`
             }}
-            onChange={handleEditorChange}
+            value={values.postContent}
+            onChange={handleEditorChange('postContent')}
+            name="postContent"
           />
           <Grid container>
             <Grid item xs={12} align="right">
@@ -170,7 +216,7 @@ function AddPost() {
                 ref={anchorRef}
                 aria-label="split button"
               >
-                <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+                <Button onClick={onSubmit}>{options[selectedIndex]}</Button>
                 <Button
                   color="primary"
                   size="small"
@@ -185,7 +231,7 @@ function AddPost() {
                 variant="outlined"
                 className={classes.button}
                 component={Link}
-                to="/article-list"
+                to="/posts"
                 color="secondary"
               >
                 Cansel
@@ -230,8 +276,15 @@ function AddPost() {
           </Grid>
         </FormControl>
       </Container>
-    </React.Fragment>
+    </div>
   );
 }
 
-export default AddPost;
+AddPost.propTypes = {
+  createPost: PropTypes.func.isRequired
+}
+
+export default connect(
+  null,
+  { createPost }
+)(AddPost);

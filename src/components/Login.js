@@ -1,74 +1,127 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { SERVER_URL } from '../constants.js';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Posts from './Posts';
-import { Snackbar } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+import { Snackbar, SnackbarContent } from '@material-ui/core';
+import { amber, green } from '@material-ui/core/colors';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import IconButton from '@material-ui/core/IconButton';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      isAuthenticated: false,
-      open: false
-    };
+const variantIcon = {
+  success: CheckCircleIcon,
+  error: ErrorIcon
+};
+
+const useStyles1 = makeStyles(theme => ({
+  success: {
+    backgroundColor: green[600]
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark
+  },
+  info: {
+    backgroundColor: theme.palette.primary.main
+  },
+  warning: {
+    backgroundColor: amber[700]
+  },
+  icon: {
+    fontSize: 20
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing(1)
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center'
   }
+}));
 
-  render() {
-    if (this.state.isAuthenticated === true) {
-      return <Posts />;
-    } else {
-      return (
-        <div>
-          <TextField
-            name="username"
-            placeholder="Username"
-            onChange={this.handleChange}
-          />
-          <br />
-          <TextField
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={this.handleChange}
-          />
-          <br />
-          <br />
-          <Button variant="raised" color="primary" onClick={this.login}>
-            Login
-          </Button>
-          <Snackbar
-            style={{
-              width: 300,
-              backgroundColor: green[600],
-              vertical: 'bottom',
-              horizontal: 'left'
-            }}
-            open={this.state.open}
-            onClose={this.handleClose}
-            autoHideDuration={2500}
-            message="Check your username and password"
-          />
-        </div>
-      );
+function SnackbarContentWrapper(props) {
+  const classes = useStyles1();
+  const { className, message, onClose, variant, ...other } = props;
+  const Icon = variantIcon[variant];
+
+  return (
+    <SnackbarContent
+      className={clsx(classes[variant], className)}
+      aria-describedby="client-snackbar"
+      message={
+        <span id="client-snackbar" className={classes.message}>
+          <Icon className={clsx(classes.icon, classes.iconVariant)} />
+          {message}
+        </span>
+      }
+      action={[
+        <IconButton
+          key="close"
+          aria-label="close"
+          color="inherit"
+          onClick={onClose}
+        >
+          <CloseIcon className={classes.icon} />
+        </IconButton>
+      ]}
+      {...other}
+    />
+  );
+}
+
+SnackbarContentWrapper.propTypes = {
+  className: PropTypes.string,
+  message: PropTypes.string,
+  onClose: PropTypes.func,
+  variant: PropTypes.oneOf(['error', 'success']).isRequired
+};
+
+const useStyles2 = makeStyles(theme => ({
+  margin: {
+    margin: theme.spacing(1)
+  }
+}));
+
+function Login() {
+  const classes = useStyles2();
+  const anchorRef = React.useRef(null);
+  const [values, setValues] = React.useState({
+    username: '',
+    password: '',
+    isAuthenticated: false,
+    open: false
+  });
+
+  const handleChange = name => event => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
+  // const handleClose = event => {
+  //   if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  //     return;
+  //   }
+
+  //   setOpen(false);
+  // };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
-  }
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    setValues({ open: false });
   };
 
-  handleClose = event => {
-    this.setState({ open: false });
-  };
-
-  login = () => {
+  const login = () => {
     const user = {
-      username: this.state.username,
-      password: this.state.password
+      username: values.username,
+      password: values.password
     };
     fetch(SERVER_URL + 'login', {
       method: 'POST',
@@ -78,18 +131,87 @@ class Login extends Component {
         const jwtToken = res.headers.get('Authorization');
         if (jwtToken !== null) {
           sessionStorage.setItem('jwt', jwtToken);
-          this.setState({ isAuthenticated: true });
+          setValues({ isAuthenticated: true });
         } else {
-          this.setState({ open: true });
+          setValues({ open: true });
         }
       })
       .catch(err => console.error(err));
   };
 
-  logout = () => {
+  const logout = () => {
     sessionStorage.removeItem('jwt');
-    this.setState({ isAuthenticated: false });
+    setValues({ isAuthenticated: false });
   };
+
+  if (values.isAuthenticated === true) {
+    console.log('User is logined!');
+    return (
+      <React.Fragment>
+        <Posts />
+        <Snackbar
+          style={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={values.open}
+          onClose={handleClose}
+          autoHideDuration={2500}
+        >
+          <SnackbarContentWrapper
+            onClose={handleClose}
+            variant="error"
+            className={classes.margin}
+            message="Check your username and password!"
+          />
+        </Snackbar>
+      </React.Fragment>
+    );
+  } else {
+    console.log('User is not logined!');
+    return (
+      <div>
+        <TextField
+          name="username"
+          placeholder="Username"
+          onChange={handleChange('username')}
+        />
+        <br />
+        <TextField
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange('password')}
+        />
+        <br />
+        <br />
+        <Button
+          color="primary"
+          variant="outlined"
+          className={classes.margin}
+          onClick={login}
+        >
+          Login
+        </Button>
+        <Snackbar
+          style={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={values.open}
+          onClose={handleClose}
+          autoHideDuration={2500}
+        >
+          <SnackbarContentWrapper
+            onClose={handleClose}
+            variant="error"
+            className={classes.margin}
+            message="Check your username and password!"
+          />
+        </Snackbar>
+      </div>
+    );
+  }
 }
 
 export default Login;

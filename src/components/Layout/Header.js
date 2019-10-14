@@ -42,8 +42,8 @@ function Header() {
           <Button component={Link} to="/posts" color="inherit">Posts</Button>
           <Button component={Link} to="/users" color="inherit">Users</Button>
           <CreatePostButton />          
-          <Button component={Link} to="/log-in" color="inherit">Log in</Button>
-          <Button component={Link} to="/sign-up" color="inherit">Sign up</Button>
+          <Button component={Link} to="/login" color="inherit">Log in</Button>
+          <Button component={Link} to="/signup" color="inherit">Sign up</Button>
         </Toolbar>
       </AppBar>
     </div>
