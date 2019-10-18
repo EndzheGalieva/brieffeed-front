@@ -17,7 +17,7 @@ import MenuList from '@material-ui/core/MenuList';
 import TextField from '@material-ui/core/TextField';
 import { SERVER_URL } from '../../constants';
 import { setState } from 'expect/build/jestMatchersObject';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
 
@@ -66,7 +66,7 @@ const categories = [
 
 const options = ['Save in draft', 'Publish'];
 
-function AddPost() {
+function AddPost(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -90,7 +90,8 @@ function AddPost() {
     postName: '',
     tag: [],
     category: 0,
-    postContent: ''
+    postContent: '',
+    errors: {}
   });
 
   const handleChange = name => event => {
@@ -140,11 +141,14 @@ function AddPost() {
     //   // .then(res => res.fetchPosts())
     //   .then(response => response.json())
     //   .catch(err => console.error(err));
-    this.props.createPost(post, this.props.history)
+    props.createPost(post, props.history);
   };
+
+  const { errors } = values;
 
   return (
     <div>
+      <h1>{errors.postContent}</h1>
       <CssBaseline />
       <Container maxWidth="lg">
         <FormControl
@@ -281,8 +285,13 @@ function AddPost() {
 }
 
 AddPost.propTypes = {
-  createPost: PropTypes.func.isRequired
-}
+  createPost: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  errors: state.errors
+});
 
 export default connect(
   null,
