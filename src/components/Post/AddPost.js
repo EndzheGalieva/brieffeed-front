@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { FormControl, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,8 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import TextField from '@material-ui/core/TextField';
 import { SERVER_URL } from '../../constants';
-import { setState } from 'expect/build/jestMatchersObject';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
 
@@ -144,11 +143,10 @@ function AddPost(props) {
     props.createPost(post, props.history);
   };
 
-  const { errors } = values;
+  const { errors } = props;
 
   return (
     <div>
-      <h1>{errors.postContent}</h1>
       <CssBaseline />
       <Container maxWidth="lg">
         <FormControl
@@ -166,6 +164,7 @@ function AddPost(props) {
             value={values.postName}
             onChange={handleChange('postName')}
             name="postName"
+            helperText={errors.postName}
           />
           <TextField
             id="standard-required"
@@ -294,6 +293,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   { createPost }
 )(AddPost);
