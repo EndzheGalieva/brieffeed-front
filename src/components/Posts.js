@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { green } from '@material-ui/core/colors';
 import PostItem from './Post/PostItem.js';
+import { connect } from 'react-redux';
+import { getPosts } from '../actions/postActions';
+import PropTypes from 'prop-types';
 
 class Posts extends Component {
   constructor(props) {
@@ -13,33 +16,24 @@ class Posts extends Component {
     this.state = { posts: [], open: false, message: '' };
   }
 
+  componentDidMount() {
+    this.props.getPosts();
+  }
+
+  // componentDidMount() {
+  //   this.fetchPosts();
+  // }
+
   render() {
-    const rows = this.state.posts.map((post, index) => (
-      <tr key={index}>
-        <td>{post.postName}</td>
-        <td>{post.postContent}</td>
-        <td>{post.createdDate}</td>
-        <td>{post.user}</td>
-        <td>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => {
-              this.confirmDelete(post._links.self.href);
-            }}
-          >
-            Delete
-          </Button>
-        </td>
-      </tr>
-    ));
+    const { posts } = this.props.post;
 
     return (
       <div className="App">
         <table>
-          <tbody>{rows}</tbody>
+          {posts.map(post => (
+            <PostItem key={post.postId} post={post} />
+          ))}
         </table>
-        <PostItem />
         <Snackbar
           style={{
             width: 300,
@@ -56,85 +50,93 @@ class Posts extends Component {
     );
   }
 
-  componentDidMount() {
-    this.fetchPosts();
-  }
+  // fetchPosts = () => {
+  //   const token = sessionStorage.getItem('jwt');
+  //   fetch(SERVER_URL + 'api/posts', {
+  //     headers: { Authorization: token }
+  //   })
+  //     .then(response => response.json())
+  //     .then(responseData => {
+  //       this.setState({
+  //         posts: responseData._embedded.posts
+  //       });
+  //     })
+  //     .catch(err => console.error(err));
+  // };
 
-  fetchPosts = () => {
-    const token = sessionStorage.getItem('jwt');
-    fetch(SERVER_URL + 'api/posts', {
-      headers: { Authorization: token }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        this.setState({
-          posts: responseData._embedded.posts
-        });
-      })
-      .catch(err => console.error(err));
-  };
+  // onDelClick = link => {
+  //   const token = sessionStorage.getItem('jwt');
+  //   fetch(link, { method: 'DELETE', headers: { Authorization: token } })
+  //     .then(res => {
+  //       this.setState({ open: true, message: 'Статья удалена' });
+  //       this.fetchPosts();
+  //     })
+  //     .catch(err => {
+  //       this.setState({ open: true, message: 'Ошибка при удалении' });
+  //       console.error(err);
+  //     });
+  // };
 
-  onDelClick = link => {
-    const token = sessionStorage.getItem('jwt');
-    fetch(link, { method: 'DELETE', headers: { Authorization: token } })
-      .then(res => {
-        this.setState({ open: true, message: 'Статья удалена' });
-        this.fetchPosts();
-      })
-      .catch(err => {
-        this.setState({ open: true, message: 'Ошибка при удалении' });
-        console.error(err);
-      });
-  };
+  // confirmDelete = link => {
+  //   confirmAlert({
+  //     message: 'Вы уверены, что хотите удалить статью?',
+  //     buttons: [
+  //       {
+  //         label: 'Да',
+  //         onClick: () => this.onDelClick(link)
+  //       },
+  //       {
+  //         label: 'Нет'
+  //       }
+  //     ]
+  //   });
+  // };
 
-  confirmDelete = link => {
-    confirmAlert({
-      message: 'Вы уверены, что хотите удалить статью?',
-      buttons: [
-        {
-          label: 'Да',
-          onClick: () => this.onDelClick(link)
-        },
-        {
-          label: 'Нет'
-        }
-      ]
-    });
-  };
+  // handleClose = (event, reason) => {
+  //   this.setState({ open: false });
+  // };
 
-  handleClose = (event, reason) => {
-    this.setState({ open: false });
-  };
+  // addPost(post) {
+  //   const token = sessionStorage.getItem('jwt');
+  //   fetch(SERVER_URL + 'api/posts', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: token
+  //     },
+  //     body: JSON.stringify(post)
+  //   })
+  //     .then(res => this.fetchPosts())
+  //     .catch(err => console.error(err));
+  // }
 
-  addPost(post) {
-    const token = sessionStorage.getItem('jwt');
-    fetch(SERVER_URL + 'api/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token
-      },
-      body: JSON.stringify(post)
-    })
-      .then(res => this.fetchPosts())
-      .catch(err => console.error(err));
-  }
-
-  updateCar(post, link) {
-    const token = sessionStorage.getItem('jwt');
-    fetch(link, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token
-      },
-      body: JSON.stringify(post)
-    })
-      .then(res => this.setState({ open: true, message: 'Changes saved' }))
-      .catch(err =>
-        this.setState({ open: true, message: 'Error when saving' })
-      );
-  }
+  //   updateCar(post, link) {
+  //     const token = sessionStorage.getItem('jwt');
+  //     fetch(link, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: token
+  //       },
+  //       body: JSON.stringify(post)
+  //     })
+  //       .then(res => this.setState({ open: true, message: 'Changes saved' }))
+  //       .catch(err =>
+  //         this.setState({ open: true, message: 'Error when saving' })
+  //       );
+  //   }
 }
 
-export default Posts;
+Posts.propTypes = {
+  post: PropTypes.object.isRequired,
+  getPosts: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  post: state.post
+});
+
+export default connect(
+  mapStateToProps,
+  { getPosts }
+)(Posts);
