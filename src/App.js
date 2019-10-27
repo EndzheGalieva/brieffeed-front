@@ -9,6 +9,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import { Provider } from 'react-redux';
 import store from './store';
+import UpdatePost from './components/Post/UpdatePost';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/posts" component={Posts} />
           <Route exact path="/users" component={Users} />
           <Route exact path="/add-post" component={AddPost} />
+          <Route exact path="/update-post/:id" component={UpdatePost} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
         </div>

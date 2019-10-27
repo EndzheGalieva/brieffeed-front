@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CssBaseline, Container, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 class PostItem extends Component {
   render() {
@@ -11,6 +12,19 @@ class PostItem extends Component {
           <td>{post.postContent}</td>
           <td>{post.createdDate}</td>
           <td>{post.user}</td>
+          <td>
+            <Button
+              component={Link}
+              to={`/update-post/${post.postId}`}
+              variant="outlined"
+              color="primary"
+              // onClick={() => {
+              //   this.confirmUpdate(post._links.self.href);
+              // }}
+            >
+              Update
+            </Button>
+          </td>
           <td>
             <Button
               variant="outlined"
