@@ -1,29 +1,40 @@
 import axios from 'axios';
-import { GET_ERRORS, GET_POSTS, GET_POST } from './types';
+import { GET_ERRORS, GET_POSTS, GET_POST, DELETE_POST } from './types';
 
 export const createPost = (post, history) => async dispatch => {
   try {
-    const res = await axios.post('http://localhost:9000/api/post', post);
+    await axios.post('/api/post', post);
     history.push('/posts');
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
-      payload: error.response.data
+      payload: {}
     });
   }
 };
 
 export const getPosts = () => async dispatch => {
-  const res = await axios.get('http://localhost:9000/api/posts');
+  const res = await axios.get('/api/posts');
   dispatch({
     type: GET_POSTS,
     payload: res.data._embedded.posts
   });
+
+  // наработки
+  // await fetch('/api/posts')
+  //   .then(response => response.json())
+  //   .then(responseData => {
+  //     dispatch({
+  //       type: GET_POSTS,
+  //       payload: responseData._embedded.posts
+  //     });
+  //   })
+  //   .catch(err => console.error(err));
 };
 
 export const getPost = (postId, history) => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:9000/api/posts/${postId}`);
+    const res = await axios.get(`/api/posts/${postId}`);
     if (res.data == null) {
       history.push('/posts');
     } else {
@@ -39,10 +50,7 @@ export const getPost = (postId, history) => async dispatch => {
 
 export const updatePost = (postId, post, history) => async dispatch => {
   try {
-    const res = await axios.patch(
-      `http://localhost:9000/api/posts/${postId}`,
-      post
-    );
+    await axios.patch(`/api/posts/${postId}`, post);
     history.push('/posts');
   } catch (error) {
     dispatch({
@@ -50,4 +58,12 @@ export const updatePost = (postId, post, history) => async dispatch => {
       payload: error.response.data
     });
   }
+};
+
+export const deletePost = postId => async dispatch => {
+  await axios.delete(`/api/posts/${postId}`);
+  dispatch({
+    type: DELETE_POST,
+    payload: postId
+  });
 };

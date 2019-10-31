@@ -107,6 +107,39 @@ function UpdatePost(props) {
     });
   }, [props.post]);
 
+  // наработки
+  // useEffect(() => {
+  //   async function fetchMyAPI() {
+  //     const postId = props.match.params.id;
+  //     props.getPost(postId, props.history);
+  //   }
+  //   fetchMyAPI();
+  // }, []);
+
+  // useEffect(() => {
+  //   async function fetchMyAPI() {
+  //     const {
+  //       postId,
+  //       postName,
+  //       tag,
+  //       category,
+  //       postContent,
+  //       createdDate,
+  //       updatedDate
+  //     } = props.post;
+  //     setValues({
+  //       postId,
+  //       postName,
+  //       tag,
+  //       category,
+  //       postContent,
+  //       createdDate,
+  //       updatedDate
+  //     });
+  //   }
+  //   fetchMyAPI();
+  // }, [props.post]);
+
   const handleClick = () => {
     alert(`You clicked ${options[selectedIndex]}`);
   };
