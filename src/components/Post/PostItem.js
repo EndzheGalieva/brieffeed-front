@@ -18,9 +18,6 @@ class PostItem extends Component {
               to={`/update-post/${post.postId}`}
               variant="outlined"
               color="primary"
-              // onClick={() => {
-              //   this.confirmUpdate(post._links.self.href);
-              // }}
             >
               Update
             </Button>

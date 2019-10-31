@@ -85,12 +85,13 @@ function AddPost(props) {
   };
 
   const [values, setValues] = React.useState({
-    id: 0,
     postName: '',
-    tag: [],
-    category: 0,
     postContent: '',
-    errors: {}
+    createdDate: '',
+    updatedDate: '',
+    postId: 0    
+    // tag: [],
+    // category: 0,
   });
 
   const handleChange = name => event => {

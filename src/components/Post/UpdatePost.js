@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { FormControl, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,8 +17,8 @@ import MenuList from '@material-ui/core/MenuList';
 import TextField from '@material-ui/core/TextField';
 import { SERVER_URL } from '../../constants';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getPost } from '../../actions/postActions';
+import { connect, useSelector } from 'react-redux';
+import { getPost, updatePost } from '../../actions/postActions';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -67,14 +67,45 @@ const options = ['Save in draft', 'Publish'];
 
 function UpdatePost(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
+  const [selectedIndex, setSelectedIndex] = useState(1);
+
+  const [values, setValues] = useState({
+    postName: '',
+    postContent: '',
+    createdDate: '',
+    updatedDate: '',
+    postId: 0
+    // tag: [],
+    // category: 0,
+  });
 
   useEffect(() => {
-    const { id } = props.match.params;
-    props.getPost(id, props.history);
+    const postId = props.match.params.id;
+    props.getPost(postId, props.history);
   }, []);
+
+  useEffect(() => {
+    const {
+      postId,
+      postName,
+      tag,
+      category,
+      postContent,
+      createdDate,
+      updatedDate
+    } = props.post;
+    setValues({
+      postId,
+      postName,
+      tag,
+      category,
+      postContent,
+      createdDate,
+      updatedDate
+    });
+  }, [props.post]);
 
   const handleClick = () => {
     alert(`You clicked ${options[selectedIndex]}`);
@@ -88,15 +119,6 @@ function UpdatePost(props) {
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
-
-  const [values, setValues] = React.useState({
-    id: 0,
-    postName: '',
-    tag: [],
-    category: 0,
-    postContent: '',
-    errors: {}
-  });
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -119,7 +141,7 @@ function UpdatePost(props) {
       postName: values.postName,
       postContent: values.postContent
     };
-    props.createPost(post, props.history);
+    props.updatePost(values.postId, post, props.history);
   };
 
   const { errors } = props;
@@ -264,6 +286,7 @@ function UpdatePost(props) {
 
 UpdatePost.propTypes = {
   getPost: PropTypes.func.isRequired,
+  updatePost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -275,5 +298,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPost }
+  { getPost, updatePost }
 )(UpdatePost);

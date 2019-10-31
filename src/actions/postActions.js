@@ -21,22 +21,33 @@ export const getPosts = () => async dispatch => {
   });
 };
 
-export const getPost = (id, history) => async dispatch => {
-  const res = await axios.get(`http://localhost:9000/api/posts/${id}`);  
-  dispatch({
-    type: GET_POST,
-    payload: res.data
-  });
+export const getPost = (postId, history) => async dispatch => {
+  try {
+    const res = await axios.get(`http://localhost:9000/api/posts/${postId}`);
+    if (res.data == null) {
+      history.push('/posts');
+    } else {
+      dispatch({
+        type: GET_POST,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+    history.push('/posts');
+  }
 };
 
-// export const updatePost = (id, history) => async dispatch => {
-//   try {
-//     const res = await axios.post(`http://localhost:9000/api/post${id}`);
-//     history.push('/posts');
-//   } catch (error) {
-//     dispatch({
-//       type: GET_ERRORS,
-//       payload: error.response.data
-//     });
-//   }
-// };
+export const updatePost = (postId, post, history) => async dispatch => {
+  try {
+    const res = await axios.patch(
+      `http://localhost:9000/api/posts/${postId}`,
+      post
+    );
+    history.push('/posts');
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data
+    });
+  }
+};
