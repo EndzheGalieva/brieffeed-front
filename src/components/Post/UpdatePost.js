@@ -15,7 +15,6 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import TextField from '@material-ui/core/TextField';
-import { SERVER_URL } from '../../constants';
 import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 import { getPost, updatePost } from '../../actions/postActions';

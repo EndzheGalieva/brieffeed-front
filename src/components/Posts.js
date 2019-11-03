@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { SERVER_URL } from '../constants.js';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Button from '@material-ui/core/Button';

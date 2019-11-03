@@ -1,5 +1,4 @@
 import React from 'react';
-import { SERVER_URL } from '../constants.js';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Posts from './Posts';
@@ -123,7 +122,7 @@ function Login() {
       username: values.username,
       password: values.password
     };
-    fetch(SERVER_URL + 'login', {
+    fetch('/login', {
       method: 'POST',
       body: JSON.stringify(user)
     })

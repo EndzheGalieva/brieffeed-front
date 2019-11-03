@@ -3,7 +3,7 @@ import { GET_ERRORS, GET_POSTS, GET_POST, DELETE_POST } from './types';
 
 export const createPost = (post, history) => async dispatch => {
   try {
-    await axios.post('/api/post', post);
+    await axios.post('/api/posts', post);
     history.push('/posts');
   } catch (error) {
     dispatch({
