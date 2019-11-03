@@ -62,7 +62,7 @@ const categories = [
   }
 ];
 
-const options = ['Save in draft', 'Publish'];
+const options = ['Publish', 'Draft'];
 
 function UpdatePost(props) {
   const classes = useStyles();
@@ -91,6 +91,7 @@ function UpdatePost(props) {
       name,
       tag,
       category,
+      status,
       content,
       createdDate,
       updatedDate
@@ -99,6 +100,7 @@ function UpdatePost(props) {
       postId,
       name,
       tag,
+      status,
       category,
       content,
       createdDate,
@@ -171,8 +173,11 @@ function UpdatePost(props) {
   const onSubmit = () => {
     const post = {
       name: values.name,
-      content: values.content
+      content: values.content,
+      status: options[selectedIndex].toUpperCase()
     };
+    console.log(options[selectedIndex].toUpperCase())
+    alert(`You clicked ${options[selectedIndex]}`);
     props.updatePost(values.postId, post, props.history);
   };
 

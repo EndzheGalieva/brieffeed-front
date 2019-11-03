@@ -62,17 +62,13 @@ const categories = [
   }
 ];
 
-const options = ['Save in draft', 'Publish'];
+const options = ['Publish', 'Draft'];
 
 function AddPost(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-
-  const handleClick = () => {
-    alert(`You clicked ${options[selectedIndex]}`);
-  };
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -86,6 +82,7 @@ function AddPost(props) {
   const [values, setValues] = React.useState({
     name: '',
     content: '',
+    status: '',
     createdDate: '',
     updatedDate: '',
     postId: 0    
@@ -126,7 +123,8 @@ function AddPost(props) {
   const onSubmit = () => {
     const post = {
       name: values.name,
-      content: values.content
+      content: values.content,
+      status: options[selectedIndex].toUpperCase()
     };
     // const token = sessionStorage.getItem('jwt');
     // fetch(SERVER_URL + 'api/posts', {
@@ -140,6 +138,8 @@ function AddPost(props) {
     //   // .then(res => res.fetchPosts())
     //   .then(response => response.json())
     //   .catch(err => console.error(err));
+    console.log(options[selectedIndex].toUpperCase());
+    alert(`You clicked ${options[selectedIndex]}`);
     props.createPost(post, props.history);
   };
 

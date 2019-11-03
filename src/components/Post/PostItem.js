@@ -47,7 +47,7 @@ class PostItem extends Component {
           <td>{post.name}</td>
           <td>{post.content}</td>
           <td>{post.createdDate}</td>
-          <td>{post.user}</td>
+          {/* <td>{post.user.userName}</td> */}
           <td>
             <Button
               component={Link}
