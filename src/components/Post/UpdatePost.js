@@ -72,8 +72,8 @@ function UpdatePost(props) {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const [values, setValues] = useState({
-    postName: '',
-    postContent: '',
+    name: '',
+    content: '',
     createdDate: '',
     updatedDate: '',
     postId: 0
@@ -89,19 +89,19 @@ function UpdatePost(props) {
   useEffect(() => {
     const {
       postId,
-      postName,
+      name,
       tag,
       category,
-      postContent,
+      content,
       createdDate,
       updatedDate
     } = props.post;
     setValues({
       postId,
-      postName,
+      name,
       tag,
       category,
-      postContent,
+      content,
       createdDate,
       updatedDate
     });
@@ -171,8 +171,8 @@ function UpdatePost(props) {
 
   const onSubmit = () => {
     const post = {
-      postName: values.postName,
-      postContent: values.postContent
+      name: values.name,
+      content: values.content
     };
     props.updatePost(values.postId, post, props.history);
   };
@@ -195,10 +195,10 @@ function UpdatePost(props) {
             label="Title"
             className={classes.textField}
             margin="normal"
-            value={values.postName}
-            onChange={handleChange('postName')}
-            name="postName"
-            helperText={errors.postName}
+            value={values.name}
+            onChange={handleChange('name')}
+            name="name"
+            helperText={errors.name}
           />
           <TextField
             id="standard-required"
@@ -242,9 +242,9 @@ function UpdatePost(props) {
               alignleft aligncenter alignright alignjustify | 
               bullist numlist outdent indent | removeformat | help`
             }}
-            value={values.postContent}
-            onChange={handleEditorChange('postContent')}
-            name="postContent"
+            value={values.content}
+            onChange={handleEditorChange('content')}
+            name="content"
           />
           <Grid container>
             <Grid item xs={12} align="right">

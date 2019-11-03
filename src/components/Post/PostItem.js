@@ -44,8 +44,8 @@ class PostItem extends Component {
     return (
       <React.Fragment>
         <tr key={post.postId}>
-          <td>{post.postName}</td>
-          <td>{post.postContent}</td>
+          <td>{post.name}</td>
+          <td>{post.content}</td>
           <td>{post.createdDate}</td>
           <td>{post.user}</td>
           <td>

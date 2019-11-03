@@ -85,8 +85,8 @@ function AddPost(props) {
   };
 
   const [values, setValues] = React.useState({
-    postName: '',
-    postContent: '',
+    name: '',
+    content: '',
     createdDate: '',
     updatedDate: '',
     postId: 0    
@@ -126,8 +126,8 @@ function AddPost(props) {
 
   const onSubmit = () => {
     const post = {
-      postName: values.postName,
-      postContent: values.postContent
+      name: values.name,
+      content: values.content
     };
     // const token = sessionStorage.getItem('jwt');
     // fetch(SERVER_URL + 'api/posts', {
@@ -162,10 +162,10 @@ function AddPost(props) {
             label="Title"
             className={classes.textField}
             margin="normal"
-            value={values.postName}
-            onChange={handleChange('postName')}
-            name="postName"
-            helperText={errors.postName}
+            value={values.name}
+            onChange={handleChange('name')}
+            name="name"
+            helperText={errors.name}
           />
           <TextField
             id="standard-required"
@@ -209,9 +209,9 @@ function AddPost(props) {
             alignleft aligncenter alignright alignjustify | 
             bullist numlist outdent indent | removeformat | help`
             }}
-            value={values.postContent}
-            onChange={handleEditorChange('postContent')}
-            name="postContent"
+            value={values.content}
+            onChange={handleEditorChange('content')}
+            name="content"
           />
           <Grid container>
             <Grid item xs={12} align="right">
