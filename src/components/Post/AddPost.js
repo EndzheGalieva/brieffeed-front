@@ -84,8 +84,7 @@ function AddPost(props) {
     content: '',
     status: '',
     createdDate: '',
-    updatedDate: '',
-    postId: 0    
+    updatedDate: ''
     // tag: [],
     // category: 0,
   });
@@ -138,8 +137,6 @@ function AddPost(props) {
     //   // .then(res => res.fetchPosts())
     //   .then(response => response.json())
     //   .catch(err => console.error(err));
-    console.log(options[selectedIndex].toUpperCase());
-    alert(`You clicked ${options[selectedIndex]}`);
     props.createPost(post, props.history);
   };
 

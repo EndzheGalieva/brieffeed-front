@@ -73,6 +73,7 @@ function UpdatePost(props) {
   const [values, setValues] = useState({
     name: '',
     content: '',
+    status: '',
     createdDate: '',
     updatedDate: '',
     postId: 0
@@ -121,29 +122,27 @@ function UpdatePost(props) {
   //   async function fetchMyAPI() {
   //     const {
   //       postId,
-  //       postName,
+  //       name,
   //       tag,
   //       category,
-  //       postContent,
+  //       status,
+  //       content,
   //       createdDate,
   //       updatedDate
   //     } = props.post;
   //     setValues({
   //       postId,
-  //       postName,
+  //       name,
   //       tag,
   //       category,
-  //       postContent,
+  //       status,
+  //       content,
   //       createdDate,
   //       updatedDate
   //     });
   //   }
   //   fetchMyAPI();
   // }, [props.post]);
-
-  const handleClick = () => {
-    alert(`You clicked ${options[selectedIndex]}`);
-  };
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -176,8 +175,6 @@ function UpdatePost(props) {
       content: values.content,
       status: options[selectedIndex].toUpperCase()
     };
-    console.log(options[selectedIndex].toUpperCase())
-    alert(`You clicked ${options[selectedIndex]}`);
     props.updatePost(values.postId, post, props.history);
   };
 

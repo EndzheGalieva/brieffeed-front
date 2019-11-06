@@ -8,7 +8,7 @@ export const createPost = (post, history) => async dispatch => {
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
-      payload: {}
+      payload: error.response.data
     });
   }
 };
