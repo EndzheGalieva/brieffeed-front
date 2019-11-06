@@ -3,7 +3,7 @@ import { GET_ERRORS, GET_POSTS, GET_POST, DELETE_POST } from './types';
 
 export const createPost = (post, history) => async dispatch => {
   try {
-    await axios.post('/api/posts', post);
+    await axios.post('/api/posts/create', post);
     history.push('/posts');
   } catch (error) {
     dispatch({
@@ -17,7 +17,7 @@ export const getPosts = () => async dispatch => {
   const res = await axios.get('/api/posts');
   dispatch({
     type: GET_POSTS,
-    payload: res.data
+    payload: res.data._embedded.posts
   });
 
   // наработки
@@ -50,7 +50,7 @@ export const getPost = (postId, history) => async dispatch => {
 
 export const updatePost = (postId, post, history) => async dispatch => {
   try {
-    await axios.patch(`/api/posts/${postId}`, post);
+    await axios.patch(`/api/posts/${postId}/update`, post);
     history.push('/posts');
   } catch (error) {
     dispatch({
