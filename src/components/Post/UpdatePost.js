@@ -73,12 +73,13 @@ function UpdatePost(props) {
   const [values, setValues] = useState({
     name: '',
     content: '',
+    createdDate: null,
+    updatedDate: null,
     status: '',
-    createdDate: '',
-    updatedDate: '',
+    user: {},
+    comments: [],
+    blogId: 0,
     postId: 0
-    // tag: [],
-    // category: 0,
   });
 
   useEffect(() => {
@@ -88,24 +89,26 @@ function UpdatePost(props) {
 
   useEffect(() => {
     const {
-      postId,
       name,
-      tag,
-      category,
-      status,
       content,
       createdDate,
-      updatedDate
+      updatedDate,
+      status,
+      user,
+      comments,
+      blogId,
+      postId
     } = props.post;
     setValues({
-      postId,
       name,
-      tag,
-      status,
-      category,
       content,
       createdDate,
-      updatedDate
+      updatedDate,
+      status,
+      user,
+      comments,
+      blogId,
+      postId
     });
   }, [props.post]);
 
