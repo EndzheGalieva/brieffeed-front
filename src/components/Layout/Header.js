@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+
 import {
   Badge,
   Menu,
@@ -197,6 +200,13 @@ function Header() {
             <p>Профиль</p>
           </MenuItem>
           <MenuItem component={Link} to="/logout">
+            <Icon
+              className={classes.menuIcon}
+              color="inherit"
+              aria-label="logout"
+            >
+              <MeetingRoomIcon />
+            </Icon>
             <p>Выйти</p>
           </MenuItem>
         </div>
@@ -308,10 +318,16 @@ function Header() {
                     </Grid>
                   </IconButton>
                 </Tooltip>
-
-                <Button component={Link} to="/logout" color="inherit">
-                  Выйти
-                </Button>
+                <Tooltip title="Выйти">
+                  <IconButton
+                    component={Link}
+                    to="/logout"
+                    color="inherit"
+                    aria-label="logout"
+                  >
+                    <MeetingRoomIcon />
+                  </IconButton>
+                </Tooltip>
               </div>
             )}
             {!auth && (

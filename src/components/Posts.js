@@ -28,11 +28,13 @@ class Posts extends Component {
 
     return (
       <div className="App">
-        <table>
-          {posts.map(post => (
-            <PostItem key={post.postId} post={post} />
-          ))}
-        </table>
+        <div className="posts_list">
+          <ul className="shortcuts_items">
+            {posts.map(post => (
+              <PostItem key={post.postId} post={post} />
+            ))}
+          </ul>
+        </div>
         <Snackbar
           style={{
             width: 300,

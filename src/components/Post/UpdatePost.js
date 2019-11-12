@@ -1,28 +1,29 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
-import { FormControl, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import TextField from '@material-ui/core/TextField';
-import PropTypes from 'prop-types';
-import { connect, useSelector } from 'react-redux';
-import { getPost, updatePost } from '../../actions/postActions';
+import React, { useEffect, useState, useRef } from "react";
+import { FormControl, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import TextField from "@material-ui/core/TextField";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getPost, updatePost } from "../../actions/postActions";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    display: "flex",
+    flexWrap: "wrap"
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -39,30 +40,30 @@ const useStyles = makeStyles(theme => ({
     width: 150
   },
   input: {
-    display: 'none'
+    display: "none"
   }
 }));
 
 const categories = [
   {
     value: 0,
-    label: 'category 1'
+    label: "category 1"
   },
   {
     value: 1,
-    label: 'category 2'
+    label: "category 2"
   },
   {
     value: 2,
-    label: 'category 3'
+    label: "category 3"
   },
   {
     value: 3,
-    label: 'category 4'
+    label: "category 4"
   }
 ];
 
-const options = ['Publish', 'Draft'];
+const options = ["Publish", "Draft"];
 
 function UpdatePost(props) {
   const classes = useStyles();
@@ -71,11 +72,11 @@ function UpdatePost(props) {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const [values, setValues] = useState({
-    name: '',
-    content: '',
+    name: "",
+    content: "",
     createdDate: null,
     updatedDate: null,
-    status: '',
+    status: "",
     user: {},
     comments: [],
     blogId: 0,
@@ -160,8 +161,9 @@ function UpdatePost(props) {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const handleEditorChange = name => event => {
-    setValues({ ...values, [name]: event.target.getContent() });
+  const handleEditorChange = name => (event, editor) => {
+    const data = editor.getData();
+    setValues({ ...values, [name]: data });
   };
 
   const handleClose = event => {
@@ -200,7 +202,7 @@ function UpdatePost(props) {
             className={classes.textField}
             margin="normal"
             value={values.name}
-            onChange={handleChange('name')}
+            onChange={handleChange("name")}
             name="name"
             helperText={errors.name}
           />
@@ -217,7 +219,7 @@ function UpdatePost(props) {
             label="Category"
             className={classes.textField}
             value={values.category}
-            onChange={handleChange('category')}
+            onChange={handleChange("category")}
             SelectProps={{
               MenuProps: {
                 className: classes.menu
@@ -232,22 +234,12 @@ function UpdatePost(props) {
               </MenuItem>
             ))}
           </TextField>
-          <Editor
-            apiKey="zgthisp1lypefx3m431mxa9bc5gwjaxv7bhv5bbhu4vi1m25"
-            init={{
-              height: 500,
-              menubar: true,
-              plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-              ],
-              toolbar: `undo redo | formatselect | bold italic backcolor | 
-              alignleft aligncenter alignright alignjustify | 
-              bullist numlist outdent indent | removeformat | help`
-            }}
+          <CKEditor
+            editor={ClassicEditor}
+            label="Content"
+            data={values.content}
             value={values.content}
-            onChange={handleEditorChange('content')}
+            onChange={handleEditorChange("content")}
             name="content"
           />
           <Grid container>
@@ -261,7 +253,7 @@ function UpdatePost(props) {
                 <Button
                   color="primary"
                   size="small"
-                  aria-owns={open ? 'menu-list-grow' : undefined}
+                  aria-owns={open ? "menu-list-grow" : undefined}
                   aria-haspopup="true"
                   onClick={handleToggle}
                 >
@@ -289,7 +281,7 @@ function UpdatePost(props) {
                     {...TransitionProps}
                     style={{
                       transformOrigin:
-                        placement === 'bottom' ? 'center top' : 'center bottom'
+                        placement === "bottom" ? "center top" : "center bottom"
                     }}
                   >
                     <Paper id="menu-list-grow">
@@ -333,7 +325,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { getPost, updatePost }
-)(UpdatePost);
+export default connect(mapStateToProps, { getPost, updatePost })(UpdatePost);
