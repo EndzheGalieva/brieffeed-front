@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import { green } from '@material-ui/core/colors';
-import PostItem from './Post/PostItem.js';
-import { connect } from 'react-redux';
-import { getPosts } from '../actions/postActions';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import { green } from "@material-ui/core/colors";
+import PostItem from "./Post/PostItem.js";
+import { connect } from "react-redux";
+import { getPosts } from "../actions/postActions";
+import PropTypes from "prop-types";
 
 class Posts extends Component {
   constructor(props) {
     super(props);
-    this.state = { posts: [], open: false, message: '' };
+    this.state = { posts: [], open: false, message: "" };
   }
 
   componentDidMount() {
@@ -31,7 +31,9 @@ class Posts extends Component {
         <div className="posts_list">
           <ul className="shortcuts_items">
             {posts.map(post => (
-              <PostItem key={post.postId} post={post} />
+              <li className="shortcuts_item">
+                <PostItem key={post.postId} post={post} />
+              </li>
             ))}
           </ul>
         </div>
@@ -39,8 +41,8 @@ class Posts extends Component {
           style={{
             width: 300,
             backgroundColor: green[600],
-            vertical: 'bottom',
-            horizontal: 'left'
+            vertical: "bottom",
+            horizontal: "left"
           }}
           open={this.state.open}
           onClose={this.handleClose}
@@ -137,7 +139,4 @@ const mapStateToProps = state => ({
   post: state.post
 });
 
-export default connect(
-  mapStateToProps,
-  { getPosts }
-)(Posts);
+export default connect(mapStateToProps, { getPosts })(Posts);

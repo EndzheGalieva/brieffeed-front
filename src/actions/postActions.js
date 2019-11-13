@@ -35,6 +35,7 @@ export const getPosts = () => async dispatch => {
 export const getPost = (postId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/posts/${postId}`);
+    console.log(postId)
     if (res.data == null) {
       history.push('/posts');
     } else {
@@ -44,7 +45,7 @@ export const getPost = (postId, history) => async dispatch => {
       });
     }
   } catch (error) {
-    history.push('/posts');
+    // history.push('/posts');
   }
 };
 
