@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import UpdatePost from './components/Post/UpdatePost';
 import Post from './components/Post';
+import Blogs from './components/Blogs';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
       <Router>
         <div className="App">
           <Header />
-          <Route exact path="/posts" component={Posts} />
+          <Route exact path="/blogs" component={Blogs} />
+          <Route exact path="/posts" component={Posts} />          
           <Route exact path="/post/:id" component={Post} />
           <Route exact path="/users" component={Users} />
           <Route exact path="/add-post" component={AddPost} />

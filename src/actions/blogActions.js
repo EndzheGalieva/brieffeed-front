@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GET_ERRORS, GET_BLOGS, GET_BLOG, DELETE_BLOG } from './types';
 
-export const createPost = (blog, history) => async dispatch => {
+export const createBlog = (blog, history) => async dispatch => {
   try {
     await axios.post('/api/blogs/create', blog);
     history.push('/blogs');
@@ -13,7 +13,7 @@ export const createPost = (blog, history) => async dispatch => {
   }
 };
 
-export const getPosts = () => async dispatch => {
+export const getBlogs = () => async dispatch => {
   const res = await axios.get('/api/blogs');
   dispatch({
     type: GET_BLOGS,
@@ -21,7 +21,7 @@ export const getPosts = () => async dispatch => {
   });
 };
 
-export const getPost = (blogId, history) => async dispatch => {
+export const getBlog = (blogId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/blogs/${blogId}`);
     if (res.data == null) {
@@ -37,7 +37,7 @@ export const getPost = (blogId, history) => async dispatch => {
   }
 };
 
-export const updatePost = (blogId, blog, history) => async dispatch => {
+export const updateBlog = (blogId, blog, history) => async dispatch => {
   try {
     await axios.patch(`/api/blogs/${blogId}/update`, blog);
     history.push('/blogs');
@@ -49,7 +49,7 @@ export const updatePost = (blogId, blog, history) => async dispatch => {
   }
 };
 
-export const deletePost = blogId => async dispatch => {
+export const deleteBlog = blogId => async dispatch => {
   await axios.delete(`/api/blogs/${blogId}`);
   dispatch({
     type: DELETE_BLOG,
