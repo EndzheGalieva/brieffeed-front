@@ -31,7 +31,6 @@ export const getCategories = () => async dispatch => {
 export const getCategory = (categoryId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/categories/${categoryId}`);
-    console.log(categoryId);
     if (res.data == null) {
       history.push('/categories');
     } else {

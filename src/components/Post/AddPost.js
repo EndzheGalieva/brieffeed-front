@@ -96,7 +96,6 @@ function AddPost(props) {
 
   const handleEditorChange = name => (event, editor) => {
     const data = editor.getData();
-    console.log(typeof data)
     setValues({ ...values, [name]: data });
   };
 

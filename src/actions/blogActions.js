@@ -24,7 +24,6 @@ export const getPosts = () => async dispatch => {
 export const getPost = (blogId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/blogs/${blogId}`);
-    console.log(blogId);
     if (res.data == null) {
       history.push('/blogs');
     } else {
