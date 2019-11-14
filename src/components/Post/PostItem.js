@@ -83,7 +83,7 @@ class PostItem extends Component {
         </p>
         <div className="post_body">
           <h2 className="post_title">
-            <Link to={`/post/${post.postId}`}>{post.name}</Link>
+            <Link to={`/post/${post.postId}`}>{post.title}</Link>
           </h2>
           <img className="post_img" src={`${post.image}`} alt="" />
           <div className="post_description">

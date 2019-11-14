@@ -81,7 +81,7 @@ function AddPost(props) {
   };
 
   const [values, setValues] = React.useState({
-    name: "",
+    title: "",
     content: "",
     status: "",
     createdDate: "",
@@ -124,7 +124,7 @@ function AddPost(props) {
 
   const onSubmit = () => {
     const post = {
-      name: values.name,
+      title: values.title,
       content: values.content,
       status: options[selectedIndex].toUpperCase()
     };
@@ -161,9 +161,9 @@ function AddPost(props) {
             label="Title"
             className={classes.textField}
             margin="normal"
-            value={values.name}
-            onChange={handleChange("name")}
-            name="name"
+            value={values.title}
+            onChange={handleChange("title")}
+            name="title"
             helperText={errors.name}
           />
           <TextField

@@ -1,19 +1,18 @@
-import React, { Component } from "react";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
-import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
-import { green } from "@material-ui/core/colors";
-import PostItem from "./Post/PostItem.js";
-import { connect } from "react-redux";
-import { getPost } from "../actions/postActions";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+// import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import Snackbar from '@material-ui/core/Snackbar';
+import { green } from '@material-ui/core/colors';
+import PostItem from './Post/PostItem.js';
+import { connect } from 'react-redux';
+import { getPost } from '../actions/postActions';
+import PropTypes from 'prop-types';
 
 class Post extends Component {
   constructor(props) {
     super(props);
-    this.state = { post: {}, open: false, message: "" };
-  }
+    this.state = { post: {}, open: false, message: '' };
+  } 
 
   componentDidMount() {
     const postId = this.props.match.params.id;
@@ -32,8 +31,8 @@ class Post extends Component {
           style={{
             width: 300,
             backgroundColor: green[600],
-            vertical: "bottom",
-            horizontal: "left"
+            vertical: 'bottom',
+            horizontal: 'left'
           }}
           open={this.state.open}
           onClose={this.handleClose}

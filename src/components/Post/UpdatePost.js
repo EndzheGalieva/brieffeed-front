@@ -72,7 +72,7 @@ function UpdatePost(props) {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const [values, setValues] = useState({
-    name: "",
+    title: "",
     content: "",
     createdDate: null,
     updatedDate: null,
@@ -90,7 +90,7 @@ function UpdatePost(props) {
 
   useEffect(() => {
     const {
-      name,
+      title,
       content,
       createdDate,
       updatedDate,
@@ -101,7 +101,7 @@ function UpdatePost(props) {
       postId
     } = props.post;
     setValues({
-      name,
+      title,
       content,
       createdDate,
       updatedDate,
@@ -176,7 +176,7 @@ function UpdatePost(props) {
 
   const onSubmit = () => {
     const post = {
-      name: values.name,
+      title: values.title,
       content: values.content,
       status: options[selectedIndex].toUpperCase()
     };
@@ -202,8 +202,8 @@ function UpdatePost(props) {
             className={classes.textField}
             margin="normal"
             value={values.name}
-            onChange={handleChange("name")}
-            name="name"
+            onChange={handleChange("title")}
+            name="title"
             helperText={errors.name}
           />
           <TextField

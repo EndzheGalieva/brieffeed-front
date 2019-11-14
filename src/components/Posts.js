@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { confirmAlert } from "react-confirm-alert";
+// import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import { green } from "@material-ui/core/colors";
 import PostItem from "./Post/PostItem.js";
