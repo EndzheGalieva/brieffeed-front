@@ -31,7 +31,7 @@ function Categories(props) {
 
   useEffect(() => {
     props.getCategories();
-  }, [props]);
+  }, []);
 
   useEffect(() => {
     const { name } = props.category;

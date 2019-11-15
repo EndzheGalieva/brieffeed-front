@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -89,7 +88,7 @@ const useStyles2 = makeStyles(theme => ({
 
 function Login() {
   const classes = useStyles2();
-  const anchorRef = React.useRef(null);
+  // const anchorRef = React.useRef(null);
   const [values, setValues] = React.useState({
     username: '',
     password: '',
@@ -138,10 +137,10 @@ function Login() {
       .catch(err => console.error(err));
   };
 
-  const logout = () => {
-    sessionStorage.removeItem('jwt');
-    setValues({ isAuthenticated: false });
-  };
+  // const logout = () => {
+  //   sessionStorage.removeItem('jwt');
+  //   setValues({ isAuthenticated: false });
+  // };
 
   if (values.isAuthenticated === true) {
     console.log('User is logined!');

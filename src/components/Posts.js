@@ -4,11 +4,13 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 // import Button from "@material-ui/core/Button";
 import Snackbar from '@material-ui/core/Snackbar';
 import { green } from '@material-ui/core/colors';
-import PostItem from './Post/PostItem.js';
 import { connect } from 'react-redux';
-import { getPosts } from '../actions/postActions';
+import { getPosts, deletePost } from '../actions/postActions';
 import PropTypes from 'prop-types';
 import Categories from './Categories.js';
+import { Link } from 'react-router-dom';
+import { Button, Chip, Avatar } from '@material-ui/core';
+import Interweave from 'interweave';
 
 class Posts extends Component {
   constructor(props) {
@@ -34,7 +36,58 @@ class Posts extends Component {
           <ul className="shortcuts_items">
             {posts.map(post => (
               <li className="shortcuts_item">
-                <PostItem key={post.postId} post={post} />
+                <article className="post post_preview" lang="ru">
+                  <p className="post_meta">
+                    <small className="post_user">
+                      <Chip
+                        variant="outlined"
+                        color="primary"
+                        avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+                        clickable
+                        label={`${post.user}`}
+                        href="#chip"
+                        size="small"
+                      />
+                    </small>
+                    <small className="post_time">{post.createdDate}</small>
+                    <br />
+                    <small>
+                      <Button
+                        component={Link}
+                        to={`/update-post/${post.postId}`}
+                        variant="outlined"
+                        color="primary"
+                      >
+                        Update
+                      </Button>
+                    </small>
+                    <small>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          // this.confirmDelete(post._links.self.href);
+                          this.onDelClick(post.postId);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </small>
+                  </p>
+                  <div className="post_body">
+                    <h2 className="post_title">
+                      <Link to={`/post/${post.postId}`}>{post.title}</Link>
+                    </h2>
+                    <img className="post_img" src={`${post.image}`} alt="" />
+                    <div className="post_description">
+                      <Interweave
+                        className="post_description"
+                        content={post.content}
+                      />
+                    </div>
+                  </div>
+                  <Link to={`/post/${post.postId}`}> [Читать дальше]</Link>
+                </article>
               </li>
             ))}
           </ul>
@@ -134,11 +187,12 @@ class Posts extends Component {
 
 Posts.propTypes = {
   post: PropTypes.object.isRequired,
-  getPosts: PropTypes.func.isRequired
+  getPosts: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   post: state.post
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default connect(mapStateToProps, { getPosts, deletePost })(Posts);

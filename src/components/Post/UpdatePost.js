@@ -86,7 +86,7 @@ function UpdatePost(props) {
   useEffect(() => {
     const postId = props.match.params.id;
     props.getPost(postId, props.history);
-  }, [props]);
+  }, []);
 
   useEffect(() => {
     const {
