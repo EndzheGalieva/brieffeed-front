@@ -21,6 +21,10 @@ class Post extends Component {
     this.props.getPost(postId, this.props.history);
   }
 
+  onDelClick = postId => {
+    this.props.deletePost(postId);
+  };
+
   render() {
     const { post } = this.props.post;
 

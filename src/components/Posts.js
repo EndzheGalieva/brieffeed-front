@@ -22,6 +22,10 @@ class Posts extends Component {
     this.props.getPosts();
   }
 
+  onDelClick = postId => {
+    this.props.deletePost(postId);
+  };
+
   // componentDidMount() {
   //   this.fetchPosts();
   // }
@@ -86,7 +90,7 @@ class Posts extends Component {
                       />
                     </div>
                   </div>
-                  <Link to={`/post/${post.postId}`}> [Читать дальше]</Link>
+                  <Link to={`/post/${post.postId}`}>[Читать дальше]</Link>
                 </article>
               </li>
             ))}
