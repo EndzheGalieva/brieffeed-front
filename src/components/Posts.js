@@ -86,7 +86,7 @@ class Posts extends Component {
                     <div className="post_description">
                       <Interweave
                         className="post_description"
-                        content={post.content}
+                        content={post.description}
                       />
                     </div>
                   </div>
