@@ -11,6 +11,6 @@ it('renders without crashing', () => {
 });
 
 it('renders a snapshot', () => {
-  const tree = renderer.create(<AddArticle/>).toJSON();
+  const tree = renderer.create(<AddArticle />).toJSON();
   expect(tree).toMatchSnapshot();
 });

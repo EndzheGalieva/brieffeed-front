@@ -52,7 +52,7 @@ function Blogs(props) {
         <div className={classes.demo}>
           <List>
             {blogs.map(blog => (
-                <BlogItem key={blog.blogId} blog={blog} />
+              <BlogItem key={blog.blogId} blog={blog} />
             ))}
           </List>
         </div>
