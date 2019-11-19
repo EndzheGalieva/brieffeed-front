@@ -9,7 +9,7 @@ import { getPosts, deletePost } from '../actions/postActions';
 import PropTypes from 'prop-types';
 import Categories from './Categories.js';
 import { Link } from 'react-router-dom';
-import { Button, Chip, Avatar } from '@material-ui/core';
+import { Button, Chip, Avatar, ListItem, List } from '@material-ui/core';
 import Interweave from 'interweave';
 
 class Posts extends Component {
@@ -37,9 +37,13 @@ class Posts extends Component {
       <div className="App">
         <Categories />
         <div className="posts_list">
-          <ul className="shortcuts_items">
+          <List className="shortcuts_items">
             {posts.map(post => (
-              <li className="shortcuts_item">
+              <ListItem
+                className="shortcuts_item"
+                key={post.postId}
+                post={post}
+              >
                 <article className="post post_preview" lang="ru">
                   <p className="post_meta">
                     <small className="post_user">
@@ -92,9 +96,9 @@ class Posts extends Component {
                   </div>
                   <Link to={`/post/${post.postId}`}>[Читать дальше]</Link>
                 </article>
-              </li>
+              </ListItem>
             ))}
-          </ul>
+          </List>
         </div>
         <Snackbar
           style={{

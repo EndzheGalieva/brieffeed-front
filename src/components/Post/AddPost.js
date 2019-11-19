@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormControl, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { setState } from 'expect/build/jestMatchersObject';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -83,12 +84,19 @@ function AddPost(props) {
   const [values, setValues] = React.useState({
     title: '',
     content: '',
+    createdDate: null,
+    updatedDate: null,
     status: '',
-    createdDate: '',
-    updatedDate: ''
-    // tag: [],
-    // category: 0,
+    user: {},
+    comments: [],
+    postId: 0
   });
+
+  useEffect(() => {
+    if (props.errors) {
+      setState({ errors: props.errors });
+    }
+  }, [props.errors]);
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -163,7 +171,7 @@ function AddPost(props) {
             value={values.title}
             onChange={handleChange('title')}
             name="title"
-            helperText={errors.name}
+            helperText={errors.title}
           />
           <TextField
             id="standard-required"

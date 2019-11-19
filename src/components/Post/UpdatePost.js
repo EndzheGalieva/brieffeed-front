@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { getPost, updatePost } from '../../actions/postActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { setState } from 'expect/build/jestMatchersObject';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -79,14 +80,13 @@ function UpdatePost(props) {
     status: '',
     user: {},
     comments: [],
-    blogId: 0,
     postId: 0
   });
 
   useEffect(() => {
     const postId = props.match.params.id;
     props.getPost(postId, props.history);
-  }, []);
+  });
 
   useEffect(() => {
     const {
@@ -97,7 +97,6 @@ function UpdatePost(props) {
       status,
       user,
       comments,
-      blogId,
       postId
     } = props.post;
     setValues({
@@ -108,10 +107,15 @@ function UpdatePost(props) {
       status,
       user,
       comments,
-      blogId,
       postId
     });
   }, [props.post]);
+
+  useEffect(() => {
+    if (props.errors) {
+      setState({ errors: props.errors });
+    }
+  }, [props.errors]);
 
   // наработки
   // useEffect(() => {
@@ -178,9 +182,10 @@ function UpdatePost(props) {
     const post = {
       title: values.title,
       content: values.content,
-      status: options[selectedIndex].toUpperCase()
+      status: options[selectedIndex].toUpperCase(),
+      postId: values.postId
     };
-    props.updatePost(values.postId, post, props.history);
+    props.updatePost(post, props.history);
   };
 
   const { errors } = props;
@@ -204,7 +209,7 @@ function UpdatePost(props) {
             value={values.title}
             onChange={handleChange('title')}
             name="title"
-            helperText={errors.name}
+            helperText={errors.title}
           />
           <TextField
             id="standard-required"

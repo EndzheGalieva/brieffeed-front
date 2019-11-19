@@ -37,9 +37,9 @@ export const getBlog = (blogId, history) => async dispatch => {
   }
 };
 
-export const updateBlog = (blogId, blog, history) => async dispatch => {
+export const updateBlog = (blog, history) => async dispatch => {
   try {
-    await axios.patch(`/api/blogs/${blogId}/update`, blog);
+    await axios.patch(`/api/blogs/${blog.blogId}/update`, blog);
     history.push('/blogs');
   } catch (error) {
     dispatch({

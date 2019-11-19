@@ -44,13 +44,12 @@ export const getCategory = (categoryId, history) => async dispatch => {
   }
 };
 
-export const updateCategory = (
-  categoryId,
-  category,
-  history
-) => async dispatch => {
+export const updateCategory = (category, history) => async dispatch => {
   try {
-    await axios.patch(`/api/categories/${categoryId}/update`, category);
+    await axios.patch(
+      `/api/categories/${category.categoryId}/update`,
+      category
+    );
     history.push('/categories');
   } catch (error) {
     dispatch({

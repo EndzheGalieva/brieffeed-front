@@ -5,6 +5,10 @@ export const createPost = (post, history) => async dispatch => {
   try {
     await axios.post('/api/posts/create', post);
     history.push('/posts');
+    dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    });
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
@@ -48,10 +52,14 @@ export const getPost = (postId, history) => async dispatch => {
   }
 };
 
-export const updatePost = (postId, post, history) => async dispatch => {
+export const updatePost = (post, history) => async dispatch => {
   try {
-    await axios.patch(`/api/posts/${postId}/update`, post);
+    await axios.patch(`/api/posts/${post.postId}/update`, post);
     history.push('/posts');
+    dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    });
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
