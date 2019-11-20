@@ -17,8 +17,8 @@ class Post extends Component {
   }
 
   componentDidMount() {
-    const postId = this.props.match.params.id;
-    this.props.getPost(postId, this.props.history);
+    const { id } = this.props.match.params;
+    this.props.getPost(id, this.props.history);
   }
 
   onDelClick = postId => {

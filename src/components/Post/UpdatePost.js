@@ -84,8 +84,14 @@ function UpdatePost(props) {
   });
 
   useEffect(() => {
-    const postId = props.match.params.id;
-    props.getPost(postId, props.history);
+    const { id } = props.match.params;
+    props.getPost(id, props.history);
+  }, []);
+
+  useEffect(() => {
+    if (props.errors) {
+      setState({ errors: props.errors });
+    }
   });
 
   useEffect(() => {
@@ -110,47 +116,6 @@ function UpdatePost(props) {
       postId
     });
   }, [props.post]);
-
-  useEffect(() => {
-    if (props.errors) {
-      setState({ errors: props.errors });
-    }
-  }, [props.errors]);
-
-  // наработки
-  // useEffect(() => {
-  //   async function fetchMyAPI() {
-  //     const postId = props.match.params.id;
-  //     props.getPost(postId, props.history);
-  //   }
-  //   fetchMyAPI();
-  // }, []);
-
-  // useEffect(() => {
-  //   async function fetchMyAPI() {
-  //     const {
-  //       postId,
-  //       name,
-  //       tag,
-  //       category,
-  //       status,
-  //       content,
-  //       createdDate,
-  //       updatedDate
-  //     } = props.post;
-  //     setValues({
-  //       postId,
-  //       name,
-  //       tag,
-  //       category,
-  //       status,
-  //       content,
-  //       createdDate,
-  //       updatedDate
-  //     });
-  //   }
-  //   fetchMyAPI();
-  // }, [props.post]);
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -206,6 +171,7 @@ function UpdatePost(props) {
             label="Title"
             className={classes.textField}
             margin="normal"
+            defaultValue={props.post.title}
             value={values.title}
             onChange={handleChange('title')}
             name="title"
@@ -242,7 +208,7 @@ function UpdatePost(props) {
           <CKEditor
             editor={ClassicEditor}
             label="Content"
-            data={values.content}
+            data={props.post.content}
             value={values.content}
             onChange={handleEditorChange('content')}
             name="content"

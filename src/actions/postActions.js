@@ -3,11 +3,11 @@ import { GET_ERRORS, GET_POSTS, GET_POST, DELETE_POST } from './types';
 
 export const createPost = (post, history) => async dispatch => {
   try {
-    await axios.post('/api/posts/create', post);
+    const res = await axios.post('/api/posts/create', post);
     history.push('/posts');
     dispatch({
       type: GET_ERRORS,
-      payload: {}
+      payload: res.data
     });
   } catch (error) {
     dispatch({
