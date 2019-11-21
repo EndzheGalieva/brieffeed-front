@@ -19,7 +19,6 @@ import { connect } from 'react-redux';
 import { getPost, updatePost } from '../../actions/postActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { setState } from 'expect/build/jestMatchersObject';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -83,6 +82,10 @@ function UpdatePost(props) {
     postId: 0
   });
 
+  const [errors, setErrors] = useState ({
+    title: ''
+  })
+
   useEffect(() => {
     const { id } = props.match.params;
     props.getPost(id, props.history);
@@ -90,9 +93,9 @@ function UpdatePost(props) {
 
   useEffect(() => {
     if (props.errors) {
-      setState({ errors: props.errors });
+      setErrors({ title: props.errors.title });
     }
-  });
+  }, [props.errors.title, props.errors]);
 
   useEffect(() => {
     const {
@@ -153,8 +156,6 @@ function UpdatePost(props) {
     props.updatePost(post, props.history);
   };
 
-  const { errors } = props;
-
   return (
     <div>
       <CssBaseline />
@@ -168,6 +169,7 @@ function UpdatePost(props) {
           <TextField
             required
             id="standard-required"
+            error={errors.title}
             label="Title"
             className={classes.textField}
             margin="normal"
