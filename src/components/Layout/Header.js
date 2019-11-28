@@ -38,11 +38,15 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   title: {
-    flexGrow: 1,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
-    }
+    },
+    textDecoration: 'none',
+    color: 'inherit'
+  },
+  flex: {
+    flexGrow: 1
   },
   search: {
     position: 'relative',
@@ -237,9 +241,16 @@ function Header() {
               <MenuIcon />
             </IconButton>
           </div>
-          <Typography variant="h4" className={classes.title} noWrap>
+          <Typography
+            variant="h4"
+            to="/"
+            className={classes.title}
+            component={Link}
+            noWrap
+          >
             Brieffeed
           </Typography>
+          <div className={classes.flex}></div>
           <FormGroup>
             <FormControlLabel
               control={
