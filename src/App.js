@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import UpdatePost from './components/Post/UpdatePost';
 import Post from './components/Post/Post';
+import Landing from './components/Layout/Landing';
 import Blogs from './components/Blog/Blogs';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Router>
         <div className="App">
           <Header />
+          <Route exact path="/" component={Landing} />
           <Route exact path="/blogs" component={Blogs} />
           <Route exact path="/posts" component={Posts} />
           <Route exact path="/post/:id" component={Post} />

@@ -270,11 +270,11 @@ function Header() {
             <Button component={Link} to="/posts" color="inherit">
               Посты
             </Button>
-            <Button component={Link} to="/news" color="inherit">
-              Новости
-            </Button>
             <Button component={Link} to="/blogs" color="inherit">
               Блоги
+            </Button>
+            <Button component={Link} to="/news" color="inherit">
+              Новости
             </Button>
             {auth && (
               <div>
