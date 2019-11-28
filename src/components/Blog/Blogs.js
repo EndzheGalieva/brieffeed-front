@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, List } from '@material-ui/core';
-import CategoryItem from './Category/CategoryItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCategories } from '../actions/categoryActions';
+import { getBlogs } from '../../actions/blogActions';
+import BlogItem from './BlogItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    maxWidth: 300,
+    maxWidth: 500,
     backgroundColor: theme.palette.background.default
   },
   demo: {
@@ -20,37 +20,39 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Categories(props) {
+function Blogs(props) {
   const classes = useStyles();
 
   const [values, setValues] = useState({
     name: '',
+    description: '',
     open: false,
     message: ''
   });
 
   useEffect(() => {
-    props.getCategories();
+    props.getBlogs();
   }, []);
 
   useEffect(() => {
-    const { name } = props.category;
+    const { name, description } = props.blog;
     setValues({
-      name
+      name,
+      description
     });
-  }, [props.category]);
+  }, [props.blog]);
 
-  const { categories } = props.category;
+  const { blogs } = props.blog;
   return (
     <div className={classes.root}>
       <Grid item xs={12} md={6}>
         <Typography variant="h6" className={classes.title}>
-          Категории
+          Блоги
         </Typography>
         <div className={classes.demo}>
           <List>
-            {categories.map(category => (
-              <CategoryItem key={category.categoryId} category={category} />
+            {blogs.map(blog => (
+              <BlogItem key={blog.blogId} blog={blog} />
             ))}
           </List>
         </div>
@@ -59,13 +61,13 @@ function Categories(props) {
   );
 }
 
-Categories.propTypes = {
-  category: PropTypes.object.isRequired,
-  getCategories: PropTypes.func.isRequired
+Blogs.propTypes = {
+  blog: PropTypes.object.isRequired,
+  getBlogs: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  category: state.category
+  blog: state.blog
 });
 
-export default connect(mapStateToProps, { getCategories })(Categories);
+export default connect(mapStateToProps, { getBlogs })(Blogs);

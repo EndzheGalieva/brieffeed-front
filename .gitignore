@@ -29,4 +29,5 @@ yarn-error.log*
 *.ipr
 
 ### VS Code ###
-.vscode/
+.vscode
+.history

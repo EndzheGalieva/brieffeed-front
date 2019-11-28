@@ -1,16 +1,16 @@
+import { Avatar, Button, Chip, List, ListItem } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
+// import Button from "@material-ui/core/Button";
+import Snackbar from '@material-ui/core/Snackbar';
+import Interweave from 'interweave';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 // import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
-// import Button from "@material-ui/core/Button";
-import Snackbar from '@material-ui/core/Snackbar';
-import { green } from '@material-ui/core/colors';
 import { connect } from 'react-redux';
-import { getPosts, deletePost } from '../actions/postActions';
-import PropTypes from 'prop-types';
-import Categories from './Categories.js';
 import { Link } from 'react-router-dom';
-import { Button, Chip, Avatar, ListItem, List } from '@material-ui/core';
-import Interweave from 'interweave';
+import { deletePost, getPosts } from '../../actions/postActions';
+import Categories from '../Category/Categories';
 
 class Posts extends Component {
   constructor(props) {

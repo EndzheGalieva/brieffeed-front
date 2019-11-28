@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Posts from './components/Posts';
+import Posts from './components/Post/Posts';
 import Header from './components/Layout/Header';
 import AddPost from './components/Post/AddPost';
-import Users from './components/Users';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Users from './components/User/Users';
+import Login from './components/User/Managment/Login';
+import SignUp from './components/User/Managment/SignUp';
 import { Provider } from 'react-redux';
 import store from './store';
 import UpdatePost from './components/Post/UpdatePost';
-import Post from './components/Post';
-import Blogs from './components/Blogs';
+import Post from './components/Post/Post';
+import Blogs from './components/Blog/Blogs';
 
 function App() {
   return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Posts from './Posts';
 import { Snackbar, SnackbarContent } from '@material-ui/core';
 import { amber, green } from '@material-ui/core/colors';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -11,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
+import Posts from '../../Post/Posts';
 
 const variantIcon = {
   success: CheckCircleIcon,

@@ -4,7 +4,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import { green } from '@material-ui/core/colors';
 import { connect } from 'react-redux';
-import { getPost, deletePost } from '../actions/postActions';
+import { getPost, deletePost } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 import { Chip, Avatar, Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
