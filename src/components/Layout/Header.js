@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-
 import {
   Badge,
   Menu,
@@ -229,7 +228,7 @@ function Header() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" color="inherit">
+      <AppBar position="static">
         <Toolbar>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -241,15 +240,18 @@ function Header() {
               <MenuIcon />
             </IconButton>
           </div>
-          <Typography
-            variant="h4"
-            to="/"
-            className={classes.title}
-            component={Link}
-            noWrap
-          >
-            Brieffeed
-          </Typography>
+          <Tooltip title="Главная страница">
+            <Typography
+              variant="h4"
+              to="/"
+              className={classes.title}
+              component={Link}
+              noWrap
+            >
+              Brieffeed
+            </Typography>
+          </Tooltip>
+
           <div className={classes.flex}></div>
           <FormGroup>
             <FormControlLabel
