@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { isString } from 'util';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -165,7 +166,7 @@ function AddPost(props) {
           <TextField
             required
             id="standard-required"
-            error={errors.title}
+            error={isString(errors.title)}
             label="Title"
             className={classes.textField}
             margin="normal"

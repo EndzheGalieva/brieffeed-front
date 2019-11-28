@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createNewUser } from '../../../actions/securityActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -51,9 +51,9 @@ function SignUp(props) {
     email: ''
   });
 
-  const [errors, setErrors] = useState ({
+  const [errors, setErrors] = useState({
     errors: {}
-  })
+  });
 
   useEffect(() => {
     if (props.errors) {
@@ -171,8 +171,6 @@ function SignUp(props) {
             variant="outlined"
             className={classes.margin}
             onClick={onSubmit}
-            // component={Link}
-            // to="/login"
           >
             Sign Up
           </Button>
