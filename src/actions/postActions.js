@@ -21,7 +21,7 @@ export const getPosts = () => async dispatch => {
   const res = await axios.get('/api/posts');
   dispatch({
     type: GET_POSTS,
-    payload: res.data._embedded.posts
+    payload: res.data
   });
 
   // наработки
@@ -54,7 +54,7 @@ export const getPost = (postId, history) => async dispatch => {
 
 export const updatePost = (post, history) => async dispatch => {
   try {
-    await axios.patch(`/api/posts/${post.postId}/update`, post);
+    await axios.patch(`/api/posts/${post.postId}`, post);
     history.push('/posts');
     dispatch({
       type: GET_ERRORS,

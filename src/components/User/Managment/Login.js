@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Snackbar, SnackbarContent } from '@material-ui/core';
@@ -11,6 +11,8 @@ import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import Posts from '../../Post/Posts';
+import { connect } from 'react-redux';
+import { login } from '../../../actions/securityActions';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -86,7 +88,7 @@ const useStyles2 = makeStyles(theme => ({
   }
 }));
 
-function Login() {
+function Login(props) {
   const classes = useStyles2();
   // const anchorRef = React.useRef(null);
   const [values, setValues] = React.useState({
@@ -99,6 +101,12 @@ function Login() {
   const handleChange = name => event => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
+
+  useEffect(() => {
+    if (props.security.validToken) {
+      props.history.push('/posts');
+    }
+  }, [props.security.validToken]);
 
   // const handleClose = event => {
   //   if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -116,25 +124,26 @@ function Login() {
     setValues({ open: false });
   };
 
-  const login = () => {
-    const user = {
+  const onSubmit = () => {
+    const req = {
       username: values.username,
       password: values.password
     };
-    fetch('/login', {
-      method: 'POST',
-      body: JSON.stringify(user)
-    })
-      .then(res => {
-        const jwtToken = res.headers.get('Authorization');
-        if (jwtToken !== null) {
-          sessionStorage.setItem('jwt', jwtToken);
-          setValues({ isAuthenticated: true });
-        } else {
-          setValues({ open: true });
-        }
-      })
-      .catch(err => console.error(err));
+    props.login(req);
+    // fetch('/login', {
+    //   method: 'POST',
+    //   body: JSON.stringify(user)
+    // })
+    //   .then(res => {
+    //     const jwtToken = res.headers.get('Authorization');
+    //     if (jwtToken !== null) {
+    //       sessionStorage.setItem('jwt', jwtToken);
+    //       setValues({ isAuthenticated: true });
+    //     } else {
+    //       setValues({ open: true });
+    //     }
+    //   })
+    //   .catch(err => console.error(err));
   };
 
   // const logout = () => {
@@ -170,9 +179,11 @@ function Login() {
     return (
       <div>
         <TextField
+          type="text"
           name="username"
           placeholder="Username"
           onChange={handleChange('username')}
+          value={values.username}
         />
         <br />
         <TextField
@@ -180,6 +191,7 @@ function Login() {
           name="password"
           placeholder="Password"
           onChange={handleChange('password')}
+          value={values.password}
         />
         <br />
         <br />
@@ -187,7 +199,7 @@ function Login() {
           color="primary"
           variant="outlined"
           className={classes.margin}
-          onClick={login}
+          onClick={onSubmit}
         >
           Login
         </Button>
@@ -212,4 +224,14 @@ function Login() {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateProps = state => ({
+  security: state.security,
+  errors: state.errors
+});
+
+export default connect(mapStateProps, { login })(Login);
