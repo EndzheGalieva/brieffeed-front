@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Snackbar, SnackbarContent } from '@material-ui/core';
@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import Posts from '../../Post/Posts';
 import { connect } from 'react-redux';
 import { login } from '../../../actions/securityActions';
+import { isString } from 'util';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -98,15 +99,22 @@ function Login(props) {
     open: false
   });
 
+  const [errors, setErrors] = useState({
+    errors: {}
+  });
+
   const handleChange = name => event => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
   useEffect(() => {
+    if (props.errors) {
+      setErrors(props.errors);
+    }
     if (props.security.validToken) {
       props.history.push('/posts');
     }
-  }, [props.security.validToken]);
+  }, [props.security.validToken, props.errors]);
 
   // const handleClose = event => {
   //   if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -183,7 +191,9 @@ function Login(props) {
           name="username"
           placeholder="Username"
           onChange={handleChange('username')}
+          error={isString(errors.username)}
           value={values.username}
+          helperText={errors.username}
         />
         <br />
         <TextField
@@ -191,7 +201,10 @@ function Login(props) {
           name="password"
           placeholder="Password"
           onChange={handleChange('password')}
+          error={isString(errors.password)}
           value={values.password}
+          helperText={errors.password}
+        />
         />
         <br />
         <br />
@@ -226,7 +239,8 @@ function Login(props) {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateProps = state => ({
