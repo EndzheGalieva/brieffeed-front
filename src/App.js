@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Posts from './components/Post/Posts';
 import Header from './components/Layout/Header';
 import AddPost from './components/Post/AddPost';
@@ -17,6 +17,7 @@ import jwt_decode from 'jwt-decode';
 import setJwtToken from './security/setJwtToken';
 import { SET_CURRENT_USER } from './actions/types';
 import { logout } from './actions/securityActions';
+import SecureRoute from './security/SecureRoute';
 
 const jwtToken = localStorage.jwtToken;
 
@@ -46,10 +47,12 @@ function App() {
           <Route exact path="/posts" component={Posts} />
           <Route exact path="/post/:id" component={Post} />
           <Route exact path="/users" component={Users} />
-          <Route exact path="/add-post" component={AddPost} />
-          <Route exact path="/update-post/:id" component={UpdatePost} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
+          <Switch>
+            <SecureRoute exact path="/add-post" component={AddPost} />
+            <SecureRoute exact path="/update-post/:id" component={UpdatePost} />
+          </Switch>
         </div>
       </Router>
     </Provider>

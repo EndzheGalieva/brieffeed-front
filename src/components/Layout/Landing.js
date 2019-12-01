@@ -1,9 +1,22 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
-class Landing extends Component {
-  render() {
-    return <div>Landing</div>;
-  }
+function Landing(props) {
+  useEffect(() => {
+    if (props.security.validToken) {
+      props.history.push('/posts');
+    }
+  }, [props.security.validToken]);
+  return <div>Landing</div>;
 }
 
-export default Landing;
+Landing.propTypes = {
+  security: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  security: state.security
+});
+
+export default connect(mapStateToProps)(Landing);

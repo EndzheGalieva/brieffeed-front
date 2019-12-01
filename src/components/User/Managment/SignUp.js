@@ -182,10 +182,12 @@ function SignUp(props) {
 
 SignUp.propTypes = {
   createNewUser: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToprops = state => ({
+  security: state.security,
   errors: state.errors
 });
 
