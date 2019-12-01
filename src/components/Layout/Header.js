@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,6 +25,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/securityActions';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -107,11 +110,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Header() {
+function Header(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [auth, setAuth] = React.useState(true);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const { validToken, user } = props.security;
+
+  useEffect(() => {
+    if (validToken && user) {
+      setAuth(true);
+    }
+    if (!validToken && user) {
+      setAuth(false);
+    }
+  }, [validToken, user]);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -135,6 +149,10 @@ function Header() {
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const logout = () => {
+    props.logout();
   };
 
   const menuId = 'primary-search-account-menu';
@@ -201,7 +219,7 @@ function Header() {
             </Icon>
             <p>Профиль</p>
           </MenuItem>
-          <MenuItem component={Link} to="/logout">
+          <MenuItem onClick={logout} component={Link}>
             <Icon
               className={classes.menuIcon}
               color="inherit"
@@ -253,18 +271,6 @@ function Header() {
           </Tooltip>
 
           <div className={classes.flex}></div>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={auth}
-                  onChange={handleChange}
-                  aria-label="login switch"
-                />
-              }
-              label={auth ? 'Logout' : 'Login'}
-            />
-          </FormGroup>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -332,10 +338,11 @@ function Header() {
                 </Tooltip>
                 <Tooltip title="Выйти">
                   <IconButton
-                    component={Link}
-                    to="/logout"
                     color="inherit"
                     aria-label="logout"
+                    component={Link}
+                    to="/"
+                    onClick={logout}
                   >
                     <MeetingRoomIcon />
                   </IconButton>
@@ -372,4 +379,13 @@ function Header() {
   );
 }
 
-export default Header;
+Header.propTypes = {
+  logout: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  security: state.security
+});
+
+export default connect(mapStateToProps, { logout })(Header);
