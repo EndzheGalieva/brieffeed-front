@@ -6,11 +6,7 @@ const initialState = {
 };
 
 const booleanActionPayload = payload => {
-  if (payload) {
-    return true;
-  } else {
-    return false;
-  }
+  return !(Object.entries(payload).length === 0);
 };
 
 export default function(state = initialState, action) {

@@ -7,7 +7,7 @@ function Landing(props) {
     if (props.security.validToken) {
       props.history.push('/posts');
     }
-  }, [props.security.validToken]);
+  }, [props.security.validToken, props.history]);
   return <div>Landing</div>;
 }
 

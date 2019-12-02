@@ -15,9 +15,6 @@ import {
   Icon,
   Grid,
   Avatar,
-  FormGroup,
-  FormControlLabel,
-  Switch,
   Tooltip
 } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -130,9 +127,9 @@ function Header(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleChange = event => {
-    setAuth(event.target.checked);
-  };
+  // const handleChange = event => {
+  //   setAuth(event.target.checked);
+  // };
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);

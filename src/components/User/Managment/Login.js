@@ -114,7 +114,7 @@ function Login(props) {
     if (props.security.validToken) {
       props.history.push('/posts');
     }
-  }, [props.security.validToken, props.errors]);
+  }, [props.security.validToken, props.errors, props.history]);
 
   // const handleClose = event => {
   //   if (anchorRef.current && anchorRef.current.contains(event.target)) {
