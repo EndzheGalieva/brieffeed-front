@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,6 @@ import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { isString } from 'util';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -89,18 +88,25 @@ function AddPost(props) {
     status: '',
     user: {},
     comments: [],
-    postId: 0, 
-    errors: {}
+    postId: 0
+  });
+
+  const [errors, setErrors] = useState({
+    title: ''
   });
 
   useEffect(() => {
     if (props.errors) {
-      setValues({ errors: props.errors });
+      setErrors({ title: props.errors.title });
     }
   }, [props.errors]);
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+    const data = event.target.value;
+    if (data) {
+      setErrors({});
+    }
+    setValues({ ...values, [name]: data });
   };
 
   const handleEditorChange = name => (event, editor) => {
@@ -151,8 +157,6 @@ function AddPost(props) {
     props.createPost(post, props.history);
   };
 
-  const { errors } = values;
-
   return (
     <div>
       <CssBaseline />
@@ -166,7 +170,7 @@ function AddPost(props) {
           <TextField
             required
             id="standard-required"
-            error={isString(errors.title)}
+            error={errors.title}
             label="Title"
             className={classes.textField}
             margin="normal"
