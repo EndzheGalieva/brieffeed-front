@@ -77,7 +77,7 @@ function UpdatePost(props) {
     createdDate: null,
     updatedDate: null,
     status: '',
-    user: {},
+    author: '',
     comments: [],
     postId: 0
   });
@@ -95,7 +95,10 @@ function UpdatePost(props) {
     if (props.errors) {
       setErrors({ title: props.errors.title });
     }
-  }, [props.errors]);
+    if (props.security.user.username !== props.post.author) {
+      props.history.push('/posts');
+    }
+  }, [props.errors, props.post.author, props.security.user.username]);
 
   useEffect(() => {
     const {
@@ -104,7 +107,7 @@ function UpdatePost(props) {
       createdDate,
       updatedDate,
       status,
-      user,
+      author,
       comments,
       postId
     } = props.post;
@@ -114,7 +117,7 @@ function UpdatePost(props) {
       createdDate,
       updatedDate,
       status,
-      user,
+      author,
       comments,
       postId
     });
@@ -294,11 +297,13 @@ UpdatePost.propTypes = {
   getPost: PropTypes.func.isRequired,
   updatePost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   post: state.post.post,
+  security: state.security,
   errors: state.errors
 });
 
