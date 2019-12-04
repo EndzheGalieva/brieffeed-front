@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography, List } from '@material-ui/core';
+import { Grid, Typography, List, Button } from '@material-ui/core';
 import CategoryItem from './CategoryItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,7 +16,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.default
   },
   title: {
-    margin: theme.spacing(4, 0, 2)
+    position: 'relative',
+    display: 'flex',
+    margin: theme.spacing(4, 1, 2)
+  },
+  editButton: {
+    marginLeft: theme.spacing(2)
   }
 }));
 
@@ -44,9 +49,14 @@ function Categories(props) {
   return (
     <div className={classes.root}>
       <Grid item xs={12} md={6}>
-        <Typography variant="h6" className={classes.title}>
-          Категории
-        </Typography>
+        <div className={classes.title}>
+          <Typography variant="h6">Категории</Typography>
+          {props.security.user.role === 'ADMIN' && (
+            <Button className={classes.editButton} size="small" variant="outlined" color="primary">
+              Edit
+            </Button>
+          )}
+        </div>
         <div className={classes.demo}>
           <List>
             {categories.map(category => (
@@ -61,10 +71,12 @@ function Categories(props) {
 
 Categories.propTypes = {
   category: PropTypes.object.isRequired,
-  getCategories: PropTypes.func.isRequired
+  getCategories: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  security: state.security,
   category: state.category
 });
 
