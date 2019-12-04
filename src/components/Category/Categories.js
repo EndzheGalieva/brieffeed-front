@@ -110,7 +110,7 @@ function Categories(props) {
                       <CloseIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.dialogTitle}>
-                      Категории
+                      Блоги
                     </Typography>
                     <Button autoFocus color="inherit" onClick={handleClose}>
                       Сохранить
