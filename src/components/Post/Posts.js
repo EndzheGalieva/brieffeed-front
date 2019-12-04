@@ -59,28 +59,33 @@ class Posts extends Component {
                     </small>
                     <small className="post_time">{post.createdDate}</small>
                     <br />
-                    <small>
-                      <Button
-                        component={Link}
-                        to={`/update-post/${post.postId}`}
-                        variant="outlined"
-                        color="primary"
-                      >
-                        Update
-                      </Button>
-                    </small>
-                    <small>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {
-                          // this.confirmDelete(post._links.self.href);
-                          this.onDelClick(post.postId);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </small>
+                    {(this.props.security.user.username === post.author) && (
+                      <div>
+                        {' '}
+                        <small>
+                          <Button
+                            component={Link}
+                            to={`/update-post/${post.postId}`}
+                            variant="outlined"
+                            color="primary"
+                          >
+                            Edit
+                          </Button>
+                        </small>
+                        <small>
+                          <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => {
+                              // this.confirmDelete(post._links.self.href);
+                              this.onDelClick(post.postId);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </small>
+                      </div>
+                    )}
                   </p>
                   <div className="post_body">
                     <h2 className="post_title">
@@ -196,10 +201,12 @@ class Posts extends Component {
 Posts.propTypes = {
   post: PropTypes.object.isRequired,
   getPosts: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired
+  deletePost: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  security: state.security,
   post: state.post
 });
 

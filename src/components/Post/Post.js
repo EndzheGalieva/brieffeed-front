@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import { green } from '@material-ui/core/colors';
@@ -46,28 +45,33 @@ class Post extends Component {
               </small>
               <small className="post_time">{post.createdDate}</small>
               <br />
-              <small>
-                <Button
-                  component={Link}
-                  to={`/update-post/${post.postId}`}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Update
-                </Button>
-              </small>
-              <small>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => {
-                    // this.confirmDelete(post._links.self.href);
-                    this.onDelClick(post.postId);
-                  }}
-                >
-                  Delete
-                </Button>
-              </small>
+              {this.props.security.user.username === post.author && (
+                <div>
+                  <small>
+                    <Button
+                      component={Link}
+                      to={`/update-post/${post.postId}`}
+                      variant="outlined"
+                      color="primary"
+                    >
+                      Edit
+                    </Button>
+                  </small>
+                  <small>
+                    <Button
+                      component={Link}
+                      to={`/posts`}
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        this.onDelClick(post.postId);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </small>
+                </div>
+              )}
             </p>
             <div className="post_body">
               <Typography className="post_title" variant="h5" gutterBottom>
@@ -103,10 +107,12 @@ class Post extends Component {
 Post.propTypes = {
   post: PropTypes.object.isRequired,
   getPost: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired
+  deletePost: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  security: state.security,
   post: state.post
 });
 
