@@ -10,8 +10,8 @@ class BlogItem extends Component {
     return (
       <ListItem>
         <ListItemText
-          primary={`${blog.name}`}
-          secondary={`${blog.description}`}
+          primary={blog.name}
+          secondary={blog.description}
         />
       </ListItem>
     );

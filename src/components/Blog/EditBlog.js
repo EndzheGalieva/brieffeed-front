@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button,
-  Dialog,
-  IconButton,
-  Toolbar,
-  Slide,
-  AppBar,
   Typography,
   List,
+  Button,
+  IconButton,
+  Toolbar,
+  Dialog,
+  AppBar,
+  Slide,
   Divider,
-  ListItemText,
-  ListItem
+  ListItem,
+  ListItemText
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import AddCategory from './AddCategory';
-import { deleteCategory, getCategories, getCategory } from '../../actions/categoryActions';
-import { connect } from 'react-redux';
+import BlogItem from './BlogItem';
+import { getBlogs, deleteBlog } from '../../actions/blogActions';
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
-  addButton: {
-    marginLeft: theme.spacing(2)
+  appBar: {
+    position: 'relative'
   },
   dialogTitle: {
     marginLeft: theme.spacing(2),
@@ -30,9 +30,6 @@ const useStyles = makeStyles(theme => ({
   },
   editButton: {
     marginLeft: theme.spacing(2)
-  },
-  appBar: {
-    position: 'relative'
   }
 }));
 
@@ -40,48 +37,38 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function EditCategory(props) {
+function EditBlog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const { blogs } = props.blog;
   const [values, setValues] = useState({
     name: '',
-    categoryId: ''
-  });
-
-  const [errors, setErrors] = useState({
-    name: ''
+    description: ''
   });
 
   useEffect(() => {
-    props.getCategories();
+    props.getBlogs();
   }, []);
 
   useEffect(() => {
-    const { name } = props.category;
+    const { name, description } = props.blog;
     setValues({
-      name
+      name,
+      description
     });
-  }, [props.category]);
-
-  useEffect(() => {
-    if (props.errors) {
-      setErrors({ name: props.errors.name });
-    }
-  }, [props.errors]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  }, [props.blog]);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const onDelClick = categoryId => {
-    props.deleteCategory(categoryId);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const { categories } = props.category;
+  const onDelClick = blogId => {
+    props.deleteBlog(blogId);
+  };
 
   return (
     <div>
@@ -111,15 +98,18 @@ function EditCategory(props) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.dialogTitle}>
-              Категории
+              Блоги
             </Typography>
           </Toolbar>
         </AppBar>
         <List>
-          {categories.map(category => (
+          {blogs.map(blog => (
             <div>
-              <ListItem key={category.categoryId}>
-                <ListItemText primary={category.name} />
+              <ListItem key={blog.blogId}>
+                <ListItemText
+                  primary={blog.name}
+                  secondary={blog.description}
+                />
                 <div>
                   <small>
                     <Button variant="outlined" color="primary">
@@ -132,7 +122,7 @@ function EditCategory(props) {
                       variant="outlined"
                       color="secondary"
                       onClick={() => {
-                        onDelClick(category.categoryId);
+                        onDelClick(blog.blogId);
                       }}
                     >
                       Delete
@@ -144,23 +134,19 @@ function EditCategory(props) {
             </div>
           ))}
         </List>
-        <AddCategory />
       </Dialog>
     </div>
   );
 }
 
-EditCategory.propTypes = {
-  category: PropTypes.object.isRequired,
-  getCategory: PropTypes.func.isRequired,
-  getCategories: PropTypes.func.isRequired,
-  deleteCategory: PropTypes.func.isRequired
+EditBlog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  getBlogs: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  category: state.category
+  blog: state.blog
 });
 
-export default connect(mapStateToProps, { getCategories, deleteCategory })(
-  EditCategory
-);
+export default connect(mapStateToProps, { getBlogs, deleteBlog })(EditBlog);
