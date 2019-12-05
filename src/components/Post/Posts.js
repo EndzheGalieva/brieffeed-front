@@ -61,7 +61,6 @@ class Posts extends Component {
                     <br />
                     {(this.props.security.user.username === post.author) && (
                       <div>
-                        {' '}
                         <small>
                           <Button
                             component={Link}

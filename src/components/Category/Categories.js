@@ -27,8 +27,7 @@ function Categories(props) {
   const classes = useStyles();
   const [values, setValues] = useState({
     name: '',
-    open: false,
-    message: ''
+    categoryId: ''
   });
 
   useEffect(() => {

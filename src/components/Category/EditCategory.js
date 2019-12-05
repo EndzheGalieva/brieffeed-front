@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -15,7 +15,10 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddCategory from './AddCategory';
-import CategoryItem from './CategoryItem';
+import { deleteCategory, getCategories, getCategory } from '../../actions/categoryActions';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   addButton: {
@@ -40,6 +43,31 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function EditCategory(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [values, setValues] = useState({
+    name: '',
+    categoryId: ''
+  });
+
+  const [errors, setErrors] = useState({
+    name: ''
+  });
+
+  useEffect(() => {
+    props.getCategories();
+  }, []);
+
+  useEffect(() => {
+    const { name } = props.category;
+    setValues({
+      name
+    });
+  }, [props.category]);
+
+  useEffect(() => {
+    if (props.errors) {
+      setErrors({ name: props.errors.name });
+    }
+  }, [props.errors]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,7 +77,11 @@ function EditCategory(props) {
     setOpen(false);
   };
 
-  const { categories } = props;
+  const onDelClick = categoryId => {
+    props.deleteCategory(categoryId);
+  };
+
+  const { categories } = props.category;
 
   return (
     <div>
@@ -86,7 +118,28 @@ function EditCategory(props) {
         <List>
           {categories.map(category => (
             <div>
-              <CategoryItem key={category.categoryId} category={category} />
+              <ListItem key={category.categoryId}>
+                <ListItemText primary={category.name} />
+                <div>
+                  <small>
+                    <Button variant="outlined" color="primary">
+                      Edit
+                    </Button>
+                  </small>
+                  <small>
+                    <Button
+                      component={Link}
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        onDelClick(category.categoryId);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </small>
+                </div>
+              </ListItem>
               <Divider />
             </div>
           ))}
@@ -97,4 +150,17 @@ function EditCategory(props) {
   );
 }
 
-export default EditCategory;
+EditCategory.propTypes = {
+  category: PropTypes.object.isRequired,
+  getCategory: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  category: state.category
+});
+
+export default connect(mapStateToProps, { getCategories, deleteCategory })(
+  EditCategory
+);

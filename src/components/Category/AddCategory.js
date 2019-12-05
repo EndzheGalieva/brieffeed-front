@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { createCategory, getCategories, getCategory } from '../../actions/categoryActions';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Button,
   Dialog,
@@ -18,13 +21,52 @@ const useStyles = makeStyles(theme => ({
 function AddCategory(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [values, setValues] = useState({
+    name: '',
+    categoryId: ''
+  });
+
+  const [errors, setErrors] = useState({
+    name: ''
+  });
+
+  useEffect(() => {
+    const { name } = props.category;
+    setValues({
+      name
+    });
+  }, [props.category]);
+
+  useEffect(() => {
+    if (props.errors) {
+      setErrors({ name: props.errors.name });
+    }
+  }, [props.errors]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  const handleChange = name => event => {
+    const data = event.target.value;
+    if (data) {
+      setErrors({});
+    }
+    setValues({ name: data });
+  };
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onSubmit = () => {
+    const category = {
+      name: values.name
+    };
+    props.createCategory(category, props.history);
+    if (values.name) {
+      handleClose();
+    }
   };
 
   return (
@@ -41,20 +83,26 @@ function AddCategory(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        autoComplete="off"
       >
         <DialogTitle id="form-dialog-title">Add Category</DialogTitle>
         <DialogContent>
           <TextField
+            required
             autoFocus
+            error={errors.name}
             margin="dense"
             id="name"
             label="Category Name"
-            type="text"
+            value={values.title}
+            onChange={handleChange('name')}
+            name="name"
+            helperText={errors.name}
             fullWidth
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={onSubmit} color="primary">
             Save
           </Button>
         </DialogActions>
@@ -63,4 +111,19 @@ function AddCategory(props) {
   );
 }
 
-export default AddCategory;
+AddCategory.propTypes = {
+  createCategory: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  category: PropTypes.object.isRequired,
+  categories: PropTypes.object.isRequired,
+  getCategory: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  errors: state.errors,
+  category: state.category,
+  categories: state.categories
+});
+
+export default connect(mapStateToProps, { getCategories, createCategory })(AddCategory);
