@@ -65,7 +65,7 @@ const categories = [
 
 const options = ['Publish', 'Draft'];
 
-function UpdatePost(props) {
+function EditPost(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -293,7 +293,7 @@ function UpdatePost(props) {
   );
 }
 
-UpdatePost.propTypes = {
+EditPost.propTypes = {
   getPost: PropTypes.func.isRequired,
   updatePost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
@@ -307,4 +307,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getPost, updatePost })(UpdatePost);
+export default connect(mapStateToProps, { getPost, updatePost })(EditPost);

@@ -9,7 +9,7 @@ class CategoryItem extends Component {
     const { category } = this.props;
     return (
       <ListItem>
-        <ListItemText primary={`${category.name}`} />
+        <ListItemText primary={category.name} />
       </ListItem>
     );
   }

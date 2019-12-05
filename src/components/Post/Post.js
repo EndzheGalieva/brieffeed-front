@@ -50,7 +50,7 @@ class Post extends Component {
                   <small>
                     <Button
                       component={Link}
-                      to={`/update-post/${post.postId}`}
+                      to={`/edit-post/${post.postId}`}
                       variant="outlined"
                       color="primary"
                     >

@@ -9,7 +9,7 @@ import Login from './components/User/Managment/Login';
 import SignUp from './components/User/Managment/SignUp';
 import { Provider } from 'react-redux';
 import store from './store';
-import UpdatePost from './components/Post/UpdatePost';
+import EditPost from './components/Post/EditPost';
 import Post from './components/Post/Post';
 import Landing from './components/Layout/Landing';
 import Blogs from './components/Blog/Blogs';
@@ -51,7 +51,7 @@ function App() {
           <Route exact path="/signup" component={SignUp} />
           <Switch>
             <SecureRoute exact path="/add-post" component={AddPost} />
-            <SecureRoute exact path="/update-post/:id" component={UpdatePost} />
+            <SecureRoute exact path="/edit-post/:id" component={EditPost} />
           </Switch>
         </div>
       </Router>
