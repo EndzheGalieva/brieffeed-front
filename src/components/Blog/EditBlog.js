@@ -14,7 +14,6 @@ import {
   ListItemText
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import BlogItem from './BlogItem';
 import { getBlogs, deleteBlog } from '../../actions/blogActions';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
