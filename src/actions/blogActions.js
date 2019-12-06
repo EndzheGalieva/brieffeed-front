@@ -4,7 +4,10 @@ import { GET_ERRORS, GET_BLOGS, GET_BLOG, DELETE_BLOG } from './types';
 export const createBlog = (blog, history) => async dispatch => {
   try {
     await axios.post('/api/blogs/create', blog);
-    history.push('/blogs');
+    dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    });
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
@@ -12,7 +15,6 @@ export const createBlog = (blog, history) => async dispatch => {
     });
   }
 };
-
 export const getBlogs = () => async dispatch => {
   const res = await axios.get('/api/blogs');
   dispatch({
@@ -24,23 +26,21 @@ export const getBlogs = () => async dispatch => {
 export const getBlog = (blogId, history) => async dispatch => {
   try {
     const res = await axios.get(`/api/blogs/${blogId}`);
-    if (res.data == null) {
-      history.push('/blogs');
-    } else {
       dispatch({
         type: GET_BLOG,
         payload: res.data
       });
-    }
   } catch (error) {
-    history.push('/blogs');
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data
+    });
   }
 };
 
 export const updateBlog = (blog, history) => async dispatch => {
   try {
-    await axios.patch(`/api/blogs/${blog.blogId}/update`, blog);
-    history.push('/blogs');
+    await axios.patch(`/api/blogs/${blog.blogId}`, blog);
   } catch (error) {
     dispatch({
       type: GET_ERRORS,

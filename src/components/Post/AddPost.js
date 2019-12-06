@@ -103,9 +103,7 @@ function AddPost(props) {
 
   const handleChange = name => event => {
     const data = event.target.value;
-    if (data) {
-      setErrors({});
-    }
+    setErrors({ ...errors, [name]: !data });
     setValues({ ...values, [name]: data });
   };
 

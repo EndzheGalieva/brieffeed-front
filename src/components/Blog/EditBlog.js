@@ -18,6 +18,7 @@ import { getBlogs, deleteBlog } from '../../actions/blogActions';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AddBlog from './AddBlog';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -109,6 +110,7 @@ function EditBlog(props) {
                   primary={blog.name}
                   secondary={blog.description}
                 />
+                {props.security.user.username === blog.author && (
                 <div>
                   <small>
                     <Button variant="outlined" color="primary">
@@ -127,12 +129,13 @@ function EditBlog(props) {
                       Delete
                     </Button>
                   </small>
-                </div>
+                </div>)}
               </ListItem>
               <Divider />
             </div>
           ))}
         </List>
+        <AddBlog />
       </Dialog>
     </div>
   );
@@ -141,10 +144,12 @@ function EditBlog(props) {
 EditBlog.propTypes = {
   blog: PropTypes.object.isRequired,
   getBlogs: PropTypes.func.isRequired,
-  deleteBlog: PropTypes.func.isRequired
+  deleteBlog: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
+  security: state.security,
   blog: state.blog
 });
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { createCategory, getCategories, getCategory } from '../../actions/categoryActions';
+import { createCategory, getCategories } from '../../actions/categoryActions';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 function AddCategory(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [values, setValues] = useState({
     name: '',
     categoryId: ''
@@ -49,10 +49,8 @@ function AddCategory(props) {
 
   const handleChange = name => event => {
     const data = event.target.value;
-    if (data) {
-      setErrors({});
-    }
-    setValues({ name: data });
+    setErrors({ ...errors, [name]: !data });
+    setValues({ ...values, [name]: data });
   };
 
   const handleClose = () => {
@@ -89,12 +87,11 @@ function AddCategory(props) {
         <DialogContent>
           <TextField
             required
-            autoFocus
             error={errors.name}
             margin="dense"
             id="name"
             label="Category Name"
-            value={values.title}
+            value={values.name}
             onChange={handleChange('name')}
             name="name"
             helperText={errors.name}
@@ -114,16 +111,17 @@ function AddCategory(props) {
 AddCategory.propTypes = {
   createCategory: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  category: PropTypes.object.isRequired,
   categories: PropTypes.object.isRequired,
-  getCategory: PropTypes.func.isRequired,
-  getCategories: PropTypes.func.isRequired,
+  category: PropTypes.object.isRequired,
+  getCategories: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  category: state.category,
-  categories: state.categories
+  categories: state.categories,
+  category: state.category
 });
 
-export default connect(mapStateToProps, { getCategories, createCategory })(AddCategory);
+export default connect(mapStateToProps, { getCategories, createCategory })(
+  AddCategory
+);

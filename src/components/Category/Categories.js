@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 function Categories(props) {
   const classes = useStyles();
+  const { categories } = props.category;
   const [values, setValues] = useState({
     name: '',
     categoryId: ''
@@ -41,7 +42,6 @@ function Categories(props) {
     });
   }, [props.category]);
 
-  const { categories } = props.category;
   return (
     <div className={classes.root}>
       <Grid item xs={12} md={6}>

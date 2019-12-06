@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddCategory from './AddCategory';
-import { deleteCategory, getCategories, getCategory } from '../../actions/categoryActions';
+import { deleteCategory, getCategories } from '../../actions/categoryActions';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -152,7 +152,6 @@ function EditCategory(props) {
 
 EditCategory.propTypes = {
   category: PropTypes.object.isRequired,
-  getCategory: PropTypes.func.isRequired,
   getCategories: PropTypes.func.isRequired,
   deleteCategory: PropTypes.func.isRequired
 };

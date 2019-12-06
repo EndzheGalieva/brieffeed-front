@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getBlogs } from '../../actions/blogActions';
 import BlogItem from './BlogItem';
-
 import EditBlog from './EditBlog';
 
 const useStyles = makeStyles(theme => ({
