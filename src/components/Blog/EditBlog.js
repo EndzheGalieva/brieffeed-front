@@ -19,6 +19,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AddBlog from './AddBlog';
+import EditBlogDialog from './EditBlogDialog';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -111,25 +112,24 @@ function EditBlog(props) {
                   secondary={blog.description}
                 />
                 {props.security.user.username === blog.author && (
-                <div>
-                  <small>
-                    <Button variant="outlined" color="primary">
-                      Edit
-                    </Button>
-                  </small>
-                  <small>
-                    <Button
-                      component={Link}
-                      variant="outlined"
-                      color="secondary"
-                      onClick={() => {
-                        onDelClick(blog.blogId);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </small>
-                </div>)}
+                  <div>
+                    <small>
+                      <EditBlogDialog blog={blog} />
+                    </small>
+                    <small>
+                      <Button
+                        component={Link}
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          onDelClick(blog.blogId);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </small>
+                  </div>
+                )}
               </ListItem>
               <Divider />
             </div>

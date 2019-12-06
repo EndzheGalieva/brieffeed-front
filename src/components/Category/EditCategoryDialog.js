@@ -30,11 +30,6 @@ function EditCategoryDialog(props) {
     name: ''
   });
 
-  // useEffect(() => {
-  //   const { categoryId } = props.category;
-  //   props.getCategory(categoryId);
-  // }, []);
-
   useEffect(() => {
     if (props.errors) {
       setErrors({ name: props.errors.name });
