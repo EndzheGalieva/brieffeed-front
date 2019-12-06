@@ -19,7 +19,7 @@ export const getBlogs = () => async dispatch => {
   const res = await axios.get('/api/blogs');
   dispatch({
     type: GET_BLOGS,
-    payload: res.data._embedded.blogs
+    payload: res.data
   });
 };
 
