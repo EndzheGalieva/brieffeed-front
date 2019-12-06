@@ -16,7 +16,7 @@ import MenuList from '@material-ui/core/MenuList';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getPost, updatePost } from '../../actions/postActions';
+import { getPost, editPost } from '../../actions/postActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -134,9 +134,7 @@ function EditPost(props) {
 
   const handleChange = name => event => {
     const data = event.target.value;
-    if (data) {
-      setErrors({});
-    }
+    setErrors({ ...errors, [name]: !data });
     setValues({ ...values, [name]: data });
   };
 
@@ -160,7 +158,7 @@ function EditPost(props) {
       status: options[selectedIndex].toUpperCase(),
       postId: values.postId
     };
-    props.updatePost(post, props.history);
+    props.editPost(post, props.history);
   };
 
   return (
@@ -295,7 +293,7 @@ function EditPost(props) {
 
 EditPost.propTypes = {
   getPost: PropTypes.func.isRequired,
-  updatePost: PropTypes.func.isRequired,
+  editPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   security: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -307,4 +305,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getPost, updatePost })(EditPost);
+export default connect(mapStateToProps, { getPost, editPost })(EditPost);

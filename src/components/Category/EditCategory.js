@@ -19,6 +19,7 @@ import { deleteCategory, getCategories } from '../../actions/categoryActions';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
+import EditCategoryDialog from './EditCategoryDialog';
 
 const useStyles = makeStyles(theme => ({
   addButton: {
@@ -122,9 +123,7 @@ function EditCategory(props) {
                 <ListItemText primary={category.name} />
                 <div>
                   <small>
-                    <Button variant="outlined" color="primary">
-                      Edit
-                    </Button>
+                    <EditCategoryDialog category={category} />
                   </small>
                   <small>
                     <Button

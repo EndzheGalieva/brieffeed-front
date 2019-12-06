@@ -31,13 +31,6 @@ function AddCategory(props) {
   });
 
   useEffect(() => {
-    const { name } = props.category;
-    setValues({
-      name
-    });
-  }, [props.category]);
-
-  useEffect(() => {
     if (props.errors) {
       setErrors({ name: props.errors.name });
     }
@@ -55,6 +48,7 @@ function AddCategory(props) {
 
   const handleClose = () => {
     setOpen(false);
+    setValues({});
   };
 
   const onSubmit = () => {

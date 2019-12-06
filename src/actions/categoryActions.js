@@ -25,7 +25,7 @@ export const getCategories = () => async dispatch => {
   const res = await axios.get('/api/categories');
   dispatch({
     type: GET_CATEGORIES,
-    payload: res.data._embedded.categories
+    payload: res.data
   });
 };
 
@@ -44,7 +44,7 @@ export const getCategory = (categoryId, history) => async dispatch => {
   }
 };
 
-export const updateCategory = (category, history) => async dispatch => {
+export const editCategory = (category, history) => async dispatch => {
   try {
     await axios.patch(`/api/categories/${category.categoryId}`, category);
   } catch (error) {

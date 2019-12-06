@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { createBlog, getBlogs } from '../../actions/blogActions';
+import { editCategory, getCategory } from '../../actions/categoryActions';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function AddBlog(props) {
+function EditCategoryDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState({
@@ -27,18 +27,27 @@ function AddBlog(props) {
   });
 
   const [errors, setErrors] = useState({
-    name: '',
-    description: ''
+    name: ''
   });
+
+  // useEffect(() => {
+  //   const { categoryId } = props.category;
+  //   props.getCategory(categoryId);
+  // }, []);
 
   useEffect(() => {
     if (props.errors) {
-      setErrors({
-        name: props.errors.name,
-        description: props.errors.description
-      });
+      setErrors({ name: props.errors.name });
     }
   }, [props.errors]);
+
+  useEffect(() => {
+    const { name, categoryId } = props.category;
+    setValues({
+      name,
+      categoryId
+    });
+  }, [props.category]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -52,19 +61,19 @@ function AddBlog(props) {
 
   const handleClose = () => {
     setOpen(false);
-    setValues({});
   };
 
   const onSubmit = () => {
-    const blog = {
+    const category = {
       name: values.name,
-      description: values.description
+      categoryId: values.categoryId
     };
-    props.createBlog(blog, props.history);
-    if (values.name && values.description) {
+    props.editCategory(category);
+    if (values.name) {
       handleClose();
     }
   };
+
   return (
     <div>
       <Button
@@ -73,7 +82,7 @@ function AddBlog(props) {
         onClick={handleClickOpen}
         className={classes.addButton}
       >
-        Add Blog
+        Edit
       </Button>
       <Dialog
         open={open}
@@ -81,30 +90,18 @@ function AddBlog(props) {
         aria-labelledby="form-dialog-title"
         autoComplete="off"
       >
-        <DialogTitle id="form-dialog-title">Add Blog</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
         <DialogContent>
           <TextField
             required
             error={errors.name}
             margin="dense"
             id="name"
-            label="Blog Name"
+            label="Category Name"
             value={values.name}
             onChange={handleChange('name')}
             name="name"
             helperText={errors.name}
-            fullWidth
-          />
-          <TextField
-            required
-            error={errors.description}
-            margin="dense"
-            id="description"
-            label="Blog Description"
-            value={values.description}
-            onChange={handleChange('description')}
-            name="description"
-            helperText={errors.description}
             fullWidth
           />
         </DialogContent>
@@ -118,18 +115,16 @@ function AddBlog(props) {
   );
 }
 
-AddBlog.propTypes = {
-  createBlog: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  blogs: PropTypes.object.isRequired,
-  blog: PropTypes.object.isRequired,
-  getBlogs: PropTypes.func.isRequired
+EditCategoryDialog.propTypes = {
+  getCategory: PropTypes.func.isRequired,
+  editCategory: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  errors: state.errors,
-  blogs: state.blogs,
-  blog: state.blog
+  errors: state.errors
 });
 
-export default connect(mapStateToProps, { getBlogs, createBlog })(AddBlog);
+export default connect(mapStateToProps, { getCategory, editCategory })(
+  EditCategoryDialog
+);

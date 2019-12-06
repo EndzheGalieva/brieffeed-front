@@ -52,7 +52,7 @@ export const getPost = (postId, history) => async dispatch => {
   }
 };
 
-export const updatePost = (post, history) => async dispatch => {
+export const editPost = (post, history) => async dispatch => {
   try {
     await axios.patch(`/api/posts/${post.postId}`, post);
     history.push('/posts');
