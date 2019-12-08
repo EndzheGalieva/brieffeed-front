@@ -186,7 +186,7 @@ function Header(props) {
             </Icon>
             <p>Написать</p>
           </MenuItem>
-          <MenuItem component={Link} to="/notifications">
+          {/* <MenuItem component={Link} to="/notifications">
             <Badge badgeContent={11} color="secondary">
               <Icon
                 className={classes.menuIcon}
@@ -197,7 +197,7 @@ function Header(props) {
               </Icon>
             </Badge>
             <p>Уведомления</p>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem component={Link} to="/profile">
             <Icon
               className={classes.menuIcon}
@@ -289,9 +289,9 @@ function Header(props) {
             <Button component={Link} to="/blogs" color="inherit">
               Блоги
             </Button>
-            <Button component={Link} to="/news" color="inherit">
+            {/* <Button component={Link} to="/news" color="inherit">
               Новости
-            </Button>
+            </Button> */}
             {auth && (
               <div>
                 <Tooltip title="Написать">
@@ -304,7 +304,7 @@ function Header(props) {
                     <AddCircleIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Уведомления">
+                {/* <Tooltip title="Уведомления">
                   <IconButton
                     component={Link}
                     to="/notifications"
@@ -315,7 +315,7 @@ function Header(props) {
                       <NotificationsIcon />
                     </Badge>
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip title="Профиль">
                   <IconButton
                     edge="end"
