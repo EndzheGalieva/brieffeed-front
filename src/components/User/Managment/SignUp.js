@@ -7,35 +7,27 @@ import {
   Button,
   CssBaseline,
   FormControl,
-  Container
+  Container,
+  Grid,
+  Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { isString } from 'util';
 
 const useStyles = makeStyles(theme => ({
-  margin: {
+  signUpHeader: {
+    display: 'flex',
+    position: 'relative'
+  },
+  button: {
     margin: theme.spacing(1)
   },
   container: {
-    // display: 'flex',
-    flexWrap: 'wrap'
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  button: {
-    margin: theme.spacing(1),
-    width: 150
-  },
-  input: {
-    display: 'none'
+    display: 'flex',
+    textAlign: 'center',
+    marginTop: theme.spacing(5),
+    justify: 'center',
+    alignItems: 'center'
   }
 }));
 
@@ -79,104 +71,113 @@ function SignUp(props) {
   };
 
   return (
-    <div>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <FormControl
-          className={classes.container}
-          noValidate
-          autoComplete="off"
-          onSubmit={onSubmit}
-        >
-          <TextField
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            onChange={handleChange('firstName')}
-            required
-            error={isString(errors.firstName)}
-            value={values.firstName}
-            helperText={errors.firstName}
-          />
-          <br />
-          <TextField
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            onChange={handleChange('lastName')}
-            required
-            error={isString(errors.lastName)}
-            value={values.lastName}
-            helperText={errors.lastName}
-          />
-          <br />
-          <TextField
-            type="text"
-            name="userName"
-            placeholder="UserName"
-            onChange={handleChange('userName')}
-            required
-            error={isString(errors.userName)}
-            value={values.userName}
-            helperText={errors.userName}
-          />
-          <br />
-          <TextField
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange('email')}
-            required
-            error={isString(errors.email)}
-            value={values.email}
-            helperText={errors.email}
-          />
-          <br />
-          <TextField
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange('password')}
-            required
-            error={isString(errors.password)}
-            value={values.password}
-            helperText={errors.password}
-          />
-          <br />
-          <TextField
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            onChange={handleChange('confirmPassword')}
-            required
-            error={isString(errors.confirmPassword)}
-            value={values.confirmPassword}
-            helperText={errors.confirmPassword}
-          />
-          <br />
-          <TextField
-            type="text"
-            name="role"
-            placeholder="Role"
-            onChange={handleChange('role')}
-            required
-            error={isString(errors.role)}
-            value={values.role}
-            helperText={errors.role}
-          />
-          <br />
-          <br />
-          <Button
-            color="primary"
-            variant="outlined"
-            className={classes.margin}
-            onClick={onSubmit}
+    <Grid
+      container
+      spacing={3}
+      direction="column"
+      className={classes.container}
+    >
+      <Grid item xs={12}>
+        <Typography variant="h5" gutterBottom classname={classes.signUpHeader}>
+          Sign Up
+        </Typography>
+        <Container maxWidth="lg">
+          <FormControl
+            className={classes.container}
+            noValidate
+            autoComplete="off"
+            onSubmit={onSubmit}
           >
-            Sign Up
-          </Button>
-        </FormControl>
-      </Container>
-    </div>
+            <TextField
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              onChange={handleChange('firstName')}
+              required
+              error={isString(errors.firstName)}
+              value={values.firstName}
+              helperText={errors.firstName}
+            />
+            <br />
+            <TextField
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              onChange={handleChange('lastName')}
+              required
+              error={isString(errors.lastName)}
+              value={values.lastName}
+              helperText={errors.lastName}
+            />
+            <br />
+            <TextField
+              type="text"
+              name="userName"
+              placeholder="UserName"
+              onChange={handleChange('userName')}
+              required
+              error={isString(errors.userName)}
+              value={values.userName}
+              helperText={errors.userName}
+            />
+            <br />
+            <TextField
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange('email')}
+              required
+              error={isString(errors.email)}
+              value={values.email}
+              helperText={errors.email}
+            />
+            <br />
+            <TextField
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange('password')}
+              required
+              error={isString(errors.password)}
+              value={values.password}
+              helperText={errors.password}
+            />
+            <br />
+            <TextField
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              onChange={handleChange('confirmPassword')}
+              required
+              error={isString(errors.confirmPassword)}
+              value={values.confirmPassword}
+              helperText={errors.confirmPassword}
+            />
+            <br />
+            <TextField
+              type="text"
+              name="role"
+              placeholder="Role"
+              onChange={handleChange('role')}
+              required
+              error={isString(errors.role)}
+              value={values.role}
+              helperText={errors.role}
+            />
+            <br />
+            <br />
+            <Button
+              color="primary"
+              variant="outlined"
+              className={classes.button}
+              onClick={onSubmit}
+            >
+              Sign Up
+            </Button>
+          </FormControl>
+        </Container>
+      </Grid>
+    </Grid>
   );
 }
 

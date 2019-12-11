@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Snackbar, SnackbarContent } from '@material-ui/core';
+import { Snackbar, SnackbarContent, Grid, Typography, Container, FormControl } from '@material-ui/core';
 import { amber, green } from '@material-ui/core/colors';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -84,14 +84,25 @@ SnackbarContentWrapper.propTypes = {
 };
 
 const useStyles2 = makeStyles(theme => ({
-  margin: {
+  loginHeader: {
+    display: 'flex',
+    position: 'relative'
+  },
+  button: {
     margin: theme.spacing(1)
+  },
+  container: {
+    display: 'flex',
+    textAlign: 'center',
+    marginTop: theme.spacing(5),
+    justify: 'center',
+    alignItems: 'center'
   }
 }));
 
 function Login(props) {
   const classes = useStyles2();
-  // const anchorRef = React.useRef(null);
+  // const anchorRef = useRef(null);
   const [values, setValues] = React.useState({
     username: '',
     password: '',
@@ -176,7 +187,6 @@ function Login(props) {
           <SnackbarContentWrapper
             onClose={handleClose}
             variant="error"
-            className={classes.margin}
             message="Check your username and password!"
           />
         </Snackbar>
@@ -185,53 +195,72 @@ function Login(props) {
   } else {
     console.log('User is not logined!');
     return (
-      <div>
-        <TextField
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={handleChange('username')}
-          error={isString(errors.username)}
-          value={values.username}
-          helperText={errors.username}
-        />
-        <br />
-        <TextField
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange('password')}
-          error={isString(errors.password)}
-          value={values.password}
-          helperText={errors.password}
-        />
-        <br />
-        <br />
-        <Button
-          color="primary"
-          variant="outlined"
-          className={classes.margin}
-          onClick={onSubmit}
-        >
-          Login
-        </Button>
-        <Snackbar
-          style={{
-            vertical: 'bottom',
-            horizontal: 'left'
-          }}
-          open={values.open}
-          onClose={handleClose}
-          autoHideDuration={2500}
-        >
-          <SnackbarContentWrapper
-            onClose={handleClose}
-            variant="error"
-            className={classes.margin}
-            message="Check your username and password!"
-          />
-        </Snackbar>
-      </div>
+      <Grid
+        container
+        spacing={3}
+        direction="column"
+        className={classes.container}
+      >
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom classname={classes.loginHeader}>
+            Login
+          </Typography>
+          <Container maxWidth="lg">
+            <FormControl
+              className={classes.container}
+              noValidate
+              autoComplete="off"
+              onSubmit={onSubmit}
+            >
+              <TextField
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={handleChange('username')}
+                error={isString(errors.username)}
+                value={values.username}
+                helperText={errors.username}
+              />
+              <br />
+              <TextField
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange('password')}
+                error={isString(errors.password)}
+                value={values.password}
+                helperText={errors.password}
+              />
+              <br />
+              <br />
+              <Button
+                color="primary"
+                variant="outlined"
+                className={classes.margin}
+                onClick={onSubmit}
+              >
+                Login
+              </Button>
+              <Snackbar
+                style={{
+                  vertical: 'bottom',
+                  horizontal: 'left'
+                }}
+                open={values.open}
+                onClose={handleClose}
+                autoHideDuration={2500}
+              >
+                <SnackbarContentWrapper
+                  onClose={handleClose}
+                  variant="error"
+                  className={classes.margin}
+                  message="Check your username and password!"
+                />
+              </Snackbar>
+            </FormControl>
+          </Container>
+        </Grid>
+      </Grid>
     );
   }
 }
