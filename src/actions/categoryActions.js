@@ -6,7 +6,7 @@ import {
   DELETE_CATEGORY
 } from './types';
 
-export const createCategory = (category, history) => async dispatch => {
+export const createCategory = (category) => async dispatch => {
   try {
     await axios.post('/api/categories/create', category);
     dispatch({
@@ -29,7 +29,7 @@ export const getCategories = () => async dispatch => {
   });
 };
 
-export const getCategory = (categoryId, history) => async dispatch => {
+export const getCategory = (categoryId) => async dispatch => {
   try {
     const res = await axios.get(`/api/categories/${categoryId}`);
     dispatch({
@@ -44,7 +44,7 @@ export const getCategory = (categoryId, history) => async dispatch => {
   }
 };
 
-export const editCategory = (category, history) => async dispatch => {
+export const editCategory = (category) => async dispatch => {
   try {
     await axios.patch(`/api/categories/${category.categoryId}`, category);
   } catch (error) {

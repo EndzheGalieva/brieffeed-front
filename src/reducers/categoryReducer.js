@@ -1,8 +1,7 @@
 import {
   GET_CATEGORIES,
   GET_CATEGORY,
-  DELETE_CATEGORY,
-  POST_CATEGORY
+  DELETE_CATEGORY
 } from '../actions/types';
 
 const initialState = {

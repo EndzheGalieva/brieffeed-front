@@ -55,7 +55,7 @@ function AddCategory(props) {
     const category = {
       name: values.name
     };
-    props.createCategory(category, props.history);
+    props.createCategory(category);
     if (values.name) {
       handleClose();
     }
