@@ -1,7 +1,8 @@
 import {
   GET_CATEGORIES,
   GET_CATEGORY,
-  DELETE_CATEGORY
+  DELETE_CATEGORY,
+  POST_CATEGORY
 } from '../actions/types';
 
 const initialState = {
@@ -24,7 +25,7 @@ export default function(state = initialState, action) {
     case DELETE_CATEGORY:
       return {
         ...state,
-        category: state.categories.filter(
+        categories: state.categories.filter(
           category => category.categoryId !== action.payload
         )
       };
