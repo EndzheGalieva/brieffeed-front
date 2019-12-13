@@ -38,32 +38,30 @@ class Categories extends Component {
 
   onDelClick = categoryId => {
     this.props.deleteCategory(categoryId);
-  }; 
+  };
 
   render() {
     const { classes } = this.props;
     const { categories } = this.props.category;
     return (
-      <div className={classes.root}>
-        <Grid item xs={12} md={6}>
-          <div className={classes.title}>
-            <Typography variant="h6">Категории</Typography>
-            {this.props.security.user.role === 'ADMIN' && (
-              <EditCategory
-                categories={categories}
-                onDelClick={this.onDelClick}
-              />
-            )}
-          </div>
-          <div className={classes.demo}>
-            <List>
-              {categories.map(category => (
-                <CategoryItem key={category.categoryId} category={category} />
-              ))}
-            </List>
-          </div>
-        </Grid>
-      </div>
+      <Grid item xs={12} md={3} className={classes.root}>
+        <div className={classes.title}>
+          <Typography variant="h6">Категории</Typography>
+          {this.props.security.user.role === 'ADMIN' && (
+            <EditCategory
+              categories={categories}
+              onDelClick={this.onDelClick}
+            />
+          )}
+        </div>
+        <div className={classes.demo}>
+          <List>
+            {categories.map(category => (
+              <CategoryItem key={category.categoryId} category={category} />
+            ))}
+          </List>
+        </div>
+      </Grid>
     );
   }
 }
