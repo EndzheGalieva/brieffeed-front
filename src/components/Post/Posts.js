@@ -10,7 +10,6 @@ import {
 import Interweave from 'interweave';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deletePost, getPosts } from '../../actions/postActions';
@@ -48,7 +47,6 @@ class Posts extends Component {
     const { posts } = this.props.post;
     const { classes } = this.props;
     return (
-      <div>
         <Grid container className={classes.posts}>
           <Grid item xs={12} md={9} className={classes.listItems}>
             <List>
@@ -118,9 +116,10 @@ class Posts extends Component {
               ))}
             </List>
           </Grid>
-          <Categories />
+          <Grid item xs={12} md={3}>
+            <Categories />
+          </Grid>
         </Grid>
-      </div>
     );
   }
 }

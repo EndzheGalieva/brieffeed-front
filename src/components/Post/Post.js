@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import Snackbar from '@material-ui/core/Snackbar';
-import { green } from '@material-ui/core/colors';
 import { connect } from 'react-redux';
 import { getPost, deletePost } from '../../actions/postActions';
 import PropTypes from 'prop-types';
-import { Chip, Avatar, Button, Typography } from '@material-ui/core';
+import {
+  Chip,
+  Avatar,
+  Button,
+  Typography,
+  withStyles,
+  Grid
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
+
+const styles = theme => ({
+  post: {
+    display: 'flex',
+    flexGrow: 1,
+    maxWidth: 1200,
+    margin: 'auto',
+    padding: theme.spacing(2, 4, 8, 4),
+    justifyContent: 'center'
+  },
+  postItem: {
+    flexGrow: 1
+  }
+});
 
 class Post extends Component {
   constructor(props) {
@@ -26,10 +44,10 @@ class Post extends Component {
 
   render() {
     const { post } = this.props.post;
-
+    const { classes } = this.props;
     return (
-      <div className="App">
-        <div className="post_item">
+      <Grid container className={classes.post}>
+        <Grid item xs={12} md={12} className={classes.postItem}>
           <article className="post post_preview" lang="ru">
             <p className="post_meta">
               <small className="post_user">
@@ -86,20 +104,8 @@ class Post extends Component {
               </div>
             </div>
           </article>
-        </div>
-        <Snackbar
-          style={{
-            width: 300,
-            backgroundColor: green[600],
-            vertical: 'bottom',
-            horizontal: 'left'
-          }}
-          open={this.state.open}
-          onClose={this.handleClose}
-          autoHideDuration={2500}
-          message={this.state.message}
-        />
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -116,4 +122,6 @@ const mapStateToProps = state => ({
   post: state.post
 });
 
-export default connect(mapStateToProps, { getPost, deletePost })(Post);
+export default connect(mapStateToProps, { getPost, deletePost })(
+  withStyles(styles)(Post)
+);

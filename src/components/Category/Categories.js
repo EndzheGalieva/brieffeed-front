@@ -44,7 +44,7 @@ class Categories extends Component {
     const { classes } = this.props;
     const { categories } = this.props.category;
     return (
-      <Grid item xs={12} md={3} className={classes.root}>
+      <div className={classes.root}>
         <div className={classes.title}>
           <Typography variant="h6">Категории</Typography>
           {this.props.security.user.role === 'ADMIN' && (
@@ -61,7 +61,7 @@ class Categories extends Component {
             ))}
           </List>
         </div>
-      </Grid>
+      </div>
     );
   }
 }
