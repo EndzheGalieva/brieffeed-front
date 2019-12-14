@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import {
   TextField,
   Button,
-  CssBaseline,
   FormControl,
   Container,
   Grid,
@@ -73,7 +72,6 @@ function SignUp(props) {
   return (
     <Grid
       container
-      spacing={3}
       direction="column"
       className={classes.container}
     >

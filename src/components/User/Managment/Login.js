@@ -197,7 +197,6 @@ function Login(props) {
     return (
       <Grid
         container
-        spacing={3}
         direction="column"
         className={classes.container}
       >
