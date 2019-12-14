@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { createRef, Component } from 'react';
 import { FormControl, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
@@ -41,42 +41,40 @@ const categories = [
 
 const options = ['Publish', 'Draft'];
 
-function EditPost(props) {
-  const classes = props;
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
-  const [selectedIndex, setSelectedIndex] = useState(1);
+class EditPost extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+      content: '',
+      createdDate: null,
+      updatedDate: null,
+      status: '',
+      user: {},
+      comments: [],
+      postId: 0,
+      errors: {
+        title: ''
+      },
+      open: false,
+      selectedIndex: 1
+    };
+  }
 
-  const [values, setValues] = useState({
-    title: '',
-    content: '',
-    createdDate: null,
-    updatedDate: null,
-    status: '',
-    author: '',
-    comments: [],
-    postId: 0
-  });
+  anchorRef = createRef(null);
 
-  const [errors, setErrors] = useState({
-    title: ''
-  });
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.getPost(id, this.props.history);
+  }
 
-  useEffect(() => {
-    const { id } = props.match.params;
-    props.getPost(id, props.history);
-  }, []);
-
-  useEffect(() => {
-    if (props.errors) {
-      setErrors({ title: props.errors.title });
+  componentWillReceiveProps() {
+    if (this.props.errors) {
+      this.setState({ errors: { title: this.props.errors.title } });
     }
-    if (props.security.user.username !== props.post.author) {
-      props.history.push('/posts');
+    if (this.props.security.user.username !== this.props.post.author) {
+      this.props.history.push('/posts');
     }
-  }, [props.errors, props.post.author, props.security.user.username]);
-
-  useEffect(() => {
     const {
       title,
       content,
@@ -86,8 +84,8 @@ function EditPost(props) {
       author,
       comments,
       postId
-    } = props.post;
-    setValues({
+    } = this.props.post;
+    this.setState({
       title,
       content,
       createdDate,
@@ -97,174 +95,185 @@ function EditPost(props) {
       comments,
       postId
     });
-  }, [props.post]);
+  }
 
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
-    setOpen(false);
+  handleMenuItemClick = (event, index) => {
+    this.setState({ selectedIndex: index });
+    this.setState({ open: false });
   };
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
+  handleToggle = () => {
+    this.setState({ open: prevOpen => !prevOpen });
   };
 
-  const handleChange = name => event => {
+  handleChange = name => event => {
     const data = event.target.value;
-    setErrors({ ...errors, [name]: !data });
-    setValues({ ...values, [name]: data });
+    this.setState({ errors: { [name]: !data } });
+    this.setState({ ...this.state, [name]: data });
   };
 
-  const handleEditorChange = name => (event, editor) => {
+  handleEditorChange = name => (event, editor) => {
     const data = editor.getData();
-    setValues({ ...values, [name]: data });
+    this.setState({ ...this.state, [name]: data });
   };
 
-  const handleClose = event => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  handleClose = event => {
+    if (
+      this.anchorRef.current &&
+      this.anchorRef.current.contains(event.target)
+    ) {
       return;
     }
-
-    setOpen(false);
+    this.setState({ open: false });
   };
 
-  const onSubmit = () => {
+  onSubmit = event => {
+    event.preventDefault();
     const post = {
-      title: values.title,
-      content: values.content,
-      status: options[selectedIndex].toUpperCase(),
-      postId: values.postId
+      title: this.state.title,
+      content: this.state.content,
+      status: options[this.state.selectedIndex].toUpperCase(),
+      postId: this.state.postId
     };
-    props.editPost(post, props.history);
+    this.props.editPost(post, this.props.history);
   };
 
-  return (
-    <div>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <FormControl
-          className={classes.container}
-          noValidate
-          autoComplete="off"
-          onSubmit={onSubmit}
-        >
-          <TextField
-            required
-            id="standard-required"
-            error={errors.title}
-            label="Title"
-            className={classes.textField}
-            margin="normal"
-            defaultValue={props.post.title}
-            value={values.title}
-            onChange={handleChange('title')}
-            name="title"
-            helperText={errors.title}
-          />
-          <TextField
-            id="standard-required"
-            label="Tags"
-            className={classes.textField}
-            margin="normal"
-            helperText="Separate tags with commas"
-          />
-          <TextField
-            id="standard-select-category"
-            select
-            label="Category"
-            className={classes.textField}
-            value={values.category}
-            onChange={handleChange('category')}
-            SelectProps={{
-              MenuProps: {
-                className: classes.menu
-              }
-            }}
-            helperText="Please select your category"
-            margin="normal"
+  render() {
+    const { classes } = this.props;
+    const { post, errors } = this.props;
+    return (
+      <div>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <FormControl
+            className={classes.container}
+            noValidate
+            autoComplete="off"
+            onSubmit={this.onSubmit}
           >
-            {categories.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <CKEditor
-            editor={ClassicEditor}
-            label="Content"
-            data={props.post.content}
-            value={values.content}
-            onChange={handleEditorChange('content')}
-            name="content"
-          />
-          <Grid container>
-            <Grid item xs={12} align="right">
-              <ButtonGroup
-                color="primary"
-                ref={anchorRef}
-                aria-label="split button"
-              >
-                <Button onClick={onSubmit}>{options[selectedIndex]}</Button>
-                <Button
+            <TextField
+              required
+              id="standard-required"
+              error={errors.title}
+              label="Title"
+              className={classes.textField}
+              margin="normal"
+              defaultValue={post.title}
+              value={this.state.title}
+              onChange={this.handleChange('title')}
+              name="title"
+              helperText={errors.title}
+            />
+            <TextField
+              id="standard-required"
+              label="Tags"
+              className={classes.textField}
+              margin="normal"
+              helperText="Separate tags with commas"
+            />
+            <TextField
+              id="standard-select-category"
+              select
+              label="Category"
+              className={classes.textField}
+              value={this.state.category}
+              onChange={this.handleChange('category')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu
+                }
+              }}
+              helperText="Please select your category"
+              margin="normal"
+            >
+              {categories.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <CKEditor
+              editor={ClassicEditor}
+              label="Content"
+              data={post.content}
+              value={this.state.content}
+              onChange={this.handleEditorChange('content')}
+              name="content"
+            />
+            <Grid container>
+              <Grid item xs={12} align="right">
+                <ButtonGroup
                   color="primary"
-                  size="small"
-                  aria-owns={open ? 'menu-list-grow' : undefined}
-                  aria-haspopup="true"
-                  onClick={handleToggle}
+                  ref={this.anchorRef}
+                  aria-label="split button"
                 >
-                  <ArrowDropDownIcon />
-                </Button>
-              </ButtonGroup>
-              <Button
-                variant="outlined"
-                className={classes.button}
-                component={Link}
-                to="/posts"
-                color="secondary"
-              >
-                Cansel
-              </Button>
-
-              <Popper
-                open={open}
-                anchorEl={anchorRef.current}
-                transition
-                disablePortal
-              >
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    style={{
-                      transformOrigin:
-                        placement === 'bottom' ? 'center top' : 'center bottom'
-                    }}
+                  <Button onClick={this.onSubmit}>
+                    {options[this.state.selectedIndex]}
+                  </Button>
+                  <Button
+                    color="primary"
+                    size="small"
+                    aria-owns={this.state.open ? 'menu-list-grow' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleToggle}
                   >
-                    <Paper id="menu-list-grow">
-                      <ClickAwayListener onClickAway={handleClose}>
-                        <MenuList>
-                          {options.map((option, index) => (
-                            <MenuItem
-                              key={option}
-                              disabled={index === 2}
-                              selected={index === selectedIndex}
-                              onClick={event =>
-                                handleMenuItemClick(event, index)
-                              }
-                            >
-                              {option}
-                            </MenuItem>
-                          ))}
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
+                    <ArrowDropDownIcon />
+                  </Button>
+                </ButtonGroup>
+                <Button
+                  variant="outlined"
+                  className={classes.button}
+                  component={Link}
+                  to="/posts"
+                  color="secondary"
+                >
+                  Cansel
+                </Button>
+
+                <Popper
+                  open={this.state.open}
+                  anchorEl={this.anchorRef.current}
+                  transition
+                  disablePortal
+                >
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin:
+                          placement === 'bottom'
+                            ? 'center top'
+                            : 'center bottom'
+                      }}
+                    >
+                      <Paper id="menu-list-grow">
+                        <ClickAwayListener onClickAway={this.handleClose}>
+                          <MenuList>
+                            {options.map((option, index) => (
+                              <MenuItem
+                                key={option}
+                                disabled={index === 2}
+                                selected={index === this.state.selectedIndex}
+                                onClick={event =>
+                                  this.handleMenuItemClick(event, index)
+                                }
+                              >
+                                {option}
+                              </MenuItem>
+                            ))}
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </Grid>
             </Grid>
-          </Grid>
-        </FormControl>
-      </Container>
-    </div>
-  );
+          </FormControl>
+        </Container>
+      </div>
+    );
+  }
 }
 
 EditPost.propTypes = {

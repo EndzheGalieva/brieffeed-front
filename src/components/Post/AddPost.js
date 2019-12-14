@@ -106,13 +106,12 @@ class AddPost extends Component {
       content: this.state.content,
       status: options[this.state.selectedIndex].toUpperCase()
     };
-    console.log(post);
     this.props.createPost(post, this.props.history);
   };
 
   render() {
     const { classes } = this.props;
-    const { post, errors } = this.props;
+    const {errors} = this.props;
     return (
       <div>
         <CssBaseline />
@@ -130,7 +129,7 @@ class AddPost extends Component {
               label="Title"
               className={classes.textField}
               margin="normal"
-              value={post.title}
+              value={this.state.title}
               onChange={this.handleChange('title')}
               name="title"
               helperText={errors.title}
@@ -147,7 +146,7 @@ class AddPost extends Component {
               select
               label="Category"
               className={classes.textField}
-              value={post.category}
+              value={this.state.category}
               onChange={this.handleChange('category')}
               SelectProps={{
                 MenuProps: {
@@ -166,7 +165,7 @@ class AddPost extends Component {
             <CKEditor
               editor={ClassicEditor}
               label="Content"
-              value={post.content}
+              value={this.state.content}
               onChange={this.handleEditorChange('content')}
               name="content"
             />
