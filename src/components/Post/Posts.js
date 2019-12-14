@@ -33,7 +33,7 @@ class Posts extends Component {
     const { posts } = this.props.post;
     const { classes } = this.props;
     return (
-      <Grid container className={classes.posts}>
+      <Grid container className={classes.post}>
         <Grid item xs={12} md={9} className={classes.postItem}>
           <List>
             {posts.map(post => (
@@ -74,7 +74,6 @@ class Posts extends Component {
                             variant="outlined"
                             color="secondary"
                             onClick={() => {
-                              // this.confirmDelete(post._links.self.href);
                               this.onDelClick(post.postId);
                             }}
                           >

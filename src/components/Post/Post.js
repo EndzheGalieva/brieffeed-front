@@ -7,25 +7,11 @@ import {
   Avatar,
   Button,
   Typography,
-  withStyles,
   Grid
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
-
-const styles = theme => ({
-  post: {
-    display: 'flex',
-    flexGrow: 1,
-    maxWidth: 1200,
-    margin: 'auto',
-    padding: theme.spacing(2, 4, 8, 4),
-    justifyContent: 'center'
-  },
-  postItem: {
-    flexGrow: 1
-  }
-});
+import styles from '../../styles';
 
 class Post extends Component {
   constructor(props) {
@@ -123,5 +109,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { getPost, deletePost })(
-  withStyles(styles)(Post)
+  styles(Post)
 );

@@ -1,18 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  // posts
-  posts: {
-    display: 'flex',
-    flexGrow: 1,
-    maxWidth: 1200,
-    margin: 'auto',
-    padding: theme.spacing(2, 4, 8, 4),
-    justifyContent: 'center'
-  },
-  postItem: {
-    flexGrow: 1
-  },
   //categories
   categories: {
     flexGrow: 1,
@@ -26,6 +14,46 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     margin: theme.spacing(4, 1, 2)
+  },
+  // blogs
+  blog: {
+    display: 'flex',
+    flexGrow: 1,
+    maxWidth: 1200,
+    margin: 'auto',
+    padding: theme.spacing(2, 4, 8, 4),
+    justifyContent: 'center'
+  },
+  blogItem: {
+    flexGrow: 1
+  },
+  blogPaper: {
+    flexGrow: 1,
+    padding: theme.spacing(2),
+    margin: 'auto',
+    maxWidth: 500
+  },
+  blogImage: {
+    width: 128,
+    height: 128
+  },
+  img: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%'
+  },
+  // posts
+  post: {
+    display: 'flex',
+    flexGrow: 1,
+    maxWidth: 1200,
+    margin: 'auto',
+    padding: theme.spacing(2, 4, 8, 4),
+    justifyContent: 'center'
+  },
+  postItem: {
+    flexGrow: 1
   },
   // edit post
   container: {
