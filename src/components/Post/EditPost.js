@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FormControl, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,30 +18,7 @@ import { connect } from 'react-redux';
 import { getPost, editPost } from '../../actions/postActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  button: {
-    margin: theme.spacing(1),
-    width: 150
-  },
-  input: {
-    display: 'none'
-  }
-}));
+import styles from '../../styles';
 
 const categories = [
   {
@@ -66,7 +42,7 @@ const categories = [
 const options = ['Publish', 'Draft'];
 
 function EditPost(props) {
-  const classes = useStyles();
+  const classes = props;
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -305,4 +281,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getPost, editPost })(EditPost);
+export default connect(mapStateToProps, { getPost, editPost })(
+  styles(EditPost)
+);

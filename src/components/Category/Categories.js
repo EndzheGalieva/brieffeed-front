@@ -1,39 +1,26 @@
 import React, { Component } from 'react';
-import { Grid, Typography, List } from '@material-ui/core';
+import { Typography, List } from '@material-ui/core';
 import CategoryItem from './CategoryItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCategories, deleteCategory } from '../../actions/categoryActions';
 import EditCategory from './EditCategory';
-import { withStyles } from '@material-ui/core/styles';
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: 300,
-    backgroundColor: theme.palette.background.default
-  },
-  demo: {
-    backgroundColor: theme.palette.background.default
-  },
-  title: {
-    position: 'relative',
-    display: 'flex',
-    margin: theme.spacing(4, 1, 2)
-  }
-});
+import styles from '../../styles';
 
 class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
-      category: {}
+      categories: []
     };
   }
 
   async componentDidMount() {
     this.props.getCategories();
+    const { categories } = this.props.category;
+    this.setState({
+      categories
+    });
   }
 
   onDelClick = categoryId => {
@@ -44,23 +31,18 @@ class Categories extends Component {
     const { classes } = this.props;
     const { categories } = this.props.category;
     return (
-      <div className={classes.root}>
-        <div className={classes.title}>
-          <Typography variant="h6">Категории</Typography>
-          {this.props.security.user.role === 'ADMIN' && (
-            <EditCategory
-              categories={categories}
-              onDelClick={this.onDelClick}
-            />
-          )}
-        </div>
-        <div className={classes.demo}>
-          <List>
-            {categories.map(category => (
-              <CategoryItem key={category.categoryId} category={category} />
-            ))}
-          </List>
-        </div>
+      <div className={classes.categories}>
+        <Typography variant="h6" className={classes.title}>
+          Категории
+        </Typography>
+        {this.props.security.user.role === 'ADMIN' && (
+          <EditCategory categories={categories} onDelClick={this.onDelClick} />
+        )}
+        <List className={classes.list}>
+          {categories.map(category => (
+            <CategoryItem key={category.categoryId} category={category} />
+          ))}
+        </List>
       </div>
     );
   }
@@ -79,5 +61,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { getCategories, deleteCategory })(
-  withStyles(styles)(Categories)
+  styles(Categories)
 );
