@@ -28,7 +28,9 @@ function Login(props) {
   });
 
   const handleChange = name => event => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    const data = event.target.value;
+    setErrors({ ...errors, [name]: !data });
+    setValues({ ...values, [name]: data });
   };
 
   useEffect(() => {
