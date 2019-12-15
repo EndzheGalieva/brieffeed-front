@@ -10,28 +10,11 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { isString } from 'util';
-
-const useStyles = makeStyles(theme => ({
-  signUpHeader: {
-    display: 'flex',
-    position: 'relative'
-  },
-  button: {
-    margin: theme.spacing(1)
-  },
-  container: {
-    display: 'flex',
-    textAlign: 'center',
-    marginTop: theme.spacing(5),
-    justify: 'center',
-    alignItems: 'center'
-  }
-}));
+import styles from '../../../styles';
 
 function SignUp(props) {
-  const classes = useStyles();
+  const {classes} = props;
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
@@ -73,7 +56,7 @@ function SignUp(props) {
     <Grid
       container
       direction="column"
-      className={classes.container}
+      className={classes.signUpContainer}
     >
       <Grid item xs={12}>
         <Typography variant="h5" gutterBottom classname={classes.signUpHeader}>
@@ -81,7 +64,7 @@ function SignUp(props) {
         </Typography>
         <Container maxWidth="lg">
           <FormControl
-            className={classes.container}
+            className={classes.signUpContainer}
             noValidate
             autoComplete="off"
             onSubmit={onSubmit}
@@ -190,4 +173,4 @@ const mapStateToprops = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToprops, { createNewUser })(SignUp);
+export default connect(mapStateToprops, { createNewUser })(styles(SignUp));

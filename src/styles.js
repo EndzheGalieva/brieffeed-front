@@ -72,10 +72,33 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing(1),
-    width: 150
   },
   input: {
     display: 'none'
+  },
+  //signUp
+  signUpHeader: {
+    display: 'flex',
+    position: 'relative'
+  },
+  signUpContainer: {
+    display: 'flex',
+    textAlign: 'center',
+    marginTop: theme.spacing(5),
+    justify: 'center',
+    alignItems: 'center'
+  },
+  //login
+  loginHeader: {
+    display: 'flex',
+    position: 'relative'
+  },
+  loginContainer: {
+    display: 'flex',
+    textAlign: 'center',
+    marginTop: theme.spacing(5),
+    justify: 'center',
+    alignItems: 'center'
   }
 });
 
