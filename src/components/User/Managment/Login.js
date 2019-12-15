@@ -26,11 +26,6 @@ class Login extends Component {
     };
   }
 
-  handleChange = name => event => {
-    const data = event.target.value;
-    this.setState({ ...this.state, [name]: data });
-  };
-
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
       this.setState({ errors: { ...this.props.errors } });
@@ -39,6 +34,10 @@ class Login extends Component {
       this.props.history.push('/posts');
     }
   }
+
+  handleChange = name => event => {
+    this.setState({ ...this.state, [name]: event.target.value });
+  };
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
