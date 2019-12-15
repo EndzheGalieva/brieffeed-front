@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {
@@ -14,106 +14,108 @@ import { login } from '../../../actions/securityActions';
 import { isString } from 'util';
 import styles from '../../../styles';
 
-function Login(props) {
-  const { classes } = props;
-  const [values, setValues] = React.useState({
-    username: '',
-    password: '',
-    isAuthenticated: false,
-    open: false
-  });
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      isAuthenticated: false,
+      open: false,
+      errors: {}
+    };
+  }
 
-  const [errors, setErrors] = useState({
-    errors: {}
-  });
-
-  const handleChange = name => event => {
+  handleChange = name => event => {
     const data = event.target.value;
-    setErrors({ ...errors, [name]: !data });
-    setValues({ ...values, [name]: data });
+    this.setState({ ...this.state, [name]: data });
   };
 
-  useEffect(() => {
-    if (props.errors) {
-      setErrors(props.errors);
+  componentDidUpdate(prevProps) {
+    if (this.props.errors !== prevProps.errors) {
+      this.setState({ errors: { ...this.props.errors } });
     }
-    if (props.security.validToken) {
-      props.history.push('/posts');
+    if (this.props.security.validToken) {
+      this.props.history.push('/posts');
     }
-  }, [props.security.validToken, props.errors, props.history]);
+  }
 
-  const handleClose = (event, reason) => {
+  handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    setValues({ open: false });
+    this.setState({ open: false });
   };
 
-  const onSubmit = () => {
+  onSubmit = () => {
     const req = {
-      username: values.username,
-      password: values.password
+      username: this.state.username,
+      password: this.state.password
     };
-    props.login(req);
+    this.props.login(req);
   };
 
-  return (
-    <Grid container direction="column" className={classes.loginContainer}>
-      <Grid item xs={12}>
-        <Typography variant="h5" gutterBottom classname={classes.loginHeader}>
-          Login
-        </Typography>
-        <Container maxWidth="lg">
-          <FormControl
-            className={classes.loginContainer}
-            noValidate
-            autoComplete="off"
-            onSubmit={onSubmit}
-          >
-            <TextField
-              type="text"
-              name="username"
-              placeholder="Username"
-              onChange={handleChange('username')}
-              error={isString(errors.username)}
-              value={values.username}
-              helperText={errors.username}
-            />
-            <br />
-            <TextField
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange('password')}
-              error={isString(errors.password)}
-              value={values.password}
-              helperText={errors.password}
-            />
-            <br />
-            <br />
-            <Button
-              color="primary"
-              variant="outlined"
-              className={classes.margin}
-              onClick={onSubmit}
+  render() {
+    const { classes } = this.props;
+    const { errors } = this.state;
+    return (
+      <Grid container direction="column" className={classes.loginContainer}>
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom classname={classes.loginHeader}>
+            Login
+          </Typography>
+          <Container maxWidth="lg">
+            <FormControl
+              className={classes.loginContainer}
+              noValidate
+              autoComplete="off"
+              onSubmit={this.onSubmit}
             >
-              Login
-            </Button>
-            <Snackbar
-              style={{
-                vertical: 'bottom',
-                horizontal: 'left'
-              }}
-              open={values.open}
-              onClose={handleClose}
-              autoHideDuration={2500}
-            ></Snackbar>
-          </FormControl>
-        </Container>
+              <TextField
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={this.handleChange('username')}
+                error={isString(errors.username)}
+                value={this.state.username}
+                helperText={errors.username}
+              />
+              <br />
+              <TextField
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={this.handleChange('password')}
+                error={isString(errors.password)}
+                value={this.state.password}
+                helperText={errors.password}
+              />
+              <br />
+              <br />
+              <Button
+                color="primary"
+                variant="outlined"
+                className={classes.margin}
+                onClick={this.onSubmit}
+              >
+                Login
+              </Button>
+              <Snackbar
+                style={{
+                  vertical: 'bottom',
+                  horizontal: 'left'
+                }}
+                open={this.state.open}
+                onClose={this.handleClose}
+                autoHideDuration={2500}
+              ></Snackbar>
+            </FormControl>
+          </Container>
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  }
 }
 
 Login.propTypes = {
@@ -127,4 +129,7 @@ const mapStateProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateProps, { login })(styles(Login));
+export default connect(
+  mapStateProps,
+  { login }
+)(styles(Login));
