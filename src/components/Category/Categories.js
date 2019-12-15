@@ -32,7 +32,7 @@ class Categories extends Component {
     const { categories } = this.props.category;
     return (
       <div className={classes.categories}>
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" className={classes.categoriesTitle}>
           Категории
         </Typography>
         {this.props.security.user.role === 'ADMIN' && (
@@ -60,6 +60,7 @@ const mapStateToProps = state => ({
   category: state.category
 });
 
-export default connect(mapStateToProps, { getCategories, deleteCategory })(
-  styles(Categories)
-);
+export default connect(
+  mapStateToProps,
+  { getCategories, deleteCategory }
+)(styles(Categories));
