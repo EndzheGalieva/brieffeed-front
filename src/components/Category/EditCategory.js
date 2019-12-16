@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import {
   Button,
   Dialog,
@@ -17,22 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddCategory from './AddCategory';
 import { Link } from 'react-router-dom';
 import EditCategoryDialog from './EditCategoryDialog';
-
-const styles = theme => ({
-  addButton: {
-    marginLeft: theme.spacing(2)
-  },
-  dialogTitle: {
-    marginLeft: theme.spacing(2),
-    flex: 1
-  },
-  editButton: {
-    marginLeft: theme.spacing(2)
-  },
-  appBar: {
-    position: 'relative'
-  }
-});
+import styles from '../../styles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -123,4 +107,4 @@ class EditCategory extends Component {
   }
 }
 
-export default withStyles(styles)(EditCategory);
+export default styles(EditCategory);

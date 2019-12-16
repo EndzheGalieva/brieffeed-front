@@ -34,7 +34,9 @@ class Blogs extends Component {
     return (
       <Grid container className={classes.blog}>
         <Grid item xs={12} md={9} className={classes.blogItem}>
-          {this.props.security.user.role === 'AUTHOR' && <EditBlog />}
+          {this.props.security.user.role === 'AUTHOR' && (
+            <EditBlog blogs={blogs} onDelClick={this.onDelClick} />
+          )}
           <List className={classes.list}>
             {blogs.map(blog => (
               <BlogItem key={blog.blogId} blog={blog} />
@@ -61,6 +63,7 @@ const mapStateToProps = state => ({
   security: state.security
 });
 
-export default connect(mapStateToProps, { getBlogs, deleteBlog })(
-  styles(Blogs)
-);
+export default connect(
+  mapStateToProps,
+  { getBlogs, deleteBlog }
+)(styles(Blogs));

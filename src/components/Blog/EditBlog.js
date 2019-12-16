@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
 import {
   Typography,
   List,
@@ -20,125 +19,100 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AddBlog from './AddBlog';
 import EditBlogDialog from './EditBlogDialog';
-
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: 'relative'
-  },
-  dialogTitle: {
-    marginLeft: theme.spacing(2),
-    flex: 1
-  },
-  editButton: {
-    marginLeft: theme.spacing(2)
-  }
-}));
+import styles from '../../styles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function EditBlog(props) {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const { blogs } = props.blog;
-  const [values, setValues] = useState({
-    name: '',
-    description: ''
-  });
+class EditBlog extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
 
-  useEffect(() => {
-    props.getBlogs();
-  }, []);
-
-  useEffect(() => {
-    const { name, description } = props.blog;
-    setValues({
-      name,
-      description
-    });
-  }, [props.blog]);
-
-  const handleClose = () => {
-    setOpen(false);
+  handleClickOpen = () => {
+    this.setState({ open: true });
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
-  const onDelClick = blogId => {
-    props.deleteBlog(blogId);
-  };
-
-  return (
-    <div>
-      <Button
-        className={classes.editButton}
-        size="small"
-        variant="outlined"
-        color="primary"
-        onClick={handleClickOpen}
-      >
-        Edit
-      </Button>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.dialogTitle}>
-              Блоги
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <List>
-          {blogs.map(blog => (
-            <div>
-              <ListItem key={blog.blogId}>
-                <ListItemText
-                  primary={blog.name}
-                  secondary={blog.description}
-                />
-                {props.security.user.username === blog.author && (
-                  <div>
-                    <small>
-                      <EditBlogDialog blog={blog} />
-                    </small>
-                    <small>
-                      <Button
-                        component={Link}
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {
-                          onDelClick(blog.blogId);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </small>
-                  </div>
-                )}
-              </ListItem>
-              <Divider />
-            </div>
-          ))}
-        </List>
-        <AddBlog />
-      </Dialog>
-    </div>
-  );
+  render() {
+    const { classes } = this.props;
+    const { blogs, onDelClick } = this.props;
+    return (
+      <div>
+        <Button
+          className={classes.editButton}
+          size="small"
+          variant="outlined"
+          color="primary"
+          onClick={this.handleClickOpen}
+        >
+          Edit
+        </Button>
+        <Dialog
+          fullScreen
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={this.handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" className={classes.dialogTitle}>
+                Блоги
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <List>
+            {blogs.map(blog => (
+              <div>
+                <ListItem key={blog.blogId}>
+                  <ListItemText
+                    primary={blog.name}
+                    secondary={blog.description}
+                  />
+                  {this.props.security.user.username === blog.author && (
+                    <div>
+                      <small>
+                        <EditBlogDialog blog={blog} />
+                      </small>
+                      <small>
+                        <Button
+                          component={Link}
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            onDelClick(blog.blogId);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </small>
+                    </div>
+                  )}
+                </ListItem>
+                <Divider />
+              </div>
+            ))}
+          </List>
+          <AddBlog />
+        </Dialog>
+      </div>
+    );
+  }
 }
 
 EditBlog.propTypes = {
@@ -153,4 +127,7 @@ const mapStateToProps = state => ({
   blog: state.blog
 });
 
-export default connect(mapStateToProps, { getBlogs, deleteBlog })(EditBlog);
+export default connect(
+  mapStateToProps,
+  { getBlogs, deleteBlog }
+)(styles(EditBlog));

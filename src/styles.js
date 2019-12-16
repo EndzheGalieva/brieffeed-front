@@ -94,6 +94,20 @@ const styles = theme => ({
     display: 'flex',
     margin: theme.spacing(4, 1, 2)
   },
+  addButton: {
+    marginLeft: theme.spacing(2)
+  },
+  // edit dialog
+  dialogTitle: {
+    marginLeft: theme.spacing(2),
+    flex: 1
+  },
+  editButton: {
+    marginLeft: theme.spacing(2)
+  },
+  appBar: {
+    position: 'relative'
+  },
   // blogs
   blog: {
     display: 'flex',
