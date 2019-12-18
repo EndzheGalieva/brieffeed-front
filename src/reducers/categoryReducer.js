@@ -25,7 +25,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         categories: state.categories.filter(
-          category => category.categoryId !== action.payload
+          category => category.id !== action.payload
         )
       };
     default:

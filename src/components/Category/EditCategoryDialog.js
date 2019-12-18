@@ -23,7 +23,7 @@ function EditCategoryDialog(props) {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState({
     name: '',
-    categoryId: ''
+    id: ''
   });
 
   const [errors, setErrors] = useState({
@@ -37,10 +37,10 @@ function EditCategoryDialog(props) {
   }, [props.errors]);
 
   useEffect(() => {
-    const { name, categoryId } = props.category;
+    const { name, id } = props.category;
     setValues({
       name,
-      categoryId
+      id
     });
   }, [props.category]);
 
@@ -61,7 +61,7 @@ function EditCategoryDialog(props) {
   const onSubmit = () => {
     const category = {
       name: values.name,
-      categoryId: values.categoryId
+      id: values.id
     };
     props.editCategory(category);
     if (values.name) {

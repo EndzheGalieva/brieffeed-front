@@ -24,7 +24,7 @@ function EditBlogDialog(props) {
   const [values, setValues] = useState({
     name: '',
     description: '',
-    blogId: ''
+    id: ''
   });
 
   const [errors, setErrors] = useState({
@@ -41,11 +41,11 @@ function EditBlogDialog(props) {
   }, [props.errors]);
 
   useEffect(() => {
-    const { name, description, blogId } = props.blog;
+    const { name, description, id } = props.blog;
     setValues({
       name,
       description,
-      blogId
+      id
     });
   }, [props.blog]);
 
@@ -67,7 +67,7 @@ function EditBlogDialog(props) {
     const blog = {
       name: values.name,
       description: values.description,
-      blogId: values.blogId
+      id: values.id
     };
     props.editBlog(blog);
     if (values.name) {

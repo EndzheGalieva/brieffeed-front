@@ -79,7 +79,7 @@ class EditBlog extends Component {
           <List>
             {blogs.map(blog => (
               <div>
-                <ListItem key={blog.blogId}>
+                <ListItem key={blog.id}>
                   <ListItemText
                     primary={blog.name}
                     secondary={blog.description}
@@ -95,7 +95,7 @@ class EditBlog extends Component {
                           variant="outlined"
                           color="secondary"
                           onClick={() => {
-                            onDelClick(blog.blogId);
+                            onDelClick(blog.id);
                           }}
                         >
                           Delete

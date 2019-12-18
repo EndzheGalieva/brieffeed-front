@@ -76,7 +76,7 @@ class EditCategory extends Component {
           <List>
             {categories.map(category => (
               <div>
-                <ListItem key={category.categoryId}>
+                <ListItem key={category.id}>
                   <ListItemText primary={category.name} />
                   <div>
                     <small>
@@ -88,7 +88,7 @@ class EditCategory extends Component {
                         variant="outlined"
                         color="secondary"
                         onClick={() => {
-                          onDelClick(category.categoryId);
+                          onDelClick(category.id);
                         }}
                       >
                         Delete

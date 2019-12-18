@@ -52,7 +52,7 @@ class EditPost extends Component {
       status: '',
       user: {},
       comments: [],
-      postId: 0,
+      id: 0,
       errors: {
         title: ''
       },
@@ -83,7 +83,7 @@ class EditPost extends Component {
       status,
       author,
       comments,
-      postId
+      id
     } = this.props.post;
     this.setState({
       title,
@@ -93,7 +93,7 @@ class EditPost extends Component {
       status,
       author,
       comments,
-      postId
+      id
     });
   }
 
@@ -133,7 +133,7 @@ class EditPost extends Component {
       title: this.state.title,
       content: this.state.content,
       status: options[this.state.selectedIndex].toUpperCase(),
-      postId: this.state.postId
+      id: this.state.id
     };
     this.props.editPost(post, this.props.history);
   };

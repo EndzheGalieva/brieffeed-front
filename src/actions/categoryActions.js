@@ -29,9 +29,9 @@ export const getCategories = () => async dispatch => {
   });
 };
 
-export const getCategory = (categoryId) => async dispatch => {
+export const getCategory = (id) => async dispatch => {
   try {
-    const res = await axios.get(`/api/categories/${categoryId}`);
+    const res = await axios.get(`/api/categories/${id}`);
     dispatch({
       type: GET_CATEGORY,
       payload: res.data
@@ -46,7 +46,7 @@ export const getCategory = (categoryId) => async dispatch => {
 
 export const editCategory = (category) => async dispatch => {
   try {
-    await axios.patch(`/api/categories/${category.categoryId}`, category);
+    await axios.patch(`/api/categories/${category.id}`, category);
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
@@ -55,10 +55,10 @@ export const editCategory = (category) => async dispatch => {
   }
 };
 
-export const deleteCategory = categoryId => async dispatch => {
-  await axios.delete(`/api/categories/${categoryId}`);
+export const deleteCategory = id => async dispatch => {
+  await axios.delete(`/api/categories/${id}`);
   dispatch({
     type: DELETE_CATEGORY,
-    payload: categoryId
+    payload: id
   });
 };

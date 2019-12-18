@@ -52,7 +52,7 @@ class AddPost extends Component {
       status: '',
       user: {},
       comments: [],
-      postId: 0,
+      id: 0,
       errors: {},
       open: false,
       selectedIndex: 1

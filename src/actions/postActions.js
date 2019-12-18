@@ -36,9 +36,9 @@ export const getPosts = () => async dispatch => {
   //   .catch(err => console.error(err));
 };
 
-export const getPost = (postId, history) => async dispatch => {
+export const getPost = (id, history) => async dispatch => {
   try {
-    const res = await axios.get(`/api/posts/${postId}`);
+    const res = await axios.get(`/api/posts/${id}`);
     if (res.data == null) {
       history.push('/posts');
     } else {
@@ -54,7 +54,7 @@ export const getPost = (postId, history) => async dispatch => {
 
 export const editPost = (post, history) => async dispatch => {
   try {
-    await axios.patch(`/api/posts/${post.postId}`, post);
+    await axios.patch(`/api/posts/${post.id}`, post);
     history.push('/posts');
     dispatch({
       type: GET_ERRORS,
@@ -68,10 +68,10 @@ export const editPost = (post, history) => async dispatch => {
   }
 };
 
-export const deletePost = postId => async dispatch => {
-  await axios.delete(`/api/posts/${postId}`);
+export const deletePost = id => async dispatch => {
+  await axios.delete(`/api/posts/${id}`);
   dispatch({
     type: DELETE_POST,
-    payload: postId
+    payload: id
   });
 };

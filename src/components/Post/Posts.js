@@ -25,8 +25,8 @@ class Posts extends Component {
     this.props.getPosts();
   }
 
-  onDelClick = postId => {
-    this.props.deletePost(postId);
+  onDelClick = id => {
+    this.props.deletePost(id);
   };
 
   render() {
@@ -39,7 +39,7 @@ class Posts extends Component {
             {posts.map(post => (
               <ListItem
                 className="shortcuts_item"
-                key={post.postId}
+                key={post.id}
                 post={post}
               >
                 <article className="post post_preview" lang="ru">
@@ -62,7 +62,7 @@ class Posts extends Component {
                         <small>
                           <Button
                             component={Link}
-                            to={`/edit-post/${post.postId}`}
+                            to={`/edit-post/${post.id}`}
                             variant="outlined"
                             color="primary"
                           >
@@ -74,7 +74,7 @@ class Posts extends Component {
                             variant="outlined"
                             color="secondary"
                             onClick={() => {
-                              this.onDelClick(post.postId);
+                              this.onDelClick(post.id);
                             }}
                           >
                             Delete
@@ -85,7 +85,7 @@ class Posts extends Component {
                   </p>
                   <div className="post_body">
                     <h2 className="post_title">
-                      <Link to={`/post/${post.postId}`}>{post.title}</Link>
+                      <Link to={`/post/${post.id}`}>{post.title}</Link>
                     </h2>
                     <img className="post_img" src={`${post.image}`} alt="" />
                     <div className="post_description">
@@ -95,7 +95,7 @@ class Posts extends Component {
                       />
                     </div>
                   </div>
-                  <Link to={`/post/${post.postId}`}>[Читать дальше]</Link>
+                  <Link to={`/post/${post.id}`}>[Читать дальше]</Link>
                 </article>
               </ListItem>
             ))}

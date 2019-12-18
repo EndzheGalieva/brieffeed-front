@@ -23,8 +23,8 @@ class Categories extends Component {
     });
   }
 
-  onDelClick = categoryId => {
-    this.props.deleteCategory(categoryId);
+  onDelClick = id => {
+    this.props.deleteCategory(id);
   };
 
   render() {
@@ -40,7 +40,7 @@ class Categories extends Component {
         )}
         <List className={classes.list}>
           {categories.map(category => (
-            <CategoryItem key={category.categoryId} category={category} />
+            <CategoryItem key={category.id} category={category} />
           ))}
         </List>
       </div>

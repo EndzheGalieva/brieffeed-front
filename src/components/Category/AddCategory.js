@@ -23,7 +23,7 @@ function AddCategory(props) {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState({
     name: '',
-    categoryId: ''
+    id: ''
   });
 
   const [errors, setErrors] = useState({

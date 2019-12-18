@@ -24,8 +24,8 @@ class Blogs extends Component {
     });
   }
 
-  onDelClick = blogId => {
-    this.props.deleteBlog(blogId);
+  onDelClick = id => {
+    this.props.deleteBlog(id);
   };
 
   render() {
@@ -39,7 +39,7 @@ class Blogs extends Component {
           )}
           <List className={classes.list}>
             {blogs.map(blog => (
-              <BlogItem key={blog.blogId} blog={blog} />
+              <BlogItem key={blog.id} blog={blog} />
             ))}
           </List>
         </Grid>

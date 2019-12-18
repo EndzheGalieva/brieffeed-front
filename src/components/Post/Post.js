@@ -24,8 +24,8 @@ class Post extends Component {
     this.props.getPost(id, this.props.history);
   }
 
-  onDelClick = postId => {
-    this.props.deletePost(postId);
+  onDelClick = id => {
+    this.props.deletePost(id);
   };
 
   render() {
@@ -54,7 +54,7 @@ class Post extends Component {
                   <small>
                     <Button
                       component={Link}
-                      to={`/edit-post/${post.postId}`}
+                      to={`/edit-post/${post.id}`}
                       variant="outlined"
                       color="primary"
                     >
@@ -68,7 +68,7 @@ class Post extends Component {
                       variant="outlined"
                       color="secondary"
                       onClick={() => {
-                        this.onDelClick(post.postId);
+                        this.onDelClick(post.id);
                       }}
                     >
                       Delete
