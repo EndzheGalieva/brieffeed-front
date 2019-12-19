@@ -13,9 +13,6 @@ import {
   ListItemText
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { getBlogs, deleteBlog } from '../../actions/blogActions';
-import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AddBlog from './AddBlog';
 import EditBlogDialog from './EditBlogDialog';
@@ -84,25 +81,21 @@ class EditBlog extends Component {
                     primary={blog.name}
                     secondary={blog.description}
                   />
-                  {this.props.security.user.username === blog.author && (
-                    <div>
-                      <small>
-                        <EditBlogDialog blog={blog} />
-                      </small>
-                      <small>
-                        <Button
-                          component={Link}
-                          variant="outlined"
-                          color="secondary"
-                          onClick={() => {
-                            onDelClick(blog.id);
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </small>
-                    </div>
-                  )}
+                  <small>
+                    <EditBlogDialog blog={blog} />
+                  </small>
+                  <small>
+                    <Button
+                      component={Link}
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        onDelClick(blog.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </small>
                 </ListItem>
                 <Divider />
               </div>
@@ -115,19 +108,4 @@ class EditBlog extends Component {
   }
 }
 
-EditBlog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  getBlogs: PropTypes.func.isRequired,
-  deleteBlog: PropTypes.func.isRequired,
-  security: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  security: state.security,
-  blog: state.blog
-});
-
-export default connect(
-  mapStateToProps,
-  { getBlogs, deleteBlog }
-)(styles(EditBlog));
+export default styles(EditBlog);

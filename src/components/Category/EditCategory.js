@@ -78,23 +78,21 @@ class EditCategory extends Component {
               <div>
                 <ListItem key={category.id}>
                   <ListItemText primary={category.name} />
-                  <div>
-                    <small>
-                      <EditCategoryDialog category={category} />
-                    </small>
-                    <small>
-                      <Button
-                        component={Link}
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {
-                          onDelClick(category.id);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </small>
-                  </div>
+                  <small>
+                    <EditCategoryDialog category={category} />
+                  </small>
+                  <small>
+                    <Button
+                      component={Link}
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        onDelClick(category.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </small>
                 </ListItem>
                 <Divider />
               </div>
