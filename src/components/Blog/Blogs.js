@@ -63,7 +63,6 @@ const mapStateToProps = state => ({
   security: state.security
 });
 
-export default connect(
-  mapStateToProps,
-  { getBlogs, deleteBlog }
-)(styles(Blogs));
+export default connect(mapStateToProps, { getBlogs, deleteBlog })(
+  styles(Blogs)
+);

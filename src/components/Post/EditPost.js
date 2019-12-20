@@ -153,7 +153,6 @@ class EditPost extends Component {
           >
             <TextField
               required
-              id="standard-required"
               error={errors.title}
               label="Title"
               className={classes.textField}
@@ -165,14 +164,12 @@ class EditPost extends Component {
               helperText={errors.title}
             />
             <TextField
-              id="standard-required"
               label="Tags"
               className={classes.textField}
               margin="normal"
               helperText="Separate tags with commas"
             />
             <TextField
-              id="standard-select-category"
               select
               label="Category"
               className={classes.textField}

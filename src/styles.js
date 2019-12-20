@@ -1,6 +1,10 @@
 import { withStyles, fade } from '@material-ui/core/styles';
 
 const styles = theme => ({
+  // general
+  addButton: {
+    marginLeft: theme.spacing(2)
+  },
   // header
   grow: {
     flexGrow: 1
@@ -93,9 +97,6 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     margin: theme.spacing(4, 1, 2)
-  },
-  addButton: {
-    marginLeft: theme.spacing(2)
   },
   // edit dialog
   dialogTitle: {

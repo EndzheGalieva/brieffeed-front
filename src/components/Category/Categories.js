@@ -15,12 +15,8 @@ class Categories extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.getCategories();
-    const { categories } = this.props.category;
-    this.setState({
-      categories
-    });
   }
 
   onDelClick = id => {
@@ -60,7 +56,6 @@ const mapStateToProps = state => ({
   category: state.category
 });
 
-export default connect(
-  mapStateToProps,
-  { getCategories, deleteCategory }
-)(styles(Categories));
+export default connect(mapStateToProps, { getCategories, deleteCategory })(
+  styles(Categories)
+);

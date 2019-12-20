@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { createBlog, getBlogs } from '../../actions/blogActions';
+import React, { Component, createRef } from 'react';
+import { createBlog } from '../../actions/blogActions';
+import { getCategories } from '../../actions/categoryActions';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -9,128 +9,157 @@ import {
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions
+  DialogActions,
+  MenuItem
 } from '@material-ui/core';
+import styles from '../../styles';
 
-const useStyles = makeStyles(theme => ({
-  addButton: {
-    marginLeft: theme.spacing(2)
-  }
-}));
-
-function AddBlog(props) {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [values, setValues] = useState({
-    name: '',
-    description: '',
-    categoryId: ''
-  });
-
-  const [errors, setErrors] = useState({
-    name: '',
-    description: ''
-  });
-
-  useEffect(() => {
-    if (props.errors) {
-      setErrors({
-        name: props.errors.name,
-        description: props.errors.description
-      });
-    }
-  }, [props.errors]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleChange = name => event => {
-    const data = event.target.value;
-    setErrors({ ...errors, [name]: !data });
-    setValues({ ...values, [name]: data });
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setValues({});
-  };
-
-  const onSubmit = () => {
-    const blog = {
-      name: values.name,
-      description: values.description
+class AddBlog extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      description: '',
+      categoryId: '',
+      errors: {},
+      open: false,
+      selectedIndex: 1
     };
-    props.createBlog(blog, props.history);
-    if (values.name && values.description) {
-      handleClose();
+  }
+
+  anchorRef = createRef(null);
+
+  async componentDidMount() {
+    this.props.getCategories();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.errors !== prevProps.errors) {
+      this.setState({ errors: { ...this.props.errors } });
+    }
+  }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleChange = name => event => {
+    const data = event.target.value;
+    this.setState({ ...this.state.errors, [name]: !data });
+    this.setState({ ...this.state, [name]: data });
+  };
+
+  handleClose = event => {
+    if (
+      this.anchorRef.current &&
+      this.anchorRef.current.contains(event.target)
+    ) {
+      return;
+    }
+    this.setState({ open: false });
+  };
+
+  onSubmit = () => {
+    const blog = {
+      name: this.state.name,
+      description: this.state.description,
+      categoryId: this.state.selectedIndex
+    };
+    this.props.createBlog(blog, this.props.history);
+    if (this.state.name && this.state.description) {
+      this.handleClose();
     }
   };
-  return (
-    <div>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleClickOpen}
-        className={classes.addButton}
-      >
-        Add Blog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        autoComplete="off"
-      >
-        <DialogTitle id="form-dialog-title">Add Blog</DialogTitle>
-        <DialogContent>
-          <TextField
-            required
-            error={errors.name}
-            margin="dense"
-            id="name"
-            label="Blog Name"
-            value={values.name}
-            onChange={handleChange('name')}
-            name="name"
-            helperText={errors.name}
-            fullWidth
-          />
-          <TextField
-            required
-            error={errors.description}
-            margin="dense"
-            id="description"
-            label="Blog Description"
-            value={values.description}
-            onChange={handleChange('description')}
-            name="description"
-            helperText={errors.description}
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onSubmit} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+  render() {
+    const { classes } = this.props;
+    const { categories } = this.props.category;
+    const { errors } = this.state;
+    return (
+      <div>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={this.handleClickOpen}
+          className={classes.addButton}
+        >
+          Add Blog
+        </Button>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+          autoComplete="off"
+        >
+          <DialogTitle>Add Blog</DialogTitle>
+          <DialogContent>
+            <TextField
+              select
+              label="Category"
+              className={classes.textField}
+              value={this.state.selectedIndex}
+              onChange={this.handleChange('selectedIndex')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu
+                }
+              }}
+              helperText="Please select your category"
+              margin="normal"
+            >
+              {categories.map(category => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              required
+              error={errors.name}
+              margin="dense"
+              id="name"
+              label="Blog Name"
+              value={this.state.name}
+              onChange={this.handleChange('name')}
+              name="name"
+              helperText={errors.name}
+              fullWidth
+            />
+            <TextField
+              required
+              error={errors.description}
+              margin="dense"
+              id="description"
+              label="Blog Description"
+              value={this.state.description}
+              onChange={this.handleChange('description')}
+              name="description"
+              helperText={errors.description}
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.onSubmit} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
 }
 
 AddBlog.propTypes = {
   createBlog: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  blogs: PropTypes.object.isRequired,
-  blog: PropTypes.object.isRequired,
-  getBlogs: PropTypes.func.isRequired
+  category: PropTypes.object.isRequired,
+  getCategories: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  blogs: state.blogs,
-  blog: state.blog
+  category: state.category
 });
 
-export default connect(mapStateToProps, { getBlogs, createBlog })(AddBlog);
+export default connect(mapStateToProps, { getCategories, createBlog })(
+  styles(AddBlog)
+);
