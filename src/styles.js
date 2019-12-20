@@ -2,6 +2,12 @@ import { withStyles, fade } from '@material-ui/core/styles';
 
 const styles = theme => ({
   // general
+  textField: {
+    width: 'auto',
+    minWidth: theme.spacing(30),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
+  },
   addButton: {
     marginLeft: theme.spacing(2)
   },
@@ -153,10 +159,6 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap'
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
   },
   dense: {
     marginTop: 19

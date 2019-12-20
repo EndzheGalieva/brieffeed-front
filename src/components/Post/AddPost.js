@@ -16,28 +16,10 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
+import { getBlogs } from '../../actions/blogActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styles from '../../styles';
-
-const categories = [
-  {
-    value: 0,
-    label: 'category 1'
-  },
-  {
-    value: 1,
-    label: 'category 2'
-  },
-  {
-    value: 2,
-    label: 'category 3'
-  },
-  {
-    value: 3,
-    label: 'category 4'
-  }
-];
 
 const options = ['Publish', 'Draft'];
 
@@ -53,6 +35,7 @@ class AddPost extends Component {
       user: {},
       comments: [],
       id: 0,
+      blogId: null,
       errors: {},
       open: false,
       selectedIndex: 1
@@ -61,16 +44,20 @@ class AddPost extends Component {
 
   anchorRef = createRef(null);
 
-  handleChange = name => event => {
-    const data = event.target.value;
-    this.setState({ ...this.state, [name]: data });
-  };
+  componentDidMount() {
+    this.props.getBlogs();
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
       this.setState({ errors: { ...this.props.errors } });
     }
   }
+
+  handleChange = name => event => {
+    const data = event.target.value;
+    this.setState({ ...this.state, [name]: data });
+  };
 
   handleMenuItemClick = (event, index) => {
     this.setState({ selectedIndex: index });
@@ -101,13 +88,15 @@ class AddPost extends Component {
     const post = {
       title: this.state.title,
       content: this.state.content,
-      status: options[this.state.selectedIndex].toUpperCase()
+      status: options[this.state.selectedIndex].toUpperCase(),
+      blogId: this.state.blogId
     };
     this.props.createPost(post, this.props.history);
   };
 
   render() {
     const { classes } = this.props;
+    const { blogs } = this.props.blog;
     const { errors } = this.state;
     return (
       <div>
@@ -121,7 +110,6 @@ class AddPost extends Component {
           >
             <TextField
               required
-              id="standard-required"
               error={errors.title}
               label="Title"
               className={classes.textField}
@@ -132,30 +120,30 @@ class AddPost extends Component {
               helperText={errors.title}
             />
             <TextField
-              id="standard-required"
               label="Tags"
               className={classes.textField}
               margin="normal"
               helperText="Separate tags with commas"
             />
             <TextField
-              id="standard-select-category"
               select
-              label="Category"
+              required
+              error={errors.blogId}
+              label="Blog"
               className={classes.textField}
-              value={this.state.category}
-              onChange={this.handleChange('category')}
+              value={this.state.blogId}
+              onChange={this.handleChange('blogId')}
               SelectProps={{
                 MenuProps: {
                   className: classes.menu
                 }
               }}
-              helperText="Please select your category"
+              helperText={errors.blogId}
               margin="normal"
             >
-              {categories.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {blogs.map(blog => (
+                <MenuItem key={blog.id} value={blog.id}>
+                  {blog.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -243,17 +231,19 @@ class AddPost extends Component {
 }
 
 AddPost.propTypes = {
+  getBlogs: PropTypes.func.isRequired,
   createPost: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  blog: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  errors: state.errors,
-  post: state.post
+  blog: state.blog,
+  post: state.post,
+  errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { createPost }
-)(styles(AddPost));
+export default connect(mapStateToProps, { getBlogs, createPost })(
+  styles(AddPost)
+);

@@ -21,7 +21,7 @@ class EditBlogDialog extends Component {
       name: '',
       description: '',
       id: 0,
-      categoryId: 1,
+      categoryId: 0,
       open: false,
       errors: {}
     };
@@ -94,10 +94,12 @@ class EditBlogDialog extends Component {
           aria-labelledby="form-dialog-title"
           autoComplete="off"
         >
-          <DialogTitle id="form-dialog-title">Edit Blog</DialogTitle>
+          <DialogTitle>Edit Blog</DialogTitle>
           <DialogContent>
             <TextField
               select
+              required
+              error={errors.categoryId}
               label="Category"
               className={classes.textField}
               value={this.state.categoryId}
@@ -107,7 +109,7 @@ class EditBlogDialog extends Component {
                   className: classes.menu
                 }
               }}
-              helperText="Please select your category"
+              helperText={errors.categoryId}
               margin="normal"
             >
               {categories.map(category => (

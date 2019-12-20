@@ -35,7 +35,7 @@ class EditPost extends Component {
       user: {},
       comments: [],
       id: 0,
-      blogId: 1,
+      blogId: 0,
       errors: {
         title: ''
       },
@@ -159,6 +159,8 @@ class EditPost extends Component {
             />
             <TextField
               select
+              required
+              error={errors.blogId}
               label="Blog"
               className={classes.textField}
               value={this.state.blogId}
@@ -168,7 +170,7 @@ class EditPost extends Component {
                   className: classes.menu
                 }
               }}
-              helperText="Please select your category"
+              helperText={errors.blogId}
               margin="normal"
             >
               {blogs.map(blog => (

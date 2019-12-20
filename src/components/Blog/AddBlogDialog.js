@@ -20,7 +20,7 @@ class AddBlog extends Component {
     this.state = {
       name: '',
       description: '',
-      categoryId: 1,
+      categoryId: null,
       errors: {},
       open: false
     };
@@ -52,7 +52,7 @@ class AddBlog extends Component {
     ) {
       return;
     }
-    this.setState({ name: '', description: '', categoryId: 1, open: false });
+    this.setState({ name: '', description: '', categoryId: null, open: false });
   };
 
   onSubmit = () => {
@@ -91,6 +91,8 @@ class AddBlog extends Component {
           <DialogContent>
             <TextField
               select
+              required
+              error={errors.categoryId}
               label="Category"
               className={classes.textField}
               value={this.state.categoryId}
@@ -100,7 +102,7 @@ class AddBlog extends Component {
                   className: classes.menu
                 }
               }}
-              helperText="Please select your category"
+              helperText={errors.categoryId}
               margin="normal"
             >
               {categories.map(category => (
