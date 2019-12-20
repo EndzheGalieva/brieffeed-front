@@ -16,28 +16,10 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPost, editPost } from '../../actions/postActions';
+import { getBlogs } from '../../actions/blogActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styles from '../../styles';
-
-const categories = [
-  {
-    value: 0,
-    label: 'category 1'
-  },
-  {
-    value: 1,
-    label: 'category 2'
-  },
-  {
-    value: 2,
-    label: 'category 3'
-  },
-  {
-    value: 3,
-    label: 'category 4'
-  }
-];
 
 const options = ['Publish', 'Draft'];
 
@@ -53,6 +35,7 @@ class EditPost extends Component {
       user: {},
       comments: [],
       id: 0,
+      blogId: 1,
       errors: {
         title: ''
       },
@@ -66,6 +49,7 @@ class EditPost extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.getPost(id, this.props.history);
+    this.props.getBlogs();
   }
 
   componentWillReceiveProps() {
@@ -83,7 +67,8 @@ class EditPost extends Component {
       status,
       author,
       comments,
-      id
+      id,
+      blogId
     } = this.props.post;
     this.setState({
       title,
@@ -93,7 +78,8 @@ class EditPost extends Component {
       status,
       author,
       comments,
-      id
+      id,
+      blogId
     });
   }
 
@@ -133,13 +119,15 @@ class EditPost extends Component {
       title: this.state.title,
       content: this.state.content,
       status: options[this.state.selectedIndex].toUpperCase(),
-      id: this.state.id
+      id: this.state.id,
+      blogId: this.state.blogId
     };
     this.props.editPost(post, this.props.history);
   };
 
   render() {
     const { classes } = this.props;
+    const { blogs } = this.props.blog;
     const { post, errors } = this.props;
     return (
       <div>
@@ -171,10 +159,10 @@ class EditPost extends Component {
             />
             <TextField
               select
-              label="Category"
+              label="Blog"
               className={classes.textField}
-              value={this.state.category}
-              onChange={this.handleChange('category')}
+              value={this.state.blogId}
+              onChange={this.handleChange('blogId')}
               SelectProps={{
                 MenuProps: {
                   className: classes.menu
@@ -183,9 +171,9 @@ class EditPost extends Component {
               helperText="Please select your category"
               margin="normal"
             >
-              {categories.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {blogs.map(blog => (
+                <MenuItem key={blog.id} value={blog.id}>
+                  {blog.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -275,18 +263,21 @@ class EditPost extends Component {
 
 EditPost.propTypes = {
   getPost: PropTypes.func.isRequired,
+  getBlogs: PropTypes.func.isRequired,
   editPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  blog: PropTypes.object.isRequired,
   security: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   post: state.post.post,
+  blog: state.blog,
   security: state.security,
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getPost, editPost })(
+export default connect(mapStateToProps, { getPost, getBlogs, editPost })(
   styles(EditPost)
 );
