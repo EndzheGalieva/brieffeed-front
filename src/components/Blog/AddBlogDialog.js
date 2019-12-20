@@ -20,18 +20,13 @@ class AddBlog extends Component {
     this.state = {
       name: '',
       description: '',
-      categoryId: '',
+      categoryId: 1,
       errors: {},
-      open: false,
-      selectedIndex: 1
+      open: false
     };
   }
 
   anchorRef = createRef(null);
-
-  async componentDidMount() {
-    this.props.getCategories();
-  }
 
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
@@ -39,7 +34,8 @@ class AddBlog extends Component {
     }
   }
 
-  handleClickOpen = () => {
+  handleClickOpen = () => {    
+    this.props.getCategories();
     this.setState({ open: true });
   };
 
@@ -56,20 +52,21 @@ class AddBlog extends Component {
     ) {
       return;
     }
-    this.setState({ open: false });
+    this.setState({ name: '', description: '', categoryId: 1, open: false });
   };
 
   onSubmit = () => {
     const blog = {
       name: this.state.name,
       description: this.state.description,
-      categoryId: this.state.selectedIndex
+      categoryId: this.state.categoryId
     };
-    this.props.createBlog(blog, this.props.history);
+    this.props.createBlog(blog);
     if (this.state.name && this.state.description) {
       this.handleClose();
     }
   };
+
   render() {
     const { classes } = this.props;
     const { categories } = this.props.category;
@@ -96,8 +93,8 @@ class AddBlog extends Component {
               select
               label="Category"
               className={classes.textField}
-              value={this.state.selectedIndex}
-              onChange={this.handleChange('selectedIndex')}
+              value={this.state.categoryId}
+              onChange={this.handleChange('categoryId')}
               SelectProps={{
                 MenuProps: {
                   className: classes.menu
