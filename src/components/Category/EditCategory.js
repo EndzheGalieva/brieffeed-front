@@ -13,7 +13,7 @@ import {
   ListItem
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import AddCategory from './AddCategory';
+import AddCategoryDialog from './AddCategoryDialog';
 import { Link } from 'react-router-dom';
 import EditCategoryDialog from './EditCategoryDialog';
 import styles from '../../styles';
@@ -98,7 +98,7 @@ class EditCategory extends Component {
               </div>
             ))}
           </List>
-          <AddCategory />
+          <AddCategoryDialog />
         </Dialog>
       </div>
     );
