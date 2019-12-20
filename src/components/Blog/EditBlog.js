@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';
-import AddBlog from './AddBlog';
+import AddBlogDialog from './AddBlogDialog';
 import EditBlogDialog from './EditBlogDialog';
 import styles from '../../styles';
 
@@ -101,7 +101,7 @@ class EditBlog extends Component {
               </div>
             ))}
           </List>
-          <AddBlog />
+          <AddBlogDialog />
         </Dialog>
       </div>
     );
