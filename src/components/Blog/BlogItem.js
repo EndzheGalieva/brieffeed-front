@@ -38,11 +38,6 @@ class BlogItem extends Component {
                     {blog.description}
                   </Typography>
                 </Grid>
-                <Grid item>
-                  <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    Remove
-                  </Typography>
-                </Grid>
               </Grid>
             </Grid>
           </Grid>

@@ -134,8 +134,8 @@ const styles = theme => ({
     maxWidth: 500
   },
   blogImage: {
-    width: 128,
-    height: 128
+    width: 64,
+    height: 64
   },
   img: {
     margin: 'auto',
