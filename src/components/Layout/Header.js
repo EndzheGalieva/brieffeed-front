@@ -14,7 +14,8 @@ import {
   Icon,
   Grid,
   Avatar,
-  Tooltip
+  Tooltip,
+  Container
 } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
@@ -163,67 +164,68 @@ function Header(props) {
   return (
     <div className={classes.grow}>
       <AppBar position="static">
-        <Toolbar>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
-          </div>
-          <Tooltip title="Главная страница">
-            <Typography
-              variant="h4"
-              to="/"
-              className={classes.title}
-              component={Link}
-              noWrap
-            >
-              Brieffeed
-            </Typography>
-          </Tooltip>
-
-          <div className={classes.flex}></div>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+        <Container className={classes.headerContainer}>
+          <Toolbar>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="open drawer"
+              >
+                <MenuIcon />
+              </IconButton>
             </div>
-            <InputBase
-              placeholder="Поиск…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div />
-          <div className={classes.sectionDesktop}>
-            <Button component={Link} to="/posts" color="inherit">
-              Посты
-            </Button>
-            <Button component={Link} to="/blogs" color="inherit">
-              Блоги
-            </Button>
-            {/* <Button component={Link} to="/news" color="inherit">
+            <Tooltip title="Главная страница">
+              <Typography
+                variant="h4"
+                to="/"
+                className={classes.title}
+                component={Link}
+                noWrap
+              >
+                Brieffeed
+              </Typography>
+            </Tooltip>
+
+            <div className={classes.flex}></div>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Поиск…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </div>
+            <div />
+            <div className={classes.sectionDesktop}>
+              <Button component={Link} to="/posts" color="inherit">
+                Посты
+              </Button>
+              <Button component={Link} to="/blogs" color="inherit">
+                Блоги
+              </Button>
+              {/* <Button component={Link} to="/news" color="inherit">
               Новости
             </Button> */}
-            {auth && (
-              <div>
-                <Tooltip title="Написать">
-                  <IconButton
-                    component={Link}
-                    to="/add-post"
-                    color="inherit"
-                    aria-label="add"
-                  >
-                    <AddCircleIcon />
-                  </IconButton>
-                </Tooltip>
-                {/* <Tooltip title="Уведомления">
+              {auth && (
+                <div>
+                  <Tooltip title="Написать">
+                    <IconButton
+                      component={Link}
+                      to="/add-post"
+                      color="inherit"
+                      aria-label="add"
+                    >
+                      <AddCircleIcon />
+                    </IconButton>
+                  </Tooltip>
+                  {/* <Tooltip title="Уведомления">
                   <IconButton
                     component={Link}
                     to="/notifications"
@@ -235,59 +237,60 @@ function Header(props) {
                     </Badge>
                   </IconButton>
                 </Tooltip> */}
-                <Tooltip title="Профиль">
-                  <IconButton
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
-                  >
-                    <Grid container justify="center" alignItems="center">
-                      <Avatar
-                        alt="airat"
-                        src="https://avatars0.githubusercontent.com/u/8280416?s=480&v=4"
-                        className={classes.avatar}
-                      />
-                    </Grid>
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Выйти">
-                  <IconButton
-                    color="inherit"
-                    aria-label="logout"
-                    component={Link}
-                    to="/"
-                    onClick={logout}
-                  >
-                    <MeetingRoomIcon />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            )}
-            {!auth && (
-              <div>
-                <Button component={Link} to="/login" color="inherit">
-                  Войти
-                </Button>
-                <Button component={Link} to="/signup" color="inherit">
-                  Регистрация
-                </Button>
-              </div>
-            )}
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
+                  <Tooltip title="Профиль">
+                    <IconButton
+                      edge="end"
+                      aria-label="account of current user"
+                      aria-controls={menuId}
+                      aria-haspopup="true"
+                      onClick={handleProfileMenuOpen}
+                    >
+                      <Grid container justify="center" alignItems="center">
+                        <Avatar
+                          alt="airat"
+                          src="https://avatars0.githubusercontent.com/u/8280416?s=480&v=4"
+                          className={classes.avatar}
+                        />
+                      </Grid>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Выйти">
+                    <IconButton
+                      color="inherit"
+                      aria-label="logout"
+                      component={Link}
+                      to="/"
+                      onClick={logout}
+                    >
+                      <MeetingRoomIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              )}
+              {!auth && (
+                <div>
+                  <Button component={Link} to="/login" color="inherit">
+                    Войти
+                  </Button>
+                  <Button component={Link} to="/signup" color="inherit">
+                    Регистрация
+                  </Button>
+                </div>
+              )}
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </Container>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
@@ -304,7 +307,4 @@ const mapStateToProps = state => ({
   security: state.security
 });
 
-export default connect(
-  mapStateToProps,
-  { logout }
-)(styles(Header));
+export default connect(mapStateToProps, { logout })(styles(Header));

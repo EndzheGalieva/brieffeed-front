@@ -15,6 +15,10 @@ const styles = theme => ({
   grow: {
     flexGrow: 1
   },
+  headerContainer: {
+    maxWidth: 1200,
+    justifyContent: 'center'
+  },
   menuButton: {
     marginRight: theme.spacing(2)
   },
