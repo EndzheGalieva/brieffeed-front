@@ -16,7 +16,7 @@ class BlogItem extends Component {
     const { classes } = this.props;
     const { blog } = this.props;
     return (
-      <ListItem>
+      <ListItem key={blog.id}>
         <Paper className={classes.blogPaper}>
           <Grid container spacing={2}>
             <Grid item>

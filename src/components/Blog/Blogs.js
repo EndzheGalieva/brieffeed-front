@@ -29,7 +29,7 @@ class Blogs extends Component {
   };
 
   render() {
-    const classes = this.props;
+    const { classes } = this.props;
     const { blogs } = this.props.blog;
     return (
       <Grid container className={classes.blog}>
@@ -37,9 +37,9 @@ class Blogs extends Component {
           {this.props.security.user.role === 'AUTHOR' && (
             <EditBlog blogs={blogs} onDelClick={this.onDelClick} />
           )}
-          <List className={classes.list}>
+          <List>
             {blogs.map(blog => (
-              <BlogItem key={blog.id} blog={blog} />
+              <BlogItem blog={blog} />
             ))}
           </List>
         </Grid>

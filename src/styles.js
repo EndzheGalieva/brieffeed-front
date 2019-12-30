@@ -134,8 +134,7 @@ const styles = theme => ({
   blogPaper: {
     flexGrow: 1,
     padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 500
+    margin: 'auto'
   },
   blogImage: {
     width: 64,
