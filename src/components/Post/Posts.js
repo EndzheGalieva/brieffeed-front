@@ -1,11 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Chip,
-  List,
-  ListItem,
-  Grid
-} from '@material-ui/core';
+import { Avatar, Button, Chip, List, ListItem, Grid } from '@material-ui/core';
 import Interweave from 'interweave';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -37,11 +30,7 @@ class Posts extends Component {
         <Grid item xs={12} md={9} className={classes.postItem}>
           <List>
             {posts.map(post => (
-              <ListItem
-                className="shortcuts_item"
-                key={post.id}
-                post={post}
-              >
+              <ListItem className="shortcuts_item" key={post.id}>
                 <article className="post post_preview" lang="ru">
                   <p className="post_meta">
                     <small className="post_user">
@@ -61,6 +50,7 @@ class Posts extends Component {
                       <div>
                         <small>
                           <Button
+                            size="small"
                             component={Link}
                             to={`/edit-post/${post.id}`}
                             variant="outlined"
@@ -71,6 +61,7 @@ class Posts extends Component {
                         </small>
                         <small>
                           <Button
+                            size="small"
                             variant="outlined"
                             color="secondary"
                             onClick={() => {
@@ -85,7 +76,9 @@ class Posts extends Component {
                   </p>
                   <div className="post_body">
                     <h2 className="post_title">
-                      <Link to={`/post/${post.id}`}>{post.title}</Link>
+                      <Link className={classes.link} to={`/post/${post.id}`}>
+                        {post.title}
+                      </Link>
                     </h2>
                     <img className="post_img" src={`${post.image}`} alt="" />
                     <div className="post_description">
@@ -95,7 +88,9 @@ class Posts extends Component {
                       />
                     </div>
                   </div>
-                  <Link to={`/post/${post.id}`}>[Читать дальше]</Link>
+                  <Link className={classes.link} to={`/post/${post.id}`}>
+                    [Читать дальше]
+                  </Link>
                 </article>
               </ListItem>
             ))}

@@ -1,6 +1,25 @@
 import { withStyles, fade } from '@material-ui/core/styles';
+import { blue } from '@material-ui/core/colors';
 
 const styles = theme => ({
+  '@global': {
+    img: {
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%'
+    },
+    a: {
+      color: 'black',
+      textDecoration: 'none',
+      '&:hover': {
+        color: blue[500]
+      }
+    },
+    header: {
+      color: blue[500]
+    }
+  },
   // general
   textField: {
     width: 'auto',
@@ -140,12 +159,6 @@ const styles = theme => ({
     width: 64,
     height: 64
   },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%'
-  },
   // posts
   post: {
     display: 'flex',
@@ -176,10 +189,6 @@ const styles = theme => ({
     display: 'none'
   },
   //signUp
-  signUpHeader: {
-    display: 'flex',
-    position: 'relative'
-  },
   signUpContainer: {
     display: 'flex',
     textAlign: 'center',
@@ -187,16 +196,20 @@ const styles = theme => ({
     justify: 'center',
     alignItems: 'center'
   },
-  //login
-  loginHeader: {
-    display: 'flex',
-    position: 'relative'
+  signUpFormControl: {
+    marginTop: theme.spacing(5),
+    alignItems: 'center'
   },
+  //login
   loginContainer: {
     display: 'flex',
     textAlign: 'center',
     marginTop: theme.spacing(5),
     justify: 'center',
+    alignItems: 'center'
+  },
+  loginFormControl: {
+    marginTop: theme.spacing(5),
     alignItems: 'center'
   }
 });

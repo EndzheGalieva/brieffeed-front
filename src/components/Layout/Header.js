@@ -163,7 +163,7 @@ function Header(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar color='default' className={classes.appBar} position="static">
         <Container className={classes.headerContainer}>
           <Toolbar>
             <div className={classes.sectionMobile}>

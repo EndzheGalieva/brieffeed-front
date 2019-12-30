@@ -61,12 +61,12 @@ class Login extends Component {
     return (
       <Grid container direction="column" className={classes.loginContainer}>
         <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom classname={classes.loginHeader}>
+          <Typography variant="h5" gutterBottom>
             Login
           </Typography>
           <Container maxWidth="lg">
             <FormControl
-              className={classes.loginContainer}
+              className={classes.loginFormControl}
               noValidate
               autoComplete="off"
               onSubmit={this.onSubmit}
@@ -128,7 +128,4 @@ const mapStateProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateProps,
-  { login }
-)(styles(Login));
+export default connect(mapStateProps, { login })(styles(Login));

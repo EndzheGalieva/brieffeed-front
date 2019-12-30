@@ -57,16 +57,12 @@ class SignUp extends Component {
     return (
       <Grid container direction="column" className={classes.signUpContainer}>
         <Grid item xs={12}>
-          <Typography
-            variant="h5"
-            gutterBottom
-            classname={classes.signUpHeader}
-          >
+          <Typography variant="h5" gutterBottom>
             Sign Up
           </Typography>
           <Container maxWidth="lg">
             <FormControl
-              className={classes.signUpContainer}
+              className={classes.signUpFormControl}
               noValidate
               autoComplete="off"
               onSubmit={this.onSubmit}
@@ -176,7 +172,4 @@ const mapStateToprops = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToprops,
-  { createNewUser }
-)(styles(SignUp));
+export default connect(mapStateToprops, { createNewUser })(styles(SignUp));

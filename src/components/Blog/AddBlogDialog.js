@@ -34,7 +34,7 @@ class AddBlog extends Component {
     }
   }
 
-  handleClickOpen = () => {    
+  handleClickOpen = () => {
     this.props.getCategories();
     this.setState({ open: true });
   };
@@ -74,6 +74,7 @@ class AddBlog extends Component {
     return (
       <div>
         <Button
+          size="small"
           variant="outlined"
           color="primary"
           onClick={this.handleClickOpen}

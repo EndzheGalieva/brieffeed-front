@@ -81,21 +81,18 @@ class EditBlog extends Component {
                     primary={blog.name}
                     secondary={blog.description}
                   />
-                  <small>
-                    <EditBlogDialog blog={blog} />
-                  </small>
-                  <small>
-                    <Button
-                      component={Link}
-                      variant="outlined"
-                      color="secondary"
-                      onClick={() => {
-                        onDelClick(blog.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </small>
+                  <EditBlogDialog blog={blog} />
+                  <Button
+                    size="small"
+                    component={Link}
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => {
+                      onDelClick(blog.id);
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </ListItem>
                 <Divider />
               </div>

@@ -36,7 +36,7 @@ class EditBlogDialog extends Component {
   }
 
   componentWillReceiveProps() {
-    const { name, description, id, categoryId } = this.props.blog;    
+    const { name, description, id, categoryId } = this.props.blog;
     this.setState({ name, description, id, categoryId });
   }
 
@@ -81,6 +81,7 @@ class EditBlogDialog extends Component {
     return (
       <div>
         <Button
+          size="small"
           variant="outlined"
           color="primary"
           onClick={this.handleClickOpen}

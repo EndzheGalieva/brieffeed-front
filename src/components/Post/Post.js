@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getPost, deletePost } from '../../actions/postActions';
 import PropTypes from 'prop-types';
-import {
-  Chip,
-  Avatar,
-  Button,
-  Typography,
-  Grid
-} from '@material-ui/core';
+import { Chip, Avatar, Button, Typography, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
 import styles from '../../styles';
@@ -53,6 +47,7 @@ class Post extends Component {
                 <div>
                   <small>
                     <Button
+                      size="small"
                       component={Link}
                       to={`/edit-post/${post.id}`}
                       variant="outlined"
@@ -63,6 +58,7 @@ class Post extends Component {
                   </small>
                   <small>
                     <Button
+                      size="small"
                       component={Link}
                       to={`/posts`}
                       variant="outlined"
@@ -108,6 +104,4 @@ const mapStateToProps = state => ({
   post: state.post
 });
 
-export default connect(mapStateToProps, { getPost, deletePost })(
-  styles(Post)
-);
+export default connect(mapStateToProps, { getPost, deletePost })(styles(Post));
