@@ -26,7 +26,7 @@ class Posts extends Component {
     const { posts } = this.props.post;
     const { classes } = this.props;
     return (
-      <Grid container className={classes.post}>
+      <Grid container className={classes.container}>
         <Grid item xs={12} md={9} className={classes.postItem}>
           <List>
             {posts.map(post => (

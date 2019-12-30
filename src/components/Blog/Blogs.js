@@ -32,7 +32,7 @@ class Blogs extends Component {
     const { classes } = this.props;
     const { blogs } = this.props.blog;
     return (
-      <Grid container className={classes.blog}>
+      <Grid container className={classes.container}>
         <Grid item xs={12} md={9} className={classes.blogItem}>
           {this.props.security.user.role === 'AUTHOR' && (
             <EditBlog blogs={blogs} onDelClick={this.onDelClick} />

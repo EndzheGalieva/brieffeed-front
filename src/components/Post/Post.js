@@ -26,8 +26,8 @@ class Post extends Component {
     const { post } = this.props.post;
     const { classes } = this.props;
     return (
-      <Grid container className={classes.post}>
-        <Grid item xs={12} md={12} className={classes.postItem}>
+      <Grid container className={classes.container}>
+        <Grid item xs={12} md={12}>
           <article className="post post_preview" lang="ru">
             <p className="post_meta">
               <small className="post_user">

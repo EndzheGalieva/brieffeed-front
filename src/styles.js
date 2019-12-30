@@ -10,7 +10,7 @@ const styles = theme => ({
       maxHeight: '100%'
     },
     a: {
-      color: 'black',
+      color: blue[900],
       textDecoration: 'none',
       '&:hover': {
         color: blue[500]
@@ -29,6 +29,12 @@ const styles = theme => ({
   },
   addButton: {
     marginLeft: theme.spacing(2)
+  },
+  container: {
+    display: 'flex',
+    maxWidth: 1200,
+    padding: theme.spacing(2, 6, 8, 6),
+    margin: 'auto'
   },
   // header
   grow: {
@@ -139,14 +145,6 @@ const styles = theme => ({
     position: 'relative'
   },
   // blogs
-  blog: {
-    display: 'flex',
-    flexGrow: 1,
-    maxWidth: 1200,
-    margin: 'auto',
-    padding: theme.spacing(2, 4, 8, 4),
-    justifyContent: 'center'
-  },
   blogItem: {
     flexGrow: 1
   },
@@ -160,21 +158,12 @@ const styles = theme => ({
     height: 64
   },
   // posts
-  post: {
-    display: 'flex',
-    flexGrow: 1,
-    maxWidth: 1200,
-    margin: 'auto',
-    padding: theme.spacing(2, 4, 8, 4),
-    justifyContent: 'center'
-  },
   postItem: {
     flexGrow: 1
   },
   // edit post
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
+  editorFormControl: {
+    display: 'flex'
   },
   dense: {
     marginTop: 19

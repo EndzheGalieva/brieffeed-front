@@ -99,11 +99,10 @@ class AddPost extends Component {
     const { blogs } = this.props.blog;
     const { errors } = this.state;
     return (
-      <div>
-        <CssBaseline />
-        <Container maxWidth="lg">
+      <Grid container className={classes.container}>
+        <Grid item xs={12} md={12}>
           <FormControl
-            className={classes.container}
+            className={classes.editorFormControl}
             noValidate
             autoComplete="off"
             onSubmit={this.onSubmit}
@@ -224,8 +223,8 @@ class AddPost extends Component {
               </Grid>
             </Grid>
           </FormControl>
-        </Container>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
