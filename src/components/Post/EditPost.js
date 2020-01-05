@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import { getPost, editPost } from '../../actions/postActions';
 import { getBlogs } from '../../actions/blogActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '../Editor/ClassicEditor';
 import styles from '../../styles';
 
 const options = ['Publish', 'Draft'];
