@@ -1,37 +1,39 @@
-import React, { Component, createRef } from 'react';
-import { FormControl, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import TextField from '@material-ui/core/TextField';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createPost } from '../../actions/postActions';
-import { getBlogs } from '../../actions/blogActions';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '../Editor/ClassicEditor';
-import styles from '../../styles';
+import React, { Component, createRef } from "react";
+import { FormControl, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Chip from "@material-ui/core/Chip";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createPost } from "../../actions/postActions";
+import { getBlogs } from "../../actions/blogActions";
+import { getTag } from "../../actions/tagActions";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "../Editor/ClassicEditor";
+import styles from "../../styles";
 
-const options = ['Publish', 'Draft'];
+const options = ["Publish", "Draft"];
 
 class AddPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      content: '',
+      title: "",
+      tags: [],
+      content: "",
+      status: "",
       createdDate: null,
       updatedDate: null,
-      status: '',
       user: {},
       comments: [],
       id: 0,
@@ -56,7 +58,9 @@ class AddPost extends Component {
 
   handleChange = name => event => {
     const data = event.target.value;
-    this.setState({ ...this.state, [name]: data });
+    if (name === "tags") {
+      this.setState(previousState => ({ tags: [...previousState.tags, data] }));
+    } else this.setState({ ...this.state, [name]: data });
   };
 
   handleMenuItemClick = (event, index) => {
@@ -87,10 +91,12 @@ class AddPost extends Component {
     event.preventDefault();
     const post = {
       title: this.state.title,
+      tags: this.state.tags,
       content: this.state.content,
       status: options[this.state.selectedIndex].toUpperCase(),
       blogId: this.state.blogId
     };
+    console.log(post);
     this.props.createPost(post, this.props.history);
   };
 
@@ -114,15 +120,41 @@ class AddPost extends Component {
               className={classes.textField}
               margin="normal"
               value={this.state.title}
-              onChange={this.handleChange('title')}
+              onChange={this.handleChange("title")}
               name="title"
               helperText={errors.title}
             />
-            <TextField
-              label="Tags"
-              className={classes.textField}
-              margin="normal"
-              helperText="Separate tags with commas"
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              size="small"
+              autoComplete
+              autoHightlight
+              clearOnEscape
+              freeSolo
+              defaultValue={this.state.tags}
+              onChange={this.handleChange("tags")}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                ))
+              }
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Tags"
+                  placeholder="Add Tag"
+                  className={classes.textField}
+                  margin="normal"
+                  name="tags"
+                  fullWidth
+                />
+              )}
             />
             <TextField
               select
@@ -131,7 +163,7 @@ class AddPost extends Component {
               label="Blog"
               className={classes.textField}
               value={this.state.blogId}
-              onChange={this.handleChange('blogId')}
+              onChange={this.handleChange("blogId")}
               SelectProps={{
                 MenuProps: {
                   className: classes.menu
@@ -150,7 +182,7 @@ class AddPost extends Component {
               editor={ClassicEditor}
               label="Content"
               value={this.state.content}
-              onChange={this.handleEditorChange('content')}
+              onChange={this.handleEditorChange("content")}
               name="content"
             />
             <Grid container>
@@ -166,7 +198,7 @@ class AddPost extends Component {
                   <Button
                     color="primary"
                     size="small"
-                    aria-owns={this.state.open ? 'menu-list-grow' : undefined}
+                    aria-owns={this.state.open ? "menu-list-grow" : undefined}
                     aria-haspopup="true"
                     onClick={this.handleToggle}
                   >
@@ -194,9 +226,9 @@ class AddPost extends Component {
                       {...TransitionProps}
                       style={{
                         transformOrigin:
-                          placement === 'bottom'
-                            ? 'center top'
-                            : 'center bottom'
+                          placement === "bottom"
+                            ? "center top"
+                            : "center bottom"
                       }}
                     >
                       <Paper id="menu-list-grow">
@@ -234,15 +266,17 @@ AddPost.propTypes = {
   createPost: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
+  tag: PropTypes.object.isRequired,
   blog: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  blog: state.blog,
   post: state.post,
+  tag: state.tag,
+  blog: state.blog,
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getBlogs, createPost })(
+export default connect(mapStateToProps, { getBlogs, getTag, createPost })(
   styles(AddPost)
 );

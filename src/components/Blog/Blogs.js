@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Typography, List, Grid } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getBlogs, deleteBlog } from '../../actions/blogActions';
-import BlogItem from './BlogItem';
-import EditBlog from './EditBlog';
-import styles from '../../styles';
-import Categories from '../Category/Categories';
+import React, { Component } from "react";
+import { List, Grid } from "@material-ui/core";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getBlogs, deleteBlog } from "../../actions/blogActions";
+import BlogItem from "./BlogItem";
+import EditBlog from "./EditBlog";
+import styles from "../../styles";
+import Categories from "../Category/Categories";
 
 class Blogs extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class Blogs extends Component {
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12} md={9} className={classes.blogItem}>
-          {this.props.security.user.role === 'AUTHOR' && (
+          {this.props.security.user.role === "AUTHOR" && (
             <EditBlog blogs={blogs} onDelClick={this.onDelClick} />
           )}
           <List>

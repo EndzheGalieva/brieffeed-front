@@ -8,6 +8,9 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const GET_BLOGS = 'GET_BLOGS';
 export const GET_BLOG = 'GET_BLOG';
 export const DELETE_BLOG = 'DELETE_BLOG';
+// types for tag actions
+export const GET_TAGS = 'GET_TAGS';
+export const GET_TAG = 'GET_TAG';
 // types for post actions
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';

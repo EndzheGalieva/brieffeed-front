@@ -8,7 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import {
-  Badge,
+  // Badge,
   Menu,
   MenuItem,
   Icon,
@@ -17,7 +17,7 @@ import {
   Tooltip,
   Container
 } from '@material-ui/core';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import MoreIcon from '@material-ui/icons/MoreVert';
