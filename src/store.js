@@ -17,6 +17,13 @@ if (window.navigator.userAgent.includes('Chrome') && ReactReduxDevTools) {
     compose(applyMiddleware(...middleWare), ReactReduxDevTools)
   );
 }
+if (window.navigator.userAgent.includes('Firefox') && ReactReduxDevTools) {
+  store = createStore(
+    rootReducer,
+    initialState,
+    compose(applyMiddleware(...middleWare), ReactReduxDevTools)
+  );
+}
 else {
   store = createStore(
     rootReducer,
