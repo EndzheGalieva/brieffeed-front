@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {
-  GET_ERRORS,
+  DELETE_CATEGORY,
   GET_CATEGORIES,
   GET_CATEGORY,
-  DELETE_CATEGORY
+  GET_ERRORS
 } from './types';
 
 export const createCategory = (category) => async dispatch => {

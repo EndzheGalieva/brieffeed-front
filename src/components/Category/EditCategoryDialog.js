@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { editCategory, getCategory } from '../../actions/categoryActions';
-import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import {editCategory, getCategory} from '../../actions/categoryActions';
+import {PropTypes} from 'prop-types';
+import {connect} from 'react-redux';
 import {
   Button,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
-  TextField,
-  DialogActions
+  DialogTitle,
+  TextField
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -32,12 +32,12 @@ function EditCategoryDialog(props) {
 
   useEffect(() => {
     if (props.errors) {
-      setErrors({ name: props.errors.name });
+      setErrors({name: props.errors.name});
     }
   }, [props.errors]);
 
   useEffect(() => {
-    const { name, id } = props.category;
+    const {name, id} = props.category;
     setValues({
       name,
       id
@@ -50,8 +50,8 @@ function EditCategoryDialog(props) {
 
   const handleChange = name => event => {
     const data = event.target.value;
-    setErrors({ ...errors, [name]: !data });
-    setValues({ ...values, [name]: data });
+    setErrors({...errors, [name]: !data});
+    setValues({...values, [name]: data});
   };
 
   const handleClose = () => {
@@ -120,6 +120,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getCategory, editCategory })(
+export default connect(mapStateToProps, {getCategory, editCategory})(
   EditCategoryDialog
 );

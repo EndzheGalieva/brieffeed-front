@@ -1,11 +1,11 @@
-import { GET_POSTS, GET_POST, DELETE_POST } from '../actions/types';
+import {DELETE_POST, GET_POST, GET_POSTS} from '../actions/types';
 
 const initialState = {
   posts: [],
   post: {}
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_POSTS:
       return {

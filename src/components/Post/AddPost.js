@@ -1,6 +1,6 @@
-import React, { Component, createRef } from "react";
-import { FormControl, Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import React, {Component, createRef} from "react";
+import {Button, FormControl} from "@material-ui/core";
+import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -14,10 +14,10 @@ import MenuList from "@material-ui/core/MenuList";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { createPost } from "../../actions/postActions";
-import { getBlogs } from "../../actions/blogActions";
-import { getTag } from "../../actions/tagActions";
+import {connect} from "react-redux";
+import {createPost} from "../../actions/postActions";
+import {getBlogs} from "../../actions/blogActions";
+import {getTag} from "../../actions/tagActions";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "../Editor/ClassicEditor";
 import styles from "../../styles";
@@ -25,6 +25,8 @@ import styles from "../../styles";
 const options = ["Publish", "Draft"];
 
 class AddPost extends Component {
+  anchorRef = createRef(null);
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,37 +46,37 @@ class AddPost extends Component {
     };
   }
 
-  anchorRef = createRef(null);
-
   componentDidMount() {
     this.props.getBlogs();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.errors !== prevProps.errors) {
-      this.setState({ errors: { ...this.props.errors } });
+      this.setState({errors: {...this.props.errors}});
     }
   }
 
   handleChange = name => event => {
     const data = event.target.value;
     if (name === "tags") {
-      this.setState(previousState => ({ tags: [...previousState.tags, data] }));
-    } else this.setState({ ...this.state, [name]: data });
+      this.setState(previousState => ({tags: [...previousState.tags, data]}));
+    } else {
+      this.setState({...this.state, [name]: data});
+    }
   };
 
   handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index });
-    this.setState({ open: false });
+    this.setState({selectedIndex: index});
+    this.setState({open: false});
   };
 
   handleToggle = () => {
-    this.setState({ open: prevOpen => !prevOpen });
+    this.setState({open: prevOpen => !prevOpen});
   };
 
   handleEditorChange = name => (event, editor) => {
     const data = editor.getData();
-    this.setState({ ...this.state, [name]: data });
+    this.setState({...this.state, [name]: data});
   };
 
   handleClose = event => {
@@ -84,7 +86,7 @@ class AddPost extends Component {
     ) {
       return;
     }
-    this.setState({ open: false });
+    this.setState({open: false});
   };
 
   onSubmit = event => {
@@ -101,9 +103,9 @@ class AddPost extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { blogs } = this.props.blog;
-    const { errors } = this.state;
+    const {classes} = this.props;
+    const {blogs} = this.props.blog;
+    const {errors} = this.state;
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12} md={12}>
@@ -139,7 +141,7 @@ class AddPost extends Component {
                   <Chip
                     variant="outlined"
                     label={option}
-                    {...getTagProps({ index })}
+                    {...getTagProps({index})}
                   />
                 ))
               }
@@ -202,7 +204,7 @@ class AddPost extends Component {
                     aria-haspopup="true"
                     onClick={this.handleToggle}
                   >
-                    <ArrowDropDownIcon />
+                    <ArrowDropDownIcon/>
                   </Button>
                 </ButtonGroup>
                 <Button
@@ -221,7 +223,7 @@ class AddPost extends Component {
                   transition
                   disablePortal
                 >
-                  {({ TransitionProps, placement }) => (
+                  {({TransitionProps, placement}) => (
                     <Grow
                       {...TransitionProps}
                       style={{
@@ -277,6 +279,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getBlogs, getTag, createPost })(
+export default connect(mapStateToProps, {getBlogs, getTag, createPost})(
   styles(AddPost)
 );

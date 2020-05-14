@@ -1,21 +1,27 @@
-import { Avatar, Button, Chip, List, ListItem, Grid } from '@material-ui/core';
+import {Avatar, Button, Chip, Grid, List, ListItem} from '@material-ui/core';
 import Interweave from 'interweave';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { deletePost, getPosts } from '../../actions/postActions';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {deletePost, getPosts} from '../../actions/postActions';
 import Categories from '../Category/Categories';
 import styles from '../../styles';
 
 class Posts extends Component {
   constructor(props) {
     super(props);
-    this.state = { posts: [], open: false, message: '' };
+    this.state = {posts: [], open: false, message: ''};
   }
 
   componentDidMount() {
     this.props.getPosts();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.post !== prevProps.post) {
+      this.setState({posts: this.props.post.posts});
+    }
   }
 
   onDelClick = id => {
@@ -23,30 +29,33 @@ class Posts extends Component {
   };
 
   render() {
-    const { posts } = this.props.post;
-    const { classes } = this.props;
+    const {posts} = this.state;
+    const {classes} = this.props;
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12} md={9} className={classes.postItem}>
           <List>
-            {posts.map(post => (
+            {posts !== undefined && posts.length > 0 ? posts.map(post => (
               <ListItem className="shortcuts_item" key={post.id}>
                 <article className="post post_preview" lang="ru">
-                  <p className="post_meta">
+                  <div className="post_meta">
                     <small className="post_user">
                       <Chip
                         variant="outlined"
                         color="primary"
-                        avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+                        avatar={<Avatar alt="Airat"
+                                        src="/static/images/avatar/1.jpg"/>}
                         clickable
                         label={`${post.user}`}
                         href="#chip"
                         size="small"
                       />
                     </small>
-                    <small className="post_time">{post.createdDate}</small>
-                    <br />
-                    {this.props.security.user.username === post.author && (
+                    <small
+                      className="post_time">{post.createdDate}</small>
+                    <br/>
+                    {this.props.security.user.username === post.author
+                    && (
                       <div>
                         <small>
                           <Button
@@ -73,14 +82,16 @@ class Posts extends Component {
                         </small>
                       </div>
                     )}
-                  </p>
+                  </div>
                   <div className="post_body">
                     <h2 className="post_title">
-                      <Link className={classes.link} to={`/post/${post.id}`}>
+                      <Link className={classes.link}
+                            to={`/post/${post.id}`}>
                         {post.title}
                       </Link>
                     </h2>
-                    <img className="post_img" src={`${post.image}`} alt="" />
+                    <img className="post_img" src={`${post.image}`}
+                         alt=""/>
                     <div className="post_description">
                       <Interweave
                         className="post_description"
@@ -93,11 +104,11 @@ class Posts extends Component {
                   </Link>
                 </article>
               </ListItem>
-            ))}
+            )) : null}
           </List>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Categories />
+          <Categories/>
         </Grid>
       </Grid>
     );
@@ -116,6 +127,6 @@ const mapStateToProps = state => ({
   post: state.post
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost })(
+export default connect(mapStateToProps, {getPosts, deletePost})(
   styles(Posts)
 );

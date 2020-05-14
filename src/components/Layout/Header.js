@@ -1,39 +1,38 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import {
-  // Badge,
+  Avatar,
+  Container,
+  Grid,
+  Icon,
   Menu,
   MenuItem,
-  Icon,
-  Grid,
-  Avatar,
-  Tooltip,
-  Container
+  Tooltip
 } from '@material-ui/core';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { connect } from 'react-redux';
-import { logout } from '../../actions/securityActions';
+import {connect} from 'react-redux';
+import {logout} from '../../actions/securityActions';
 import PropTypes from 'prop-types';
 import styles from '../../styles';
 
 function Header(props) {
-  const { classes } = props;
+  const {classes} = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [auth, setAuth] = React.useState(true);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const { validToken, user } = props.security;
+  const {validToken, user} = props.security;
 
   useEffect(() => {
     if (validToken && user) {
@@ -76,10 +75,10 @@ function Header(props) {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{vertical: 'top', horizontal: 'right'}}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -91,10 +90,10 @@ function Header(props) {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{vertical: 'top', horizontal: 'right'}}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -102,7 +101,7 @@ function Header(props) {
         <div>
           <MenuItem component={Link} to="/add-post">
             <Icon className={classes.menuIcon} color="inherit" aria-label="add">
-              <AddCircleIcon />
+              <AddCircleIcon/>
             </Icon>
             <p>Написать</p>
           </MenuItem>
@@ -142,7 +141,7 @@ function Header(props) {
               color="inherit"
               aria-label="logout"
             >
-              <MeetingRoomIcon />
+              <MeetingRoomIcon/>
             </Icon>
             <p>Выйти</p>
           </MenuItem>
@@ -173,7 +172,7 @@ function Header(props) {
                 color="inherit"
                 aria-label="open drawer"
               >
-                <MenuIcon />
+                <MenuIcon/>
               </IconButton>
             </div>
             <Tooltip title="Главная страница">
@@ -191,7 +190,7 @@ function Header(props) {
             <div className={classes.flex}></div>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
-                <SearchIcon />
+                <SearchIcon/>
               </div>
               <InputBase
                 placeholder="Поиск…"
@@ -199,10 +198,10 @@ function Header(props) {
                   root: classes.inputRoot,
                   input: classes.inputInput
                 }}
-                inputProps={{ 'aria-label': 'search' }}
+                inputProps={{'aria-label': 'search'}}
               />
             </div>
-            <div />
+            <div/>
             <div className={classes.sectionDesktop}>
               <Button component={Link} to="/posts" color="inherit">
                 Посты
@@ -222,7 +221,7 @@ function Header(props) {
                       color="inherit"
                       aria-label="add"
                     >
-                      <AddCircleIcon />
+                      <AddCircleIcon/>
                     </IconButton>
                   </Tooltip>
                   {/* <Tooltip title="Уведомления">
@@ -262,7 +261,7 @@ function Header(props) {
                       to="/"
                       onClick={logout}
                     >
-                      <MeetingRoomIcon />
+                      <MeetingRoomIcon/>
                     </IconButton>
                   </Tooltip>
                 </div>
@@ -286,7 +285,7 @@ function Header(props) {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <MoreIcon/>
               </IconButton>
             </div>
           </Toolbar>
@@ -307,4 +306,4 @@ const mapStateToProps = state => ({
   security: state.security
 });
 
-export default connect(mapStateToProps, { logout })(styles(Header));
+export default connect(mapStateToProps, {logout})(styles(Header));

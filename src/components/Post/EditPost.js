@@ -1,6 +1,6 @@
-import React, { createRef, Component } from 'react';
-import { FormControl, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import React, {Component, createRef} from 'react';
+import {Button, FormControl} from '@material-ui/core';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -12,9 +12,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getPost, editPost } from '../../actions/postActions';
-import { getBlogs } from '../../actions/blogActions';
+import {connect} from 'react-redux';
+import {editPost, getPost} from '../../actions/postActions';
+import {getBlogs} from '../../actions/blogActions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '../Editor/ClassicEditor';
 import styles from '../../styles';
@@ -22,6 +22,8 @@ import styles from '../../styles';
 const options = ['Publish', 'Draft'];
 
 class EditPost extends Component {
+  anchorRef = createRef(null);
+
   constructor(props) {
     super(props);
     this.state = {
@@ -42,17 +44,15 @@ class EditPost extends Component {
     };
   }
 
-  anchorRef = createRef(null);
-
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const {id} = this.props.match.params;
     this.props.getPost(id, this.props.history);
     this.props.getBlogs();
   }
 
   componentWillReceiveProps() {
     if (this.props.errors) {
-      this.setState({ errors: { title: this.props.errors.title } });
+      this.setState({errors: {title: this.props.errors.title}});
     }
     if (this.props.security.user.username !== this.props.post.author) {
       this.props.history.push('/posts');
@@ -82,23 +82,23 @@ class EditPost extends Component {
   }
 
   handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index });
-    this.setState({ open: false });
+    this.setState({selectedIndex: index});
+    this.setState({open: false});
   };
 
   handleToggle = () => {
-    this.setState({ open: prevOpen => !prevOpen });
+    this.setState({open: prevOpen => !prevOpen});
   };
 
   handleChange = name => event => {
     const data = event.target.value;
-    this.setState({ errors: { [name]: !data } });
-    this.setState({ ...this.state, [name]: data });
+    this.setState({errors: {[name]: !data}});
+    this.setState({...this.state, [name]: data});
   };
 
   handleEditorChange = name => (event, editor) => {
     const data = editor.getData();
-    this.setState({ ...this.state, [name]: data });
+    this.setState({...this.state, [name]: data});
   };
 
   handleClose = event => {
@@ -108,7 +108,7 @@ class EditPost extends Component {
     ) {
       return;
     }
-    this.setState({ open: false });
+    this.setState({open: false});
   };
 
   onSubmit = event => {
@@ -124,9 +124,9 @@ class EditPost extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { blogs } = this.props.blog;
-    const { post, errors } = this.props;
+    const {classes} = this.props;
+    const {blogs} = this.props.blog;
+    const {post, errors} = this.props;
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12} md={12}>
@@ -201,7 +201,7 @@ class EditPost extends Component {
                     aria-haspopup="true"
                     onClick={this.handleToggle}
                   >
-                    <ArrowDropDownIcon />
+                    <ArrowDropDownIcon/>
                   </Button>
                 </ButtonGroup>
                 <Button
@@ -220,7 +220,7 @@ class EditPost extends Component {
                   transition
                   disablePortal
                 >
-                  {({ TransitionProps, placement }) => (
+                  {({TransitionProps, placement}) => (
                     <Grow
                       {...TransitionProps}
                       style={{
@@ -277,6 +277,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getPost, getBlogs, editPost })(
+export default connect(mapStateToProps, {getPost, getBlogs, editPost})(
   styles(EditPost)
 );

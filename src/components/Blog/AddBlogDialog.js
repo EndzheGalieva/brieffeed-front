@@ -1,20 +1,22 @@
-import React, { Component, createRef } from 'react';
-import { createBlog } from '../../actions/blogActions';
-import { getCategories } from '../../actions/categoryActions';
-import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux';
+import React, {Component, createRef} from 'react';
+import {createBlog} from '../../actions/blogActions';
+import {getCategories} from '../../actions/categoryActions';
+import {PropTypes} from 'prop-types';
+import {connect} from 'react-redux';
 import {
   Button,
   Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
   DialogActions,
-  MenuItem
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  TextField
 } from '@material-ui/core';
 import styles from '../../styles';
 
 class AddBlog extends Component {
+  anchorRef = createRef(null);
+
   constructor(props) {
     super(props);
     this.state = {
@@ -26,23 +28,21 @@ class AddBlog extends Component {
     };
   }
 
-  anchorRef = createRef(null);
-
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
-      this.setState({ errors: { ...this.props.errors } });
+      this.setState({errors: {...this.props.errors}});
     }
   }
 
   handleClickOpen = () => {
     this.props.getCategories();
-    this.setState({ open: true });
+    this.setState({open: true});
   };
 
   handleChange = name => event => {
     const data = event.target.value;
-    this.setState({ ...this.state.errors, [name]: !data });
-    this.setState({ ...this.state, [name]: data });
+    this.setState({...this.state.errors, [name]: !data});
+    this.setState({...this.state, [name]: data});
   };
 
   handleClose = event => {
@@ -52,7 +52,7 @@ class AddBlog extends Component {
     ) {
       return;
     }
-    this.setState({ name: '', description: '', categoryId: null, open: false });
+    this.setState({name: '', description: '', categoryId: null, open: false});
   };
 
   onSubmit = () => {
@@ -68,9 +68,9 @@ class AddBlog extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { categories } = this.props.category;
-    const { errors } = this.state;
+    const {classes} = this.props;
+    const {categories} = this.props.category;
+    const {errors} = this.state;
     return (
       <div>
         <Button
@@ -160,6 +160,6 @@ const mapStateToProps = state => ({
   category: state.category
 });
 
-export default connect(mapStateToProps, { getCategories, createBlog })(
+export default connect(mapStateToProps, {getCategories, createBlog})(
   styles(AddBlog)
 );

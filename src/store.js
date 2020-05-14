@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
@@ -23,8 +23,7 @@ if (window.navigator.userAgent.includes('Firefox') && ReactReduxDevTools) {
     initialState,
     compose(applyMiddleware(...middleWare), ReactReduxDevTools)
   );
-}
-else {
+} else {
   store = createStore(
     rootReducer,
     initialState,

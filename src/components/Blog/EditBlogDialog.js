@@ -1,20 +1,22 @@
-import React, { Component, createRef } from 'react';
-import { editBlog, getBlog } from '../../actions/blogActions';
-import { getCategories } from '../../actions/categoryActions';
-import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux';
+import React, {Component, createRef} from 'react';
+import {editBlog, getBlog} from '../../actions/blogActions';
+import {getCategories} from '../../actions/categoryActions';
+import {PropTypes} from 'prop-types';
+import {connect} from 'react-redux';
 import {
   Button,
   Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
   DialogActions,
-  MenuItem
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  TextField
 } from '@material-ui/core';
 import styles from '../../styles';
 
 class EditBlogDialog extends Component {
+  anchorRef = createRef(null);
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,28 +29,26 @@ class EditBlogDialog extends Component {
     };
   }
 
-  anchorRef = createRef(null);
-
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
-      this.setState({ errors: { ...this.props.errors } });
+      this.setState({errors: {...this.props.errors}});
     }
   }
 
   componentWillReceiveProps() {
-    const { name, description, id, categoryId } = this.props.blog;
-    this.setState({ name, description, id, categoryId });
+    const {name, description, id, categoryId} = this.props.blog;
+    this.setState({name, description, id, categoryId});
   }
 
   handleClickOpen = () => {
     this.props.getCategories();
-    this.setState({ open: true });
+    this.setState({open: true});
   };
 
   handleChange = name => event => {
     const data = event.target.value;
-    this.setState({ ...this.state.errors, [name]: !data });
-    this.setState({ ...this.state, [name]: data });
+    this.setState({...this.state.errors, [name]: !data});
+    this.setState({...this.state, [name]: data});
   };
 
   handleClose = event => {
@@ -58,7 +58,7 @@ class EditBlogDialog extends Component {
     ) {
       return;
     }
-    this.setState({ open: false });
+    this.setState({open: false});
   };
 
   onSubmit = () => {
@@ -75,9 +75,9 @@ class EditBlogDialog extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { categories } = this.props.category;
-    const { errors } = this.state;
+    const {classes} = this.props;
+    const {categories} = this.props.category;
+    const {errors} = this.state;
     return (
       <div>
         <Button
@@ -167,6 +167,6 @@ const mapStateToProps = state => ({
   category: state.category
 });
 
-export default connect(mapStateToProps, { getBlog, getCategories, editBlog })(
+export default connect(mapStateToProps, {getBlog, getCategories, editBlog})(
   styles(EditBlogDialog)
 );

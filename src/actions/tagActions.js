@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_TAGS, GET_TAG } from "./types";
+import {GET_ERRORS, GET_TAG, GET_TAGS} from "./types";
 
 export const getTags = name => async dispatch => {
   const res = await axios.get("/api/tags");

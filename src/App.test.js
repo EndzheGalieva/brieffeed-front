@@ -6,11 +6,11 @@ import AddArticle from './components/AddArticle';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOM.render(<App/>, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 
 it('renders a snapshot', () => {
-  const tree = renderer.create(<AddArticle />).toJSON();
+  const tree = renderer.create(<AddArticle/>).toJSON();
   expect(tree).toMatchSnapshot();
 });

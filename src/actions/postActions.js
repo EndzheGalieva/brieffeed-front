@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ERRORS, GET_POSTS, GET_POST, DELETE_POST } from './types';
+import {DELETE_POST, GET_ERRORS, GET_POST, GET_POSTS} from './types';
 
 export const createPost = (post, history) => async dispatch => {
   try {

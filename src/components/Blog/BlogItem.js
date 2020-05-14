@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
-import {
-  ListItem,
-  Paper,
-  Grid,
-  ButtonBase,
-  Typography
-} from '@material-ui/core';
-import { connect } from 'react-redux';
-import { deleteBlog } from '../../actions/blogActions';
+import React, {Component} from 'react';
+import {ButtonBase, Grid, ListItem, Paper, Typography} from '@material-ui/core';
+import {connect} from 'react-redux';
+import {deleteBlog} from '../../actions/blogActions';
 import PropTypes from 'prop-types';
 import styles from '../../styles';
 
 class BlogItem extends Component {
   render() {
-    const { classes } = this.props;
-    const { blog } = this.props;
+    const {classes} = this.props;
+    const {blog} = this.props;
     return (
       <ListItem key={blog.id}>
         <Paper className={classes.blogPaper}>
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classes.blogImage}>
-                <img alt="complex" src="/static/images/grid/complex.jpg" />
+                <img alt="complex" src="/static/images/grid/complex.jpg"/>
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
@@ -44,7 +38,7 @@ class BlogItem extends Component {
 }
 
 BlogItem.propTypes = {
-  deletePost: PropTypes.func.isRequired
+  deleteBlog: PropTypes.func.isRequired
 };
 
-export default connect(null, { deleteBlog })(styles(BlogItem));
+export default connect(null, {deleteBlog})(styles(BlogItem));

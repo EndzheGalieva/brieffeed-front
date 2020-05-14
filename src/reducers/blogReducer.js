@@ -1,11 +1,11 @@
-import { GET_BLOGS, GET_BLOG, DELETE_BLOG } from '../actions/types';
+import {DELETE_BLOG, GET_BLOG, GET_BLOGS} from '../actions/types';
 
 const initialState = {
   blogs: [],
   blog: {}
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_BLOGS:
       return {

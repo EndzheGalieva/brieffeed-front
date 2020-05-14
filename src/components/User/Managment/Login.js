@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {
-  Snackbar,
-  Grid,
-  Typography,
   Container,
-  FormControl
+  FormControl,
+  Grid,
+  Snackbar,
+  Typography
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { login } from '../../../actions/securityActions';
-import { isString } from 'util';
+import {connect} from 'react-redux';
+import {login} from '../../../actions/securityActions';
+import {isString} from 'util';
 import styles from '../../../styles';
 
 class Login extends Component {
@@ -28,7 +28,7 @@ class Login extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
-      this.setState({ errors: { ...this.props.errors } });
+      this.setState({errors: {...this.props.errors}});
     }
     if (this.props.security.validToken) {
       this.props.history.push('/posts');
@@ -36,7 +36,7 @@ class Login extends Component {
   }
 
   handleChange = name => event => {
-    this.setState({ ...this.state, [name]: event.target.value });
+    this.setState({...this.state, [name]: event.target.value});
   };
 
   handleClose = (event, reason) => {
@@ -44,7 +44,7 @@ class Login extends Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({open: false});
   };
 
   onSubmit = () => {
@@ -56,8 +56,8 @@ class Login extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { errors } = this.state;
+    const {classes} = this.props;
+    const {errors} = this.state;
     return (
       <Grid container direction="column" className={classes.loginContainer}>
         <Grid item xs={12}>
@@ -80,7 +80,7 @@ class Login extends Component {
                 value={this.state.username}
                 helperText={errors.username}
               />
-              <br />
+              <br/>
               <TextField
                 type="password"
                 name="password"
@@ -90,8 +90,8 @@ class Login extends Component {
                 value={this.state.password}
                 helperText={errors.password}
               />
-              <br />
-              <br />
+              <br/>
+              <br/>
               <Button
                 color="primary"
                 variant="outlined"
@@ -128,4 +128,4 @@ const mapStateProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateProps, { login })(styles(Login));
+export default connect(mapStateProps, {login})(styles(Login));

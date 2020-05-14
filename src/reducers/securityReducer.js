@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from '../actions/types';
+import {SET_CURRENT_USER} from '../actions/types';
 
 const initialState = {
   validToken: false,
@@ -9,7 +9,7 @@ const booleanActionPayload = payload => {
   return !(Object.entries(payload).length === 0);
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {

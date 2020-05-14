@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getPost, deletePost } from '../../actions/postActions';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {deletePost, getPost} from '../../actions/postActions';
 import PropTypes from 'prop-types';
-import { Chip, Avatar, Button, Typography, Grid } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import {Avatar, Button, Chip, Grid, Typography} from '@material-ui/core';
+import {Link} from 'react-router-dom';
 import Interweave from 'interweave';
 import styles from '../../styles';
 
 class Post extends Component {
   constructor(props) {
     super(props);
-    this.state = { post: {}, open: false, message: '' };
+    this.state = {post: {}, open: false, message: ''};
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const {id} = this.props.match.params;
     this.props.getPost(id, this.props.history);
   }
 
@@ -23,8 +23,8 @@ class Post extends Component {
   };
 
   render() {
-    const { post } = this.props.post;
-    const { classes } = this.props;
+    const {post} = this.props.post;
+    const {classes} = this.props;
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12} md={12}>
@@ -34,7 +34,7 @@ class Post extends Component {
                 <Chip
                   variant="outlined"
                   color="primary"
-                  avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+                  avatar={<Avatar src="/static/images/avatar/1.jpg"/>}
                   clickable
                   label={`${post.user}`}
                   href="#chip"
@@ -42,7 +42,7 @@ class Post extends Component {
                 />
               </small>
               <small className="post_time">{post.createdDate}</small>
-              <br />
+              <br/>
               {this.props.security.user.username === post.author && (
                 <div>
                   <small>
@@ -77,7 +77,7 @@ class Post extends Component {
               <Typography className="post_title" variant="h5" gutterBottom>
                 {post.title}
               </Typography>
-              <img className="post_img" src={`${post.image}`} alt="" />
+              <img className="post_img" src={`${post.image}`} alt=""/>
               <div className="post_description">
                 <Interweave
                   className="post_description"
@@ -104,4 +104,4 @@ const mapStateToProps = state => ({
   post: state.post
 });
 
-export default connect(mapStateToProps, { getPost, deletePost })(styles(Post));
+export default connect(mapStateToProps, {getPost, deletePost})(styles(Post));

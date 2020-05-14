@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
+  AppBar,
   Button,
   Dialog,
-  IconButton,
-  Toolbar,
-  Slide,
-  AppBar,
-  Typography,
-  List,
   Divider,
+  IconButton,
+  List,
+  ListItem,
   ListItemText,
-  ListItem
+  Slide,
+  Toolbar,
+  Typography
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddCategoryDialog from './AddCategoryDialog';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import EditCategoryDialog from './EditCategoryDialog';
 import styles from '../../styles';
 
@@ -31,16 +31,16 @@ class EditCategory extends Component {
   }
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({open: true});
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({open: false});
   };
 
   render() {
-    const { classes } = this.props;
-    const { categories, onDelClick } = this.props;
+    const {classes} = this.props;
+    const {categories, onDelClick} = this.props;
     return (
       <div>
         <Button
@@ -66,7 +66,7 @@ class EditCategory extends Component {
                 onClick={this.handleClose}
                 aria-label="close"
               >
-                <CloseIcon />
+                <CloseIcon/>
               </IconButton>
               <Typography variant="h6" className={classes.dialogTitle}>
                 Категории
@@ -77,9 +77,9 @@ class EditCategory extends Component {
             {categories.map(category => (
               <div>
                 <ListItem key={category.id}>
-                  <ListItemText primary={category.name} />
+                  <ListItemText primary={category.name}/>
                   <small>
-                    <EditCategoryDialog category={category} />
+                    <EditCategoryDialog category={category}/>
                   </small>
                   <small>
                     <Button
@@ -94,11 +94,11 @@ class EditCategory extends Component {
                     </Button>
                   </small>
                 </ListItem>
-                <Divider />
+                <Divider/>
               </div>
             ))}
           </List>
-          <AddCategoryDialog />
+          <AddCategoryDialog/>
         </Dialog>
       </div>
     );

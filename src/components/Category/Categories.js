@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Typography, List } from '@material-ui/core';
+import React, {Component} from 'react';
+import {List, Typography} from '@material-ui/core';
 import CategoryItem from './CategoryItem';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getCategories, deleteCategory } from '../../actions/categoryActions';
+import {connect} from 'react-redux';
+import {deleteCategory, getCategories} from '../../actions/categoryActions';
 import EditCategory from './EditCategory';
 import styles from '../../styles';
 
@@ -11,7 +11,7 @@ class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: []
+      categories: [], open: false, message: ''
     };
   }
 
@@ -19,25 +19,32 @@ class Categories extends Component {
     this.props.getCategories();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.category !== prevProps.category) {
+      this.setState({categories: this.props.category.categories});
+    }
+  }
+
   onDelClick = id => {
     this.props.deleteCategory(id);
   };
 
   render() {
-    const { classes } = this.props;
-    const { categories } = this.props.category;
+    const {classes} = this.props;
+    const {categories} = this.state;
     return (
       <div className={classes.categories}>
         <Typography variant="h6" className={classes.categoriesTitle}>
           Категории
         </Typography>
         {this.props.security.user.role === 'ADMIN' && (
-          <EditCategory categories={categories} onDelClick={this.onDelClick} />
+          <EditCategory categories={categories} onDelClick={this.onDelClick}/>
         )}
         <List className={classes.list}>
-          {categories.map(category => (
-            <CategoryItem key={category.id} category={category} />
-          ))}
+          {categories !== undefined && categories.length > 0 ? categories.map(
+            category => (
+              <CategoryItem key={category.id} category={category}/>
+            )) : null}
         </List>
       </div>
     );
@@ -56,6 +63,6 @@ const mapStateToProps = state => ({
   category: state.category
 });
 
-export default connect(mapStateToProps, { getCategories, deleteCategory })(
+export default connect(mapStateToProps, {getCategories, deleteCategory})(
   styles(Categories)
 );

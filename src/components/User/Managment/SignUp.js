@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { createNewUser } from '../../../actions/securityActions';
+import React, {Component} from 'react';
+import {createNewUser} from '../../../actions/securityActions';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {
-  TextField,
   Button,
-  FormControl,
   Container,
+  FormControl,
   Grid,
+  TextField,
   Typography
 } from '@material-ui/core';
-import { isString } from 'util';
+import {isString} from 'util';
 import styles from '../../../styles';
 
 class SignUp extends Component {
@@ -30,12 +30,12 @@ class SignUp extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.errors !== prevProps.errors) {
-      this.setState({ errors: { ...this.props.errors } });
+      this.setState({errors: {...this.props.errors}});
     }
   }
 
   handleChange = name => event => {
-    this.setState({ ...this.state, [name]: event.target.value });
+    this.setState({...this.state, [name]: event.target.value});
   };
 
   onSubmit = () => {
@@ -52,8 +52,8 @@ class SignUp extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { errors } = this.state;
+    const {classes} = this.props;
+    const {errors} = this.state;
     return (
       <Grid container direction="column" className={classes.signUpContainer}>
         <Grid item xs={12}>
@@ -77,7 +77,7 @@ class SignUp extends Component {
                 value={this.state.firstName}
                 helperText={errors.firstName}
               />
-              <br />
+              <br/>
               <TextField
                 type="text"
                 name="lastName"
@@ -88,7 +88,7 @@ class SignUp extends Component {
                 value={this.state.lastName}
                 helperText={errors.lastName}
               />
-              <br />
+              <br/>
               <TextField
                 type="text"
                 name="userName"
@@ -99,7 +99,7 @@ class SignUp extends Component {
                 value={this.state.userName}
                 helperText={errors.userName}
               />
-              <br />
+              <br/>
               <TextField
                 type="email"
                 name="email"
@@ -110,7 +110,7 @@ class SignUp extends Component {
                 value={this.state.email}
                 helperText={errors.email}
               />
-              <br />
+              <br/>
               <TextField
                 type="password"
                 name="password"
@@ -121,7 +121,7 @@ class SignUp extends Component {
                 value={this.state.password}
                 helperText={errors.password}
               />
-              <br />
+              <br/>
               <TextField
                 type="password"
                 name="confirmPassword"
@@ -132,7 +132,7 @@ class SignUp extends Component {
                 value={this.state.confirmPassword}
                 helperText={errors.confirmPassword}
               />
-              <br />
+              <br/>
               <TextField
                 type="text"
                 name="role"
@@ -143,8 +143,8 @@ class SignUp extends Component {
                 value={this.state.role}
                 helperText={errors.role}
               />
-              <br />
-              <br />
+              <br/>
+              <br/>
               <Button
                 color="primary"
                 variant="outlined"
@@ -172,4 +172,4 @@ const mapStateToprops = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToprops, { createNewUser })(styles(SignUp));
+export default connect(mapStateToprops, {createNewUser})(styles(SignUp));

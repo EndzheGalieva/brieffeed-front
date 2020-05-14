@@ -1,15 +1,11 @@
-import {
-  GET_CATEGORIES,
-  GET_CATEGORY,
-  DELETE_CATEGORY
-} from '../actions/types';
+import {DELETE_CATEGORY, GET_CATEGORIES, GET_CATEGORY} from '../actions/types';
 
 const initialState = {
   categories: [],
   category: {}
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_CATEGORIES:
       return {

@@ -1,5 +1,5 @@
-import { withStyles, fade } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
+import {fade, withStyles} from '@material-ui/core/styles';
+import {blue} from '@material-ui/core/colors';
 
 const styles = theme => ({
   '@global': {

@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  Typography,
-  List,
-  Button,
-  IconButton,
-  Toolbar,
-  Dialog,
   AppBar,
-  Slide,
+  Button,
+  Dialog,
   Divider,
+  IconButton,
+  List,
   ListItem,
-  ListItemText
+  ListItemText,
+  Slide,
+  Toolbar,
+  Typography
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import AddBlogDialog from './AddBlogDialog';
 import EditBlogDialog from './EditBlogDialog';
 import styles from '../../styles';
@@ -31,16 +31,16 @@ class EditBlog extends Component {
   }
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({open: true});
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({open: false});
   };
 
   render() {
-    const { classes } = this.props;
-    const { blogs, onDelClick } = this.props;
+    const {classes} = this.props;
+    const {blogs, onDelClick} = this.props;
     return (
       <div>
         <Button
@@ -66,7 +66,7 @@ class EditBlog extends Component {
                 onClick={this.handleClose}
                 aria-label="close"
               >
-                <CloseIcon />
+                <CloseIcon/>
               </IconButton>
               <Typography variant="h6" className={classes.dialogTitle}>
                 Блоги
@@ -81,7 +81,7 @@ class EditBlog extends Component {
                     primary={blog.name}
                     secondary={blog.description}
                   />
-                  <EditBlogDialog blog={blog} />
+                  <EditBlogDialog blog={blog}/>
                   <Button
                     size="small"
                     component={Link}
@@ -94,11 +94,11 @@ class EditBlog extends Component {
                     Delete
                   </Button>
                 </ListItem>
-                <Divider />
+                <Divider/>
               </div>
             ))}
           </List>
-          <AddBlogDialog />
+          <AddBlogDialog/>
         </Dialog>
       </div>
     );
