@@ -99,12 +99,14 @@ function Header(props) {
     >
       {auth && (
         <div>
-          <MenuItem component={Link} to="/add-post">
-            <Icon className={classes.menuIcon} color="inherit" aria-label="add">
-              <AddCircleIcon/>
-            </Icon>
-            <p>Написать</p>
-          </MenuItem>
+          {user.role === "AUTHOR" && (
+            <MenuItem component={Link} to="/add-post">
+              <Icon className={classes.menuIcon} color="inherit"
+                    aria-label="add">
+                <AddCircleIcon/>
+              </Icon>
+              <p>Написать</p>
+            </MenuItem>)}
           {/* <MenuItem component={Link} to="/notifications">
             <Badge badgeContent={11} color="secondary">
               <Icon
@@ -187,7 +189,7 @@ function Header(props) {
               </Typography>
             </Tooltip>
 
-            <div className={classes.flex}></div>
+            <div className={classes.flex}/>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon/>
@@ -214,16 +216,17 @@ function Header(props) {
             </Button> */}
               {auth && (
                 <div>
-                  <Tooltip title="Написать">
-                    <IconButton
-                      component={Link}
-                      to="/add-post"
-                      color="inherit"
-                      aria-label="add"
-                    >
-                      <AddCircleIcon/>
-                    </IconButton>
-                  </Tooltip>
+                  {user.role === "AUTHOR" && (
+                    <Tooltip title="Написать">
+                      <IconButton
+                        component={Link}
+                        to="/add-post"
+                        color="inherit"
+                        aria-label="add"
+                      >
+                        <AddCircleIcon/>
+                      </IconButton>
+                    </Tooltip>)}
                   {/* <Tooltip title="Уведомления">
                   <IconButton
                     component={Link}

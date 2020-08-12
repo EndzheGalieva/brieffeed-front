@@ -4,8 +4,8 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://brieffeed-back.herokuapp.com',
-      // target: 'http://localhost:9000',
+      // target: 'https://brieffeed-back.herokuapp.com',
+      target: 'http://localhost:9000',
       changeOrigin: true,
     })
   );
