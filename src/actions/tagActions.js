@@ -1,8 +1,10 @@
 import axios from "axios";
 import {GET_ERRORS, GET_TAG, GET_TAGS} from "./types";
 
+const API_VERSION = '/api';
+
 export const getTags = name => async dispatch => {
-  const res = await axios.get("/api/tags");
+  const res = await axios.get(`${API_VERSION}/tags`);
   dispatch({
     type: GET_TAGS,
     payload: res.data
@@ -11,7 +13,7 @@ export const getTags = name => async dispatch => {
 
 export const getTag = id => async dispatch => {
   try {
-    const res = await axios.get(`/api/tags/${id}`);
+    const res = await axios.get(`${API_VERSION}/tags/${id}`);
     dispatch({
       type: GET_TAG,
       payload: res.data

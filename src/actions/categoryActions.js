@@ -6,9 +6,11 @@ import {
   GET_ERRORS
 } from './types';
 
+const API_VERSION = '/api';
+
 export const createCategory = (category) => async dispatch => {
   try {
-    await axios.post('/api/categories/create', category);
+    await axios.post(`${API_VERSION}/categories/create`, category);
     dispatch({
       type: GET_ERRORS,
       payload: {}
@@ -22,7 +24,7 @@ export const createCategory = (category) => async dispatch => {
 };
 
 export const getCategories = () => async dispatch => {
-  const res = await axios.get('/api/categories');
+  const res = await axios.get(`${API_VERSION}/categories`);
   dispatch({
     type: GET_CATEGORIES,
     payload: res.data
@@ -31,7 +33,7 @@ export const getCategories = () => async dispatch => {
 
 export const getCategory = (id) => async dispatch => {
   try {
-    const res = await axios.get(`/api/categories/${id}`);
+    const res = await axios.get(`${API_VERSION}/categories/${id}`);
     dispatch({
       type: GET_CATEGORY,
       payload: res.data
@@ -46,7 +48,7 @@ export const getCategory = (id) => async dispatch => {
 
 export const editCategory = (category) => async dispatch => {
   try {
-    await axios.patch(`/api/categories/${category.id}`, category);
+    await axios.patch(`${API_VERSION}/categories/${category.id}`, category);
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
@@ -56,7 +58,7 @@ export const editCategory = (category) => async dispatch => {
 };
 
 export const deleteCategory = id => async dispatch => {
-  await axios.delete(`/api/categories/${id}`);
+  await axios.delete(`${API_VERSION}/categories/${id}`);
   dispatch({
     type: DELETE_CATEGORY,
     payload: id
