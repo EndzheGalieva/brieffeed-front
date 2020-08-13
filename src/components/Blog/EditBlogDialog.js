@@ -156,10 +156,11 @@ class EditBlogDialog extends Component {
 }
 
 EditBlogDialog.propTypes = {
-  createBlog: PropTypes.func.isRequired,
+  editBlog: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   category: PropTypes.object.isRequired,
-  getCategories: PropTypes.func.isRequired
+  getCategories: PropTypes.func.isRequired,
+  getBlog: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -137,7 +137,7 @@ function Header(props) {
             </Icon>
             <p>Профиль</p>
           </MenuItem>
-          <MenuItem onClick={logout} component={Link}>
+          <MenuItem onClick={logout} component={Link} to="/">
             <Icon
               className={classes.menuIcon}
               color="inherit"

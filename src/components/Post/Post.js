@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {deletePost, getPost} from '../../actions/postActions';
 import PropTypes from 'prop-types';
-import {Avatar, Button, Chip, Grid, Typography} from '@material-ui/core';
+import {Button, Chip, Grid, Typography} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import Interweave from 'interweave';
 import styles from '../../styles';
+import Avatar from "@material-ui/core/Avatar";
 
 class Post extends Component {
   constructor(props) {
@@ -27,14 +28,15 @@ class Post extends Component {
     const {classes} = this.props;
     return (
       <Grid container className={classes.container}>
-        <Grid item xs={12} md={12}>
+        <Grid item xs={12} md={9}>
           <article className="post post_preview" lang="ru">
-            <p className="post_meta">
+            <div className="post_meta">
               <small className="post_user">
                 <Chip
                   variant="outlined"
                   color="primary"
-                  avatar={<Avatar src="/static/images/avatar/1.jpg"/>}
+                  avatar={<Avatar alt="Airat"
+                                  src="/static/images/avatar/1.jpg"/>}
                   clickable
                   label={`${post.user}`}
                   href="#chip"
@@ -72,7 +74,7 @@ class Post extends Component {
                   </small>
                 </div>
               )}
-            </p>
+            </div>
             <div className="post_body">
               <Typography className="post_title" variant="h5" gutterBottom>
                 {post.title}

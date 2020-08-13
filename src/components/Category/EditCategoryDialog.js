@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import React, {Component} from 'react';
 import {editCategory, getCategory} from '../../actions/categoryActions';
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
@@ -11,103 +10,99 @@ import {
   DialogTitle,
   TextField
 } from '@material-ui/core';
+import styles from '../../styles';
 
-const useStyles = makeStyles(theme => ({
-  addButton: {
-    marginLeft: theme.spacing(2)
-  }
-}));
-
-function EditCategoryDialog(props) {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [values, setValues] = useState({
-    name: '',
-    id: ''
-  });
-
-  const [errors, setErrors] = useState({
-    name: ''
-  });
-
-  useEffect(() => {
-    if (props.errors) {
-      setErrors({name: props.errors.name});
-    }
-  }, [props.errors]);
-
-  useEffect(() => {
-    const {name, id} = props.category;
-    setValues({
-      name,
-      id
-    });
-  }, [props.category]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleChange = name => event => {
-    const data = event.target.value;
-    setErrors({...errors, [name]: !data});
-    setValues({...values, [name]: data});
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const onSubmit = () => {
-    const category = {
-      name: values.name,
-      id: values.id
+class EditCategoryDialog extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      id: 0,
+      open: false,
+      errors: {}
     };
-    props.editCategory(category);
-    if (values.name) {
-      handleClose();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.errors !== prevProps.errors) {
+      this.setState({errors: {...this.props.errors}});
+    }
+  }
+
+  componentWillReceiveProps() {
+    const {name, id} = this.props.category;
+    this.setState({name, id});
+  }
+
+  handleClickOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleChange = name => event => {
+    const data = event.target.value;
+    this.setState({...this.state.errors, [name]: !data});
+    this.setState({...this.state, [name]: data});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
+  onSubmit = () => {
+    const category = {
+      name: this.state.name,
+      id: this.state.id
+    };
+    this.props.editCategory(category);
+    if (this.state.name) {
+      this.handleClose();
     }
   };
 
-  return (
-    <div>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleClickOpen}
-        className={classes.addButton}
-      >
-        Edit
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        autoComplete="off"
-      >
-        <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
-        <DialogContent>
-          <TextField
-            required
-            error={errors.name}
-            margin="dense"
-            id="name"
-            label="Category Name"
-            value={values.name}
-            onChange={handleChange('name')}
-            name="name"
-            helperText={errors.name}
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onSubmit} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+  render() {
+    const {classes} = this.props;
+    const {errors} = this.state;
+    return (
+      <div>
+        <Button
+          size="small"
+          variant="outlined"
+          color="primary"
+          onClick={this.handleClickOpen}
+          className={classes.addButton}
+        >
+          Edit
+        </Button>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+          autoComplete="off"
+        >
+          <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
+          <DialogContent>
+            <TextField
+              required
+              error={errors.name}
+              margin="dense"
+              id="name"
+              label="Category Name"
+              value={this.state.name}
+              onChange={this.handleChange('name')}
+              name="name"
+              helperText={errors.name}
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.onSubmit} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
 }
 
 EditCategoryDialog.propTypes = {
@@ -121,5 +116,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {getCategory, editCategory})(
-  EditCategoryDialog
+  styles(EditCategoryDialog)
 );

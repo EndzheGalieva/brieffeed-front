@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddCategoryDialog from './AddCategoryDialog';
-import {Link} from 'react-router-dom';
 import EditCategoryDialog from './EditCategoryDialog';
 import styles from '../../styles';
 
@@ -75,27 +74,25 @@ class EditCategory extends Component {
           </AppBar>
           <List>
             {categories.map(category => (
-              <div>
-                <ListItem key={category.id}>
-                  <ListItemText primary={category.name}/>
-                  <small>
-                    <EditCategoryDialog category={category}/>
-                  </small>
-                  <small>
-                    <Button
-                      component={Link}
-                      variant="outlined"
-                      color="secondary"
-                      onClick={() => {
-                        onDelClick(category.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </small>
-                </ListItem>
+              <ListItem key={category.id}>
+                <ListItemText primary={category.name}/>
+                <small>
+                  <EditCategoryDialog category={category}/>
+                </small>
+                <small>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => {
+                      onDelClick(category.id);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </small>
                 <Divider/>
-              </div>
+              </ListItem>
             ))}
           </List>
           <AddCategoryDialog/>

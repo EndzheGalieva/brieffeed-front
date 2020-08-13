@@ -13,7 +13,6 @@ import {
   Typography
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import {Link} from 'react-router-dom';
 import AddBlogDialog from './AddBlogDialog';
 import EditBlogDialog from './EditBlogDialog';
 import styles from '../../styles';
@@ -75,27 +74,24 @@ class EditBlog extends Component {
           </AppBar>
           <List>
             {blogs.map(blog => (
-              <div>
-                <ListItem key={blog.id}>
-                  <ListItemText
-                    primary={blog.name}
-                    secondary={blog.description}
-                  />
-                  <EditBlogDialog blog={blog}/>
-                  <Button
-                    size="small"
-                    component={Link}
-                    variant="outlined"
-                    color="secondary"
-                    onClick={() => {
-                      onDelClick(blog.id);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </ListItem>
+              <ListItem key={blog.id}>
+                <ListItemText
+                  primary={blog.name}
+                  secondary={blog.description}
+                />
+                <EditBlogDialog blog={blog}/>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                    onDelClick(blog.id);
+                  }}
+                >
+                  Delete
+                </Button>
                 <Divider/>
-              </div>
+              </ListItem>
             ))}
           </List>
           <AddBlogDialog/>
