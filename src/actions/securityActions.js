@@ -5,6 +5,13 @@ import jwt_decode from 'jwt-decode';
 
 const API_VERSION = '/api';
 
+export const getErrors = (errors) => async (dispatch) => {
+  dispatch({
+    type: GET_ERRORS,
+    errors: errors.response.data,
+  });
+};
+
 export const createNewUser = (newUser, history) => async dispatch => {
   try {
     await axios.post(`${API_VERSION}/users/register`, newUser);
@@ -13,11 +20,8 @@ export const createNewUser = (newUser, history) => async dispatch => {
       type: GET_ERRORS,
       payload: {}
     });
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data
-    });
+  } catch (errors) {
+    dispatch(getErrors(errors));
   }
 };
 
@@ -32,19 +36,20 @@ export const login = LoginRequest => async dispatch => {
       type: SET_CURRENT_USER,
       payload: decoded
     });
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data
-    });
+  } catch (errors) {
+    dispatch(getErrors(errors));
   }
 };
 
 export const logout = () => async dispatch => {
-  localStorage.removeItem('jwtToken');
-  setJwtToken(false);
-  dispatch({
-    type: SET_CURRENT_USER,
-    payload: {}
-  });
+  try {
+    localStorage.removeItem('jwtToken');
+    setJwtToken(false);
+    dispatch({
+      type: SET_CURRENT_USER,
+      payload: {}
+    });
+  } catch (errors) {
+    dispatch(getErrors(errors));
+  }
 };

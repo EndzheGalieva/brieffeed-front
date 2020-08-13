@@ -11,6 +11,7 @@ export const DELETE_BLOG = 'DELETE_BLOG';
 // types for tag actions
 export const GET_TAGS = 'GET_TAGS';
 export const GET_TAG = 'GET_TAG';
+export const DELETE_TAG = 'DELETE_TAG';
 // types for post actions
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';

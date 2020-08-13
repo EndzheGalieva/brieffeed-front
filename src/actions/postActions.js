@@ -3,6 +3,13 @@ import {DELETE_POST, GET_ERRORS, GET_POST, GET_POSTS} from './types';
 
 const API_VERSION = '/api';
 
+export const getErrors = (errors) => async (dispatch) => {
+  dispatch({
+    type: GET_ERRORS,
+    errors: errors.response.data,
+  });
+};
+
 export const createPost = (post, history) => async dispatch => {
   try {
     await axios.post(`${API_VERSION}/posts/create`, post);
@@ -11,31 +18,21 @@ export const createPost = (post, history) => async dispatch => {
       type: GET_ERRORS,
       payload: {}
     });
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data
-    });
+  } catch (errors) {
+    dispatch(getErrors(errors));
   }
 };
 
 export const getPosts = () => async dispatch => {
-  const res = await axios.get(`${API_VERSION}/posts`);
-  dispatch({
-    type: GET_POSTS,
-    payload: res.data
-  });
-
-  // наработки
-  // await fetch('/api/posts')
-  //   .then(response => response.json())
-  //   .then(responseData => {
-  //     dispatch({
-  //       type: GET_POSTS,
-  //       payload: responseData._embedded.posts
-  //     });
-  //   })
-  //   .catch(err => console.error(err));
+  try {
+    const res = await axios.get(`${API_VERSION}/posts`);
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data
+    });
+  } catch (errors) {
+    dispatch(getErrors(errors));
+  }
 };
 
 export const getPost = (id, history) => async dispatch => {
@@ -49,7 +46,7 @@ export const getPost = (id, history) => async dispatch => {
         payload: res.data
       });
     }
-  } catch (error) {
+  } catch (errors) {
     history.push('/posts');
   }
 };
@@ -62,18 +59,19 @@ export const editPost = (post, history) => async dispatch => {
       type: GET_ERRORS,
       payload: {}
     });
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data
-    });
+  } catch (errors) {
+    dispatch(getErrors(errors));
   }
 };
 
 export const deletePost = id => async dispatch => {
-  await axios.delete(`${API_VERSION}/posts/${id}`);
-  dispatch({
-    type: DELETE_POST,
-    payload: id
-  });
+  try {
+    await axios.delete(`${API_VERSION}/posts/${id}`);
+    dispatch({
+      type: DELETE_POST,
+      payload: id
+    });
+  } catch (errors) {
+    dispatch(getErrors(errors));
+  }
 };
