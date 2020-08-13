@@ -1,34 +1,16 @@
-import {applyMiddleware, compose, createStore} from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers';
+import {applyMiddleware, compose, createStore} from "redux";
+import thunk from "redux-thunk";
+import rootReducer from "./reducers";
 
 const initialState = {};
 const middleWare = [thunk];
 
-let store;
+const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
-const ReactReduxDevTools =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-
-if (window.navigator.userAgent.includes('Chrome') && ReactReduxDevTools) {
-  store = createStore(
-    rootReducer,
-    initialState,
-    compose(applyMiddleware(...middleWare), ReactReduxDevTools)
-  );
-}
-if (window.navigator.userAgent.includes('Firefox') && ReactReduxDevTools) {
-  store = createStore(
-    rootReducer,
-    initialState,
-    compose(applyMiddleware(...middleWare), ReactReduxDevTools)
-  );
-} else {
-  store = createStore(
-    rootReducer,
-    initialState,
-    compose(applyMiddleware(...middleWare))
-  );
-}
+const enhancer = composeEnhancers(applyMiddleware(...middleWare));
+const store = createStore(rootReducer, initialState, enhancer);
 
 export default store;
