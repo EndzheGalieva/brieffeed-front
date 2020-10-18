@@ -29,7 +29,7 @@ class Posts extends Component {
   };
 
   render() {
-    const {posts} = this.state;
+    const posts = this.state.posts;
     const {classes} = this.props;
     return (
       <Grid container className={classes.container}>

@@ -31,7 +31,7 @@ class Categories extends Component {
 
   render() {
     const {classes} = this.props;
-    const {categories} = this.state;
+    const categories = this.state.categories;
     return (
       <div className={classes.categories}>
         <Typography variant="h6" className={classes.categoriesTitle}>
