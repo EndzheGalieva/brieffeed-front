@@ -1,7 +1,5 @@
 import axios from "axios";
-import {DELETE_TAG, GET_ERRORS, GET_TAG, GET_TAGS} from "./types";
-
-const API_VERSION = '/api';
+import {DELETE_TAG, GET_ERRORS, GET_TAG, GET_TAGS, URL} from "./types";
 
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
@@ -12,7 +10,7 @@ export const getErrors = (errors) => async (dispatch) => {
 
 export const createTag = (tag) => async dispatch => {
   try {
-    await axios.post(`${API_VERSION}/tags/create`, tag);
+    await axios.post(`${URL}/tags/create`, tag);
     dispatch({
       type: GET_ERRORS,
       payload: {}
@@ -24,7 +22,7 @@ export const createTag = (tag) => async dispatch => {
 
 export const getTags = name => async dispatch => {
   try {
-    const res = await axios.get(`${API_VERSION}/tags`);
+    const res = await axios.get(`${URL}/tags`);
     dispatch({
       type: GET_TAGS,
       payload: res.data
@@ -36,7 +34,7 @@ export const getTags = name => async dispatch => {
 
 export const getTag = id => async dispatch => {
   try {
-    const res = await axios.get(`${API_VERSION}/tags/${id}`);
+    const res = await axios.get(`${URL}/tags/${id}`);
     dispatch({
       type: GET_TAG,
       payload: res.data
@@ -48,7 +46,7 @@ export const getTag = id => async dispatch => {
 
 export const deleteTag = id => async dispatch => {
   try {
-    await axios.delete(`${API_VERSION}/tags/${id}`);
+    await axios.delete(`${URL}/tags/${id}`);
     dispatch({
       type: DELETE_TAG,
       payload: id
