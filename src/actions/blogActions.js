@@ -1,7 +1,5 @@
 import axios from 'axios';
-import {DELETE_BLOG, GET_BLOG, GET_BLOGS, GET_ERRORS} from './types';
-
-const API_VERSION = '/api';
+import {DELETE_BLOG, GET_BLOG, GET_BLOGS, GET_ERRORS, URL} from './types';
 
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
@@ -12,7 +10,7 @@ export const getErrors = (errors) => async (dispatch) => {
 
 export const createBlog = blog => async dispatch => {
   try {
-    await axios.post(`${API_VERSION}/blogs/create`, blog);
+    await axios.post(`${URL}/blogs/create`, blog);
     dispatch({
       type: GET_ERRORS,
       payload: {}
@@ -23,20 +21,15 @@ export const createBlog = blog => async dispatch => {
 };
 
 export const getBlogs = () => async dispatch => {
-  try {
-    const res = await axios.get(`${API_VERSION}/blogs`);
-    dispatch({
-      type: GET_BLOGS,
-      payload: res.data
-    });
-  } catch (errors) {
-    dispatch(getErrors(errors));
-  }
+  await axios.get(`${URL}/blogs`).then(response => dispatch({
+    type: GET_BLOGS,
+    payload: response.data
+  })).catch(error => dispatch(getErrors(error)));
 };
 
 export const getBlog = id => async dispatch => {
   try {
-    const res = await axios.get(`${API_VERSION}/blogs/${id}`);
+    const res = await axios.get(`${URL}/blogs/${id}`);
     dispatch({
       type: GET_BLOG,
       payload: res.data
@@ -48,7 +41,7 @@ export const getBlog = id => async dispatch => {
 
 export const editBlog = blog => async dispatch => {
   try {
-    await axios.patch(`${API_VERSION}/blogs/${blog.id}`, blog);
+    await axios.patch(`${URL}/blogs/${blog.id}`, blog);
   } catch (errors) {
     dispatch(getErrors(errors));
   }
@@ -56,7 +49,7 @@ export const editBlog = blog => async dispatch => {
 
 export const deleteBlog = id => async dispatch => {
   try {
-    await axios.delete(`${API_VERSION}/blogs/${id}`);
+    await axios.delete(`${URL}/blogs/${id}`);
     dispatch({
       type: DELETE_BLOG,
       payload: id

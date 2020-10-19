@@ -18,3 +18,5 @@ export const GET_POST = 'GET_POST';
 export const DELETE_POST = 'DELETE_POST';
 // types for security actions
 export const SET_CURRENT_USER = "SET_CURRENT_USER"
+// TODO проблема в ссылке на API, почему-то не подхватывается
+export const URL = 'https://brieffeed-back.herokuapp.com/api';

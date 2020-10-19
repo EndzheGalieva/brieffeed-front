@@ -3,12 +3,10 @@ import {
   DELETE_CATEGORY,
   GET_CATEGORIES,
   GET_CATEGORY,
-  GET_ERRORS
+  GET_ERRORS, URL
 } from './types';
 
-const API_VERSION = '/api';
-
-export const getErrors = (errors) => async (dispatch) => {
+const getErrors = (errors) => async (dispatch) => {
   dispatch({
     type: GET_ERRORS,
     errors: errors.response.data,
@@ -17,7 +15,7 @@ export const getErrors = (errors) => async (dispatch) => {
 
 export const createCategory = (category) => async dispatch => {
   try {
-    await axios.post(`${API_VERSION}/categories/create`, category);
+    await axios.post(`${URL}/categories/create`, category);
     dispatch({
       type: GET_ERRORS,
       payload: {}
@@ -29,19 +27,22 @@ export const createCategory = (category) => async dispatch => {
 
 export const getCategories = () => async dispatch => {
   try {
-    const res = await axios.get(`${API_VERSION}/categories`);
+    const res = await axios.get(`${URL}/categories`);
     dispatch({
       type: GET_CATEGORIES,
       payload: res.data
     });
   } catch (errors) {
-    dispatch(getErrors(errors));
+    dispatch({
+      type: GET_ERRORS,
+      errors: errors.response.data,
+    });
   }
 };
 
 export const getCategory = (id) => async dispatch => {
   try {
-    const res = await axios.get(`${API_VERSION}/categories/${id}`);
+    const res = await axios.get(`${URL}/categories/${id}`);
     dispatch({
       type: GET_CATEGORY,
       payload: res.data
@@ -53,7 +54,7 @@ export const getCategory = (id) => async dispatch => {
 
 export const editCategory = (category) => async dispatch => {
   try {
-    await axios.patch(`${API_VERSION}/categories/${category.id}`, category);
+    await axios.patch(`${URL}/categories/${category.id}`, category);
   } catch (errors) {
     dispatch(getErrors(errors));
   }
@@ -61,7 +62,7 @@ export const editCategory = (category) => async dispatch => {
 
 export const deleteCategory = id => async dispatch => {
   try {
-    await axios.delete(`${API_VERSION}/categories/${id}`);
+    await axios.delete(`${URL}/categories/${id}`);
     dispatch({
       type: DELETE_CATEGORY,
       payload: id

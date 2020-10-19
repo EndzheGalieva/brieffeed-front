@@ -1,7 +1,5 @@
 import axios from 'axios';
-import {DELETE_POST, GET_ERRORS, GET_POST, GET_POSTS} from './types';
-
-const API_VERSION = '/api';
+import {DELETE_POST, GET_ERRORS, GET_POST, GET_POSTS, URL} from './types';
 
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
@@ -12,7 +10,7 @@ export const getErrors = (errors) => async (dispatch) => {
 
 export const createPost = (post, history) => async dispatch => {
   try {
-    await axios.post(`${API_VERSION}/posts/create`, post);
+    await axios.post(`${URL}/posts/create`, post);
     history.push('/posts');
     dispatch({
       type: GET_ERRORS,
@@ -24,20 +22,17 @@ export const createPost = (post, history) => async dispatch => {
 };
 
 export const getPosts = () => async dispatch => {
-  try {
-    const res = await axios.get(`${API_VERSION}/posts`);
-    dispatch({
+  await axios.get(`${URL}/posts`).then(
+    response => dispatch({
       type: GET_POSTS,
-      payload: res.data
-    });
-  } catch (errors) {
-    dispatch(getErrors(errors));
-  }
+      payload: response.data
+    })
+  ).catch(error => dispatch(getErrors(error)));
 };
 
 export const getPost = (id, history) => async dispatch => {
   try {
-    const res = await axios.get(`${API_VERSION}/posts/${id}`);
+    const res = await axios.get(`${URL}/posts/${id}`);
     if (res.data == null) {
       history.push('/posts');
     } else {
@@ -53,7 +48,7 @@ export const getPost = (id, history) => async dispatch => {
 
 export const editPost = (post, history) => async dispatch => {
   try {
-    await axios.patch(`${API_VERSION}/posts/${post.id}`, post);
+    await axios.patch(`${URL}/posts/${post.id}`, post);
     history.push('/posts');
     dispatch({
       type: GET_ERRORS,
@@ -66,7 +61,7 @@ export const editPost = (post, history) => async dispatch => {
 
 export const deletePost = id => async dispatch => {
   try {
-    await axios.delete(`${API_VERSION}/posts/${id}`);
+    await axios.delete(`${URL}/posts/${id}`);
     dispatch({
       type: DELETE_POST,
       payload: id
