@@ -1,12 +1,11 @@
-import {Avatar, Button, Chip, Grid, List, ListItem} from '@material-ui/core';
-import Interweave from 'interweave';
+import {Grid, List} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
 import {deletePost, getPosts} from '../../actions/postActions';
 import Categories from '../Category/Categories';
 import styles from '../../styles';
+import PostItem from "./PostItem";
 
 class Posts extends Component {
   constructor(props) {
@@ -36,74 +35,7 @@ class Posts extends Component {
         <Grid item xs={12} md={9} className={classes.postItem}>
           <List>
             {posts !== undefined && posts.length > 0 ? posts.map(post => (
-              <ListItem className="shortcuts_item" key={post.id}>
-                <article className="post post_preview" lang="ru">
-                  <div className="post_meta">
-                    <small className="post_user">
-                      <Chip
-                        variant="outlined"
-                        color="primary"
-                        avatar={<Avatar alt="Airat"
-                                        src="/static/images/avatar/1.jpg"/>}
-                        clickable
-                        label={`${post.user}`}
-                        href="#chip"
-                        size="small"
-                      />
-                    </small>
-                    <small
-                      className="post_time">{post.createdDate}</small>
-                    <br/>
-                    {this.props.security.user.username === post.author
-                    && (
-                      <div>
-                        <small>
-                          <Button
-                            size="small"
-                            component={Link}
-                            to={`/edit-post/${post.id}`}
-                            variant="outlined"
-                            color="primary"
-                          >
-                            Edit
-                          </Button>
-                        </small>
-                        <small>
-                          <Button
-                            size="small"
-                            variant="outlined"
-                            color="secondary"
-                            onClick={() => {
-                              this.onDelClick(post.id);
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </small>
-                      </div>
-                    )}
-                  </div>
-                  <div className="post_body">
-                    <h2 className="post_title">
-                      <Link className={classes.link}
-                            to={`/post/${post.id}`}>
-                        {post.title}
-                      </Link>
-                    </h2>
-                    <img className="post_img" src={`${post.image}`}
-                         alt=""/>
-                    <div className="post_description">
-                      <Interweave
-                        className="post_description"
-                        content={post.description}
-                      />
-                    </div>
-                  </div>
-                  <Link className={classes.link} to={`/post/${post.id}`}>
-                    [Читать дальше]
-                  </Link>
-                </article>
-              </ListItem>
+              <PostItem key={post.id} post={post}/>
             )) : null}
           </List>
         </Grid>
