@@ -4,7 +4,7 @@ import {DELETE_BLOG, GET_BLOG, GET_BLOGS, GET_ERRORS, URL, POST_BLOG, PATCH_BLOG
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
     type: GET_ERRORS,
-    errors: errors.response.data,
+    payload: errors.response.data,
   });
 };
 
