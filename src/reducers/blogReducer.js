@@ -1,4 +1,4 @@
-import {DELETE_BLOG, GET_BLOG, GET_BLOGS, POST_BLOG, PATCH_BLOG} from '../actions/types';
+import {DELETE_BLOG, GET_BLOG, GET_BLOGS, PATCH_BLOG, POST_BLOG} from '../actions/types';
 
 const initialState = {
   blogs: [],
@@ -8,7 +8,8 @@ const initialState = {
   categoryId: ""
 };
 
-export default function (state = initialState, action) {
+function blogReducer(state = initialState, action) {
+
   switch (action.type) {
     case GET_BLOGS:
       return {
@@ -42,3 +43,5 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+export default blogReducer

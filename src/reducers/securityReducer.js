@@ -9,7 +9,7 @@ const booleanActionPayload = payload => {
   return !(Object.entries(payload).length === 0);
 };
 
-export default function (state = initialState, action) {
+function securityReducer(state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {
@@ -22,3 +22,5 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+export default securityReducer;
