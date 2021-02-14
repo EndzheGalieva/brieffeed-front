@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {DELETE_BLOG, GET_BLOG, GET_BLOGS, GET_ERRORS, URL} from './types';
+import {DELETE_BLOG, GET_BLOG, GET_BLOGS, GET_ERRORS, URL, POST_BLOG, PATCH_BLOG} from './types';
 
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
@@ -42,6 +42,10 @@ export const getBlog = id => async dispatch => {
 export const editBlog = blog => async dispatch => {
   try {
     await axios.patch(`${URL}/blogs/${blog.id}`, blog);
+    dispatch({
+      type: POST_BLOG,
+      payload: blog
+    });
   } catch (errors) {
     dispatch(getErrors(errors));
   }
