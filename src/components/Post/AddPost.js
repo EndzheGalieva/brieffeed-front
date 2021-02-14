@@ -58,11 +58,12 @@ class AddPost extends Component {
 
   handleChange = name => event => {
     const data = event.target.value;
-    if (name === "tags") {
-      this.setState(previousState => ({tags: [...previousState.tags, data]}));
-    } else {
-      this.setState({...this.state, [name]: data});
-    }
+    console.log(data)
+    // if (name === "tags") {
+    //   this.setState(previousState => ({tags: [...previousState.tags, data]}));
+    // } else {
+    //   this.setState({...this.state, [name]: data});
+    // }
   };
 
   handleMenuItemClick = (event, index) => {
