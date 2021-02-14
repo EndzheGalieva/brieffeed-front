@@ -5,7 +5,8 @@ const initialState = {
   category: {}
 };
 
-export default function (state = initialState, action) {
+function categoryReducer(state = initialState, action) {
+
   switch (action.type) {
     case GET_CATEGORIES:
       return {
@@ -28,3 +29,5 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+export default categoryReducer

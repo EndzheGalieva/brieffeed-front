@@ -5,7 +5,7 @@ const initialState = {
   post: {}
 };
 
-export default function (state = initialState, action) {
+function postReducer(state = initialState, action) {
   switch (action.type) {
     case GET_POSTS:
       return {
@@ -26,3 +26,5 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+export default postReducer;

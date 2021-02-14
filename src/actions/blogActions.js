@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {DELETE_BLOG, GET_BLOG, GET_BLOGS, GET_ERRORS, URL, POST_BLOG, PATCH_BLOG} from './types';
+import {DELETE_BLOG, GET_BLOG, GET_BLOGS, GET_ERRORS, URL, POST_BLOG} from './types';
 
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
