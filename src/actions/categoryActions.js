@@ -9,7 +9,7 @@ import {
 const getErrors = (errors) => async (dispatch) => {
   dispatch({
     type: GET_ERRORS,
-    errors: errors.response.data,
+    payload: errors.response.data,
   });
 };
 

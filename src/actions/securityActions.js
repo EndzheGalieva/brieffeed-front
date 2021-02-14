@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
     type: GET_ERRORS,
-    errors: errors.response.data,
+    payload: errors.response.data,
   });
 };
 

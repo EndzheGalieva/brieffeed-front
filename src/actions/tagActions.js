@@ -4,7 +4,7 @@ import {DELETE_TAG, GET_ERRORS, GET_TAG, GET_TAGS, URL} from "./types";
 export const getErrors = (errors) => async (dispatch) => {
   dispatch({
     type: GET_ERRORS,
-    errors: errors.response.data,
+    payload: errors.response.data,
   });
 };
 

@@ -7,6 +7,8 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 // types for blog actions
 export const GET_BLOGS = 'GET_BLOGS';
 export const GET_BLOG = 'GET_BLOG';
+export const POST_BLOG = 'POST_BLOG';
+export const PATCH_BLOG = 'PATCH_BLOG';
 export const DELETE_BLOG = 'DELETE_BLOG';
 // types for tag actions
 export const GET_TAGS = 'GET_TAGS';
